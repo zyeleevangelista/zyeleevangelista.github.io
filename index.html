@@ -3,1654 +3,1311 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f7f3ec" />
-  <meta
-    name="description"
-    content="Kyle is a web developer, SEO specialist, and automation-focused virtual assistant building websites, systems, and client-ready digital experiences across WordPress, Shopify, GoHighLevel, and custom front end work."
-  />
-  <meta property="og:title" content="Kyle | Web Developer, SEO Specialist & Systems Builder" />
-  <meta
-    property="og:description"
-    content="A scroll-based portfolio featuring selected client websites, redesigns, SEO work, and automation systems."
-  />
+  <meta name="theme-color" content="#f7f5f0" />
+  <meta name="description" content="Kyle is a web developer, SEO specialist, and automation-focused virtual assistant building websites, systems, and client-ready digital experiences across WordPress, Shopify, GoHighLevel, and custom front end work." />
+  <meta property="og:title" content="Kyle | Web, SEO & Digital Systems" />
+  <meta property="og:description" content="A scroll-driven portfolio featuring selected client websites, redesigns, SEO work, and automation systems." />
   <meta property="og:type" content="website" />
-  <title>Kyle | Web Developer, SEO Specialist & Systems Builder</title>
+  <title>Kyle | Web, SEO & Digital Systems</title>
 
   <style>
     :root {
-      --bg: #f7f3ec;
-      --bg-soft: #fdfaf5;
-      --paper: #fffdf8;
+      --paper: #f7f5f0;
+      --white: #fffdf9;
       --ink: #111111;
-      --muted: #616161;
-      --muted-2: #8a8a8a;
-      --line: rgba(17, 17, 17, 0.12);
-      --line-strong: rgba(17, 17, 17, 0.22);
-      --accent: #1d4ed8;
-      --accent-soft: rgba(29, 78, 216, 0.08);
-      --accent-2: #0f766e;
-      --max: 1180px;
-      --radius: 26px;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.06);
+      --muted: #747474;
+      --line: rgba(17,17,17,.14);
+      --soft-line: rgba(17,17,17,.075);
+      --blue: #2457ff;
+      --green: #0d7f67;
+      --max: 1320px;
+      --ease: cubic-bezier(.2,.75,.2,1);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(29, 78, 216, 0.035), transparent 18%),
-        radial-gradient(circle at top right, rgba(15, 118, 110, 0.03), transparent 18%),
-        linear-gradient(180deg, #f7f3ec 0%, #fbf8f3 38%, #f6f1e9 100%);
-      line-height: 1.65;
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       overflow-x: hidden;
+      text-rendering: optimizeLegibility;
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(17, 17, 17, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(17, 17, 17, 0.02) 1px, transparent 1px);
-      background-size: 32px 32px;
-      mask-image: linear-gradient(to bottom, black, transparent 92%);
       z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(36,87,255,.05), transparent 19%),
+        radial-gradient(circle at 88% 90%, rgba(13,127,103,.045), transparent 20%);
     }
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button, input, textarea { font: inherit; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button, input, textarea {
-      font: inherit;
-    }
-
-    .container {
-      width: min(calc(100% - 32px), var(--max));
-      margin-inline: auto;
-    }
-
-    .section {
-      padding: 100px 0;
-      position: relative;
-    }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .kicker::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 7px rgba(29, 78, 216, 0.08);
-    }
-
-    .section-head {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 40px;
-      align-items: end;
-      margin-bottom: 40px;
-    }
-
-    .section-head h2 {
-      margin: 14px 0 0;
-      font-size: clamp(38px, 5vw, 70px);
-      line-height: 0.95;
-      letter-spacing: -0.055em;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 500px;
-      justify-self: end;
-    }
-
-    .site-header {
+    .topbar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 60;
-      padding: 14px 0;
-      transition: 0.25s ease;
+      inset: 0 0 auto 0;
+      height: 64px;
+      z-index: 100;
+      pointer-events: none;
     }
 
-    .site-header.scrolled {
-      background: rgba(247, 243, 236, 0.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(17, 17, 17, 0.08);
-    }
-
-    .nav {
-      min-height: 58px;
+    .topbar-inner {
+      width: min(calc(100% - 28px), var(--max));
+      height: 100%;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
     }
 
-    .brand {
-      display: flex;
+    .signature,
+    .scroll-meta {
+      pointer-events: auto;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      padding: 9px 12px;
+      border: 1px solid var(--soft-line);
+      background: rgba(255,253,249,.74);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      box-shadow: 0 10px 34px rgba(0,0,0,.035);
+      font-size: 11px;
       font-weight: 800;
-      letter-spacing: -0.03em;
+      letter-spacing: .11em;
+      text-transform: uppercase;
     }
 
-    .brand-mark {
-      width: 40px;
-      height: 40px;
+    .signature b {
+      width: 27px;
+      height: 27px;
       display: grid;
       place-items: center;
-      border-radius: 12px;
-      background: #111;
-      color: #fff;
-      font-weight: 900;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    }
-
-    .brand small {
-      display: block;
-      color: var(--muted-2);
+      border-radius: 50%;
+      background: var(--ink);
+      color: white;
       font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-top: 2px;
+      letter-spacing: 0;
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .scroll-meta span:last-child { color: var(--muted); }
 
-    .nav-links a {
-      padding: 10px 12px;
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 700;
-      transition: 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      background: rgba(17, 17, 17, 0.05);
-      color: var(--ink);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      font-weight: 800;
-      font-size: 14px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: #111;
-      color: #fff;
-      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border-color: var(--line-strong);
-      color: var(--ink);
-    }
-
-    .btn-soft {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border-color: rgba(29, 78, 216, 0.12);
-    }
-
-    .menu-btn {
-      display: none;
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      border: 1px solid var(--line-strong);
-      background: #fff;
-      color: var(--ink);
-    }
-
-    .progress-wrap {
+    .progress {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      inset: auto 0 0 0;
       height: 3px;
-      z-index: 80;
+      z-index: 110;
       background: transparent;
     }
 
-    .progress-bar {
+    .progress > div {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transition: width 0.08s linear;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      will-change: width;
     }
 
-    .hero {
-      min-height: 100vh;
+    .intro {
+      position: relative;
+      min-height: 220vh;
+    }
+
+    .intro-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 88px 0 36px;
+    }
+
+    .intro-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: auto;
+      position: relative;
+      height: 100%;
+    }
+
+    .intro-kicker {
+      position: absolute;
+      left: 0;
+      top: 8%;
       display: flex;
       align-items: center;
-      padding: 140px 0 90px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 56px;
-      align-items: start;
-    }
-
-    .hero-note {
-      display: inline-flex;
-      align-items: center;
       gap: 10px;
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.62);
       color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 24px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
-    .hero-note .dot {
+    .intro-kicker::before {
+      content: "";
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--accent-2);
+      background: var(--green);
+      box-shadow: 0 0 0 7px rgba(13,127,103,.09);
     }
 
-    .hero h1 {
+    .intro-title {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
       margin: 0;
-      max-width: 780px;
-      font-size: clamp(58px, 7vw, 108px);
-      line-height: 0.88;
-      letter-spacing: -0.07em;
-      font-weight: 900;
+      font-size: clamp(72px, 12vw, 188px);
+      line-height: .76;
+      letter-spacing: -.085em;
+      font-weight: 950;
+      text-wrap: balance;
+      will-change: transform, opacity;
     }
 
-    .hero h1 .soft {
-      color: #787878;
-      font-weight: 700;
+    .intro-title .ghost {
+      color: #8a8a8a;
+      font-weight: 750;
     }
 
-    .hero-copy {
-      max-width: 690px;
-      margin: 26px 0 0;
-      font-size: clamp(17px, 2vw, 21px);
+    .intro-copy {
+      position: absolute;
+      right: 0;
+      bottom: 8%;
+      max-width: 560px;
+      margin: 0;
       color: var(--muted);
+      font-size: clamp(16px, 1.5vw, 20px);
+      line-height: 1.55;
+      will-change: transform, opacity;
     }
 
-    .hero-actions {
+    .intro-copy strong { color: var(--ink); }
+
+    .scroll-cue {
+      position: absolute;
+      left: 0;
+      bottom: 8%;
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 30px;
-    }
-
-    .chip {
-      display: inline-flex;
       align-items: center;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.7);
+      gap: 12px;
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
     }
 
-    .hero-card {
-      position: sticky;
-      top: 110px;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(6px);
-      padding: 22px;
-      box-shadow: var(--shadow);
+    .scroll-cue i {
+      width: 42px;
+      height: 1px;
+      display: block;
+      background: var(--line);
+      position: relative;
       overflow: hidden;
     }
 
-    .hero-card::before {
+    .scroll-cue i::after {
       content: "";
       position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: rgba(29, 78, 216, 0.06);
-      top: -90px;
-      right: -90px;
-      filter: blur(6px);
+      inset: 0 auto 0 0;
+      width: 35%;
+      background: var(--ink);
+      animation: scan 1.8s ease-in-out infinite;
     }
 
-    .mini-top {
+    @keyframes scan {
+      0% { transform: translateX(-120%); }
+      55%,100% { transform: translateX(320%); }
+    }
+
+    .statement {
+      min-height: 125vh;
+      display: grid;
+      place-items: center;
+      padding: 80px 0;
+      border-top: 1px solid var(--soft-line);
+      border-bottom: 1px solid var(--soft-line);
+      background: rgba(255,255,255,.25);
+    }
+
+    .statement-inner {
+      width: min(calc(100% - 32px), 1120px);
+      margin: auto;
+    }
+
+    .statement p {
+      margin: 0;
+      font-size: clamp(42px, 6.7vw, 104px);
+      line-height: .95;
+      letter-spacing: -.06em;
+      font-weight: 840;
+      text-wrap: balance;
+    }
+
+    .statement .muted { color: #9a9a9a; }
+    .statement .accent { color: var(--blue); }
+
+    .scene {
+      --accent: #2457ff;
+      --tint: #eef2ff;
+      position: relative;
+      min-height: 240vh;
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .scene[data-theme="gold"] { --accent: #9a6418; --tint: #f8f0e5; }
+    .scene[data-theme="green"] { --accent: #0f7a62; --tint: #ebf7f2; }
+    .scene[data-theme="brown"] { --accent: #7b4b2c; --tint: #f5ede6; }
+    .scene[data-theme="rose"] { --accent: #9a4150; --tint: #f8ecef; }
+    .scene[data-theme="violet"] { --accent: #5f4bb6; --tint: #efedfb; }
+    .scene[data-theme="orange"] { --accent: #b85d18; --tint: #faeee5; }
+    .scene[data-theme="slate"] { --accent: #3e5964; --tint: #eaf0f2; }
+    .scene[data-theme="red"] { --accent: #ad3737; --tint: #f8e9e9; }
+
+    .scene-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--line);
+      padding: 72px 0 36px;
+      background:
+        radial-gradient(circle at 85% 18%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 25%),
+        linear-gradient(180deg, var(--paper), #fbfaf7);
+    }
+
+    .scene-inner {
+      width: min(calc(100% - 32px), var(--max));
+      height: 100%;
+      margin: 0 auto;
       position: relative;
-      z-index: 1;
     }
 
-    .mini-top span {
+    .scene-index {
+      position: absolute;
+      left: 0;
+      top: 6%;
       font-size: 11px;
-      letter-spacing: 0.12em;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      color: var(--muted-2);
-      font-weight: 800;
+      font-weight: 850;
+      color: var(--muted);
     }
 
-    .mini-dots {
+    .scene-index b {
+      color: var(--accent);
+      margin-right: 8px;
+    }
+
+    .scene-title {
+      position: absolute;
+      left: 0;
+      top: 18%;
+      margin: 0;
+      max-width: 820px;
+      font-size: clamp(54px, 7.4vw, 112px);
+      line-height: .82;
+      letter-spacing: -.075em;
+      font-weight: 930;
+      z-index: 3;
+      will-change: transform, opacity;
+    }
+
+    .scene-title small {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      font-weight: 850;
+    }
+
+    .scene-browser {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: min(64vw, 820px);
+      transform: translateY(-42%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: 0 34px 100px rgba(0,0,0,.11);
+      z-index: 2;
+      will-change: transform, opacity;
+    }
+
+    .browser-top {
+      height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--soft-line);
+      background: rgba(255,255,255,.85);
+    }
+
+    .browser-dots {
       display: flex;
       gap: 6px;
     }
 
-    .mini-dots i {
+    .browser-dots i {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: rgba(17, 17, 17, 0.22);
+      background: rgba(17,17,17,.2);
       display: block;
     }
 
-    .hero-card h3 {
-      margin: 18px 0 10px;
-      font-size: 34px;
-      line-height: 1.02;
-      letter-spacing: -0.045em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-card p {
-      color: var(--muted);
-      margin: 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .mini-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .mini-box {
-      min-height: 110px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: var(--bg-soft);
-    }
-
-    .mini-box small {
-      display: block;
-      color: var(--muted-2);
-      font-size: 12px;
-      margin-bottom: 18px;
-    }
-
-    .mini-box strong {
-      font-size: 24px;
-      letter-spacing: -0.04em;
-      line-height: 1;
-    }
-
-    .mini-list {
-      margin-top: 12px;
-      display: grid;
-      gap: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .mini-row {
+    .browser-url {
+      flex: 1;
+      min-width: 0;
+      height: 26px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 14px 15px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.65);
-      font-size: 13px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #f2f2ef;
+      color: #818181;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .mini-row span:last-child {
-      color: var(--muted-2);
-    }
-
-    .manifesto {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: rgba(255,255,255,0.45);
-    }
-
-    .manifesto-grid {
-      padding: 26px 0;
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 30px;
-      align-items: center;
-    }
-
-    .manifesto-label {
-      color: var(--muted-2);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .manifesto-copy {
-      font-size: clamp(20px, 2.2vw, 32px);
-      line-height: 1.3;
-      letter-spacing: -0.03em;
-      font-weight: 600;
-    }
-
-    .manifesto-copy span {
-      color: var(--accent);
-    }
-
-    .projects-wrap {
-      display: grid;
-      gap: 24px;
-    }
-
-    .project {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 26px;
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: rgba(255,255,255,0.76);
-      box-shadow: 0 18px 44px rgba(0,0,0,0.04);
+    .browser-view {
+      aspect-ratio: 16/10;
       position: relative;
       overflow: hidden;
+      background: var(--tint);
     }
 
-    .project:nth-child(even) {
-      grid-template-columns: 1.05fr 0.95fr;
-    }
-
-    .project:nth-child(even) .project-media {
-      order: 2;
-    }
-
-    .project:nth-child(even) .project-copy {
-      order: 1;
-    }
-
-    .project::after {
-      content: attr(data-no);
-      position: absolute;
-      right: 20px;
-      top: 8px;
-      font-size: clamp(56px, 10vw, 100px);
-      font-weight: 900;
-      line-height: 1;
-      color: rgba(17,17,17,0.04);
-      letter-spacing: -0.08em;
-      pointer-events: none;
-    }
-
-    .project-media {
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: #efebe3;
-      min-height: 320px;
-      position: relative;
-    }
-
-    .project-media img {
+    .browser-view img {
       width: 100%;
       height: 100%;
-      min-height: 320px;
       object-fit: cover;
       object-position: top;
-      transition: transform 0.7s ease;
+      position: relative;
+      z-index: 2;
     }
 
-    .project:hover .project-media img {
-      transform: scale(1.03);
-    }
-
-    .project-fallback {
+    .browser-fallback {
       position: absolute;
       inset: 0;
-      padding: 22px;
-      background:
-        radial-gradient(circle at 80% 20%, rgba(29, 78, 216, 0.08), transparent 28%),
-        linear-gradient(145deg, #f8f5ef, #efe9df);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-    }
-
-    .project-browser {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted-2);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .project-browser i {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: rgba(17,17,17,0.24);
-      display: inline-block;
-    }
-
-    .project-browser span:first-child {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-    }
-
-    .project-fallback h3 {
-      margin: 0;
-      font-size: clamp(34px, 4vw, 56px);
-      line-height: 0.9;
-      letter-spacing: -0.05em;
-      max-width: 420px;
-    }
-
-    .project-ui {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .project-ui div {
-      height: 42px;
-      border-radius: 10px;
-      border: 1px solid rgba(17,17,17,0.08);
-      background: rgba(255,255,255,0.7);
-    }
-
-    .project-ui div:first-child {
-      grid-column: 1 / -1;
-      height: 68px;
-    }
-
-    .project-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0;
-      position: relative;
+      padding: 26px;
+      background:
+        radial-gradient(circle at 78% 20%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 30%),
+        linear-gradient(145deg, var(--tint), #fffdf9);
       z-index: 1;
     }
 
-    .project-meta {
-      display: flex;
-      align-items: center;
+    .browser-fallback strong {
+      max-width: 430px;
+      font-size: clamp(34px, 4vw, 64px);
+      line-height: .9;
+      letter-spacing: -.055em;
+    }
+
+    .browser-fallback-grid {
+      display: grid;
+      grid-template-columns: 1.4fr .6fr;
       gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
     }
 
-    .project-type {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted-2);
+    .browser-fallback-grid span {
+      height: 56px;
+      border-radius: 12px;
+      border: 1px solid rgba(17,17,17,.08);
+      background: rgba(255,255,255,.56);
     }
 
-    .project-copy h3 {
+    .browser-fallback-grid span:first-child {
+      height: 84px;
+      grid-column: 1 / -1;
+    }
+
+    .scene-copy {
+      position: absolute;
+      left: 0;
+      bottom: 8%;
+      max-width: 540px;
+      z-index: 4;
+      will-change: transform, opacity;
+    }
+
+    .scene-copy p {
       margin: 0;
-      font-size: clamp(28px, 3vw, 42px);
-      line-height: 0.96;
-      letter-spacing: -0.05em;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 18px);
+      line-height: 1.58;
     }
 
-    .project-subtitle {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 16px;
+    .scene-copy strong { color: var(--ink); }
+
+    .scene-tags {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .project-body {
-      margin: 18px 0 0;
-      color: var(--muted);
+    .scene-tags span {
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.62);
+      color: #565656;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .scene-link {
+      position: absolute;
+      right: 0;
+      bottom: 8%;
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,253,249,.78);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 850;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .scene-link:hover {
+      transform: translateY(-2px);
+      background: white;
+    }
+
+    .scene-link::after {
+      content: "↗";
+      color: var(--accent);
       font-size: 15px;
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .tag {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.75);
-      color: #4d4d4d;
-    }
-
-    .project-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .services-grid {
+    .work-transition {
+      min-height: 130vh;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      place-items: center;
+      padding: 80px 0;
+      border-top: 1px solid var(--soft-line);
     }
 
-    .service {
-      min-height: 240px;
-      padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255,255,255,0.72);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    .work-transition-inner {
+      width: min(calc(100% - 32px), 1140px);
+      margin: auto;
     }
 
-    .service-num {
-      color: var(--muted-2);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .service h3 {
-      margin: 38px 0 10px;
-      font-size: 24px;
-      line-height: 1.05;
-      letter-spacing: -0.035em;
-    }
-
-    .service p {
+    .work-transition h2 {
       margin: 0;
-      color: var(--muted);
-      font-size: 14px;
+      font-size: clamp(52px, 8vw, 122px);
+      line-height: .86;
+      letter-spacing: -.075em;
+      font-weight: 920;
     }
 
-    .story-wrap {
-      display: grid;
-      grid-template-columns: 0.84fr 1.16fr;
-      gap: 48px;
-      align-items: start;
+    .work-transition h2 span { color: #989898; }
+
+    .skills-runway {
+      min-height: 160vh;
+      border-top: 1px solid var(--soft-line);
+      border-bottom: 1px solid var(--soft-line);
+      position: relative;
     }
 
-    .story-card {
+    .skills-sticky {
       position: sticky;
-      top: 108px;
-      padding: 28px;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: rgba(255,255,255,0.82);
-      box-shadow: var(--shadow);
-    }
-
-    .story-card h3 {
-      margin: 12px 0 8px;
-      font-size: 34px;
-      line-height: 1;
-      letter-spacing: -0.05em;
-    }
-
-    .story-card p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .story-mini {
-      margin-top: 22px;
+      top: 0;
+      min-height: 100vh;
       display: grid;
-      gap: 12px;
+      align-items: center;
+      overflow: hidden;
+      padding: 80px 0 40px;
     }
 
-    .story-mini div {
+    .skills-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: auto;
+    }
+
+    .skills-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 26px;
+    }
+
+    .skills-list {
+      display: grid;
+      gap: 4px;
+    }
+
+    .skills-list div {
       display: flex;
+      align-items: baseline;
       justify-content: space-between;
-      gap: 16px;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
-      font-size: 13px;
-      color: #3f3f3f;
+      gap: 18px;
+      padding: 16px 0;
+      border-top: 1px solid var(--soft-line);
     }
 
-    .story-mini span:last-child {
-      color: var(--muted-2);
+    .skills-list strong {
+      font-size: clamp(38px, 5.6vw, 82px);
+      line-height: .9;
+      letter-spacing: -.055em;
+    }
+
+    .skills-list span {
+      max-width: 360px;
+      color: var(--muted);
+      font-size: 13px;
       text-align: right;
     }
 
-    .story-content h2 {
-      margin: 0;
-      font-size: clamp(38px, 5vw, 68px);
-      line-height: 0.95;
-      letter-spacing: -0.055em;
+    .about {
+      min-height: 130vh;
+      display: grid;
+      place-items: center;
+      padding: 90px 0;
     }
 
-    .story-content p {
-      margin: 22px 0 0;
+    .about-inner {
+      width: min(calc(100% - 32px), 1120px);
+      margin: auto;
+      display: grid;
+      grid-template-columns: .78fr 1.22fr;
+      gap: 54px;
+      align-items: start;
+    }
+
+    .about-aside {
+      position: sticky;
+      top: 100px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,255,255,.62);
+    }
+
+    .about-aside .label,
+    .about-main .label,
+    .final .label {
       color: var(--muted);
-      font-size: 18px;
-      max-width: 760px;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
-    .toolbox {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 28px;
+    .about-aside h3 {
+      margin: 12px 0 6px;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -.05em;
     }
 
-    .approach {
-      margin-top: 40px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .approach-row {
-      display: grid;
-      grid-template-columns: 60px 1fr auto;
-      gap: 18px;
-      align-items: center;
-      padding: 18px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .approach-row .n {
-      color: var(--muted-2);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-    }
-
-    .approach-row strong {
-      display: block;
-      font-size: 18px;
-      line-height: 1.2;
-      margin-bottom: 4px;
-    }
-
-    .approach-row p {
+    .about-aside p {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
     }
 
-    .approach-row span:last-child {
-      color: var(--muted-2);
-      font-size: 13px;
-    }
-
-    .contact-box {
-      padding: clamp(28px, 4vw, 60px);
-      border: 1px solid var(--line-strong);
-      border-radius: 32px;
-      background:
-        radial-gradient(circle at 88% 20%, rgba(29, 78, 216, 0.06), transparent 28%),
-        radial-gradient(circle at 8% 100%, rgba(15, 118, 110, 0.05), transparent 22%),
-        rgba(255,255,255,0.82);
-      box-shadow: var(--shadow);
-    }
-
-    .contact-box h2 {
-      margin: 14px 0 18px;
-      max-width: 920px;
-      font-size: clamp(44px, 6vw, 86px);
-      line-height: 0.9;
-      letter-spacing: -0.065em;
-    }
-
-    .contact-box p {
-      max-width: 760px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 18px;
-    }
-
-    .contact-actions {
-      display: flex;
-      flex-wrap: wrap;
+    .about-meta {
+      display: grid;
       gap: 10px;
-      margin-top: 28px;
+      margin-top: 22px;
     }
 
-    .contact-note {
-      margin-top: 18px;
-      color: var(--muted-2);
-      font-size: 13px;
-    }
-
-    footer {
-      padding: 28px 0 36px;
-    }
-
-    .footer-row {
+    .about-meta div {
       display: flex;
-      align-items: center;
       justify-content: space-between;
       gap: 18px;
-      border-top: 1px solid var(--line);
-      padding-top: 20px;
-      color: var(--muted-2);
+      padding-top: 10px;
+      border-top: 1px solid var(--soft-line);
       font-size: 12px;
     }
 
-    .footer-links {
+    .about-meta span:last-child { color: var(--muted); text-align: right; }
+
+    .about-main h2 {
+      margin: 12px 0 0;
+      font-size: clamp(46px, 6vw, 86px);
+      line-height: .93;
+      letter-spacing: -.065em;
+    }
+
+    .about-main p {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 760px;
+    }
+
+    .about-main p strong { color: var(--ink); }
+
+    .final {
+      min-height: 120vh;
+      display: grid;
+      place-items: center;
+      padding: 90px 0;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(36,87,255,.055), transparent 24%),
+        radial-gradient(circle at 10% 85%, rgba(13,127,103,.05), transparent 22%);
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .final-inner {
+      width: min(calc(100% - 32px), 1120px);
+      margin: auto;
+    }
+
+    .final h2 {
+      margin: 14px 0 20px;
+      font-size: clamp(58px, 9vw, 140px);
+      line-height: .82;
+      letter-spacing: -.08em;
+      max-width: 1000px;
+    }
+
+    .final h2 span { color: #939393; }
+
+    .final p {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: clamp(16px, 1.6vw, 20px);
+    }
+
+    .final-actions {
+      margin-top: 28px;
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+    .final-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.66);
+      font-size: 13px;
+      font-weight: 850;
+      transition: transform .2s ease, background .2s ease;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
+    .final-actions a.primary {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: white;
     }
 
-    @media (max-width: 1040px) {
-      .hero-grid,
-      .section-head,
-      .story-wrap,
-      .project,
-      .project:nth-child(even),
-      .manifesto-grid {
-        grid-template-columns: 1fr;
-      }
+    .final-actions a:hover { transform: translateY(-2px); }
 
-      .project:nth-child(even) .project-media,
-      .project:nth-child(even) .project-copy {
-        order: initial;
-      }
+    .contact-note {
+      margin-top: 16px;
+      color: #969696;
+      font-size: 12px;
+    }
 
-      .hero-card,
-      .story-card {
-        position: relative;
-        top: auto;
-      }
+    footer {
+      padding: 26px 0 36px;
+      color: #8b8b8b;
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
 
-      .services-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+    footer .inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1px solid var(--soft-line);
+    }
 
-      .section-head p {
-        justify-self: start;
-      }
+    @media (max-width: 1050px) {
+      .scene-title { max-width: 680px; }
+      .scene-browser { width: min(70vw, 740px); right: -4vw; }
+      .scene-copy { max-width: 470px; }
+      .about-inner { grid-template-columns: 1fr; }
+      .about-aside { position: relative; top: auto; }
     }
 
     @media (max-width: 760px) {
-      .section {
-        padding: 76px 0;
+      .topbar { height: 58px; }
+      .scroll-meta { display: none; }
+      .signature { padding: 8px 10px; }
+      .signature b { width: 25px; height: 25px; }
+
+      .intro { min-height: 180vh; }
+      .intro-sticky { padding-top: 72px; }
+      .intro-kicker { top: 7%; }
+      .intro-title {
+        top: 39%;
+        font-size: clamp(58px, 19vw, 92px);
+        line-height: .82;
+      }
+      .intro-copy {
+        left: 0;
+        right: auto;
+        bottom: 8%;
+        max-width: 94%;
+        font-size: 16px;
+      }
+      .scroll-cue { display: none; }
+
+      .statement { min-height: 105vh; }
+      .statement p {
+        font-size: clamp(40px, 11vw, 72px);
+        line-height: .97;
       }
 
-      .hero {
-        min-height: auto;
-        padding: 122px 0 72px;
+      .scene { min-height: 225vh; }
+      .scene-sticky { padding-top: 66px; }
+      .scene-index { top: 7%; }
+      .scene-title {
+        top: 15%;
+        width: 100%;
+        max-width: 100%;
+        font-size: clamp(46px, 13vw, 72px);
       }
+      .scene-title small { font-size: 10px; margin-bottom: 10px; }
 
-      .nav-links {
-        position: absolute;
-        left: 16px;
-        right: 16px;
-        top: 72px;
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 12px;
-        border: 1px solid var(--line);
+      .scene-browser {
+        top: 47%;
+        left: 0;
+        right: auto;
+        width: 100%;
+        transform: translateY(-38%);
         border-radius: 18px;
-        background: rgba(255,255,255,0.95);
-        box-shadow: 0 18px 50px rgba(0,0,0,0.06);
       }
 
-      .nav-links.open {
-        display: flex;
+      .browser-top { height: 36px; }
+      .browser-view { aspect-ratio: 4/3; }
+
+      .scene-copy {
+        left: 0;
+        right: 0;
+        bottom: 6%;
+        max-width: 100%;
       }
 
-      .nav-links a {
-        padding: 12px;
-        border-radius: 12px;
+      .scene-copy p { font-size: 14px; }
+      .scene-tags { margin-top: 12px; gap: 6px; }
+      .scene-tags span { font-size: 9px; padding: 6px 8px; }
+
+      .scene-link {
+        bottom: auto;
+        top: 7%;
+        right: 0;
+        padding: 9px 11px;
+        font-size: 10px;
       }
 
-      .menu-btn {
-        display: inline-grid;
-        place-items: center;
+      .skills-runway { min-height: 140vh; }
+      .skills-list div {
+        display: block;
+        padding: 16px 0;
       }
+      .skills-list strong { display: block; font-size: clamp(34px, 10vw, 62px); }
+      .skills-list span { display: block; text-align: left; margin-top: 8px; max-width: 100%; }
 
-      .desktop-cta {
-        display: none;
-      }
+      .about { min-height: auto; padding: 80px 0; }
+      .about-main h2 { font-size: clamp(42px, 11vw, 68px); }
+      .about-main p { font-size: 16px; }
 
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
+      .final { min-height: 105vh; }
+      .final h2 { font-size: clamp(56px, 16vw, 96px); }
 
-      .approach-row {
-        grid-template-columns: 44px 1fr;
-      }
-
-      .approach-row span:last-child {
-        grid-column: 2;
-      }
-
-      .project {
-        padding: 16px;
-      }
-
-      .project-media,
-      .project-media img {
-        min-height: 260px;
-      }
-
-      .footer-row {
-        flex-direction: column;
-        align-items: start;
-      }
-
-      .mini-grid {
-        grid-template-columns: 1fr;
-      }
+      footer .inner { flex-direction: column; align-items: flex-start; }
     }
 
-    @media (max-width: 520px) {
-      .container {
+    @media (max-width: 480px) {
+      .intro-inner,
+      .scene-inner,
+      .skills-inner,
+      .about-inner,
+      .final-inner,
+      .statement-inner,
+      footer .inner {
         width: min(calc(100% - 22px), var(--max));
       }
 
-      .hero h1 {
-        font-size: 52px;
-      }
+      .scene-title { font-size: 44px; }
+      .browser-fallback { padding: 18px; }
+      .browser-fallback strong { font-size: 36px; }
+    }
 
-      .hero-copy,
-      .story-content p,
-      .contact-box p {
-        font-size: 16px;
-      }
-
-      .contact-box {
-        border-radius: 24px;
-      }
-
-      .project-copy h3 {
-        font-size: 28px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .scroll-cue i::after { animation: none; }
+      * { transition: none !important; }
     }
   </style>
 </head>
+
 <body>
-  <div class="progress-wrap" aria-hidden="true">
-    <div class="progress-bar" id="progressBar"></div>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="signature" href="#top" aria-label="Back to top"><b>K</b><span>Kyle / Portfolio</span></a>
+      <div class="scroll-meta"><span id="sceneLabel">Introduction</span><span id="percent">00%</span></div>
+    </div>
   </div>
 
-  <header class="site-header" id="siteHeader">
-    <div class="container nav">
-      <a class="brand" href="#top" aria-label="Kyle portfolio home">
-        <span class="brand-mark">K</span>
-        <span>
-          Kyle
-          <small>Web • SEO • Systems</small>
-        </span>
-      </a>
-
-      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
-        <a href="#work">Work</a>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <a class="btn btn-primary desktop-cta" href="#contact">Let’s work together</a>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
-    </div>
-  </header>
+  <div class="progress"><div id="progressBar"></div></div>
 
   <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="reveal">
-          <div class="hero-note">
-            <span class="dot"></span>
-            Based in the Philippines • Available for remote client work
-          </div>
+    <section class="intro" data-label="Introduction">
+      <div class="intro-sticky">
+        <div class="intro-inner">
+          <div class="intro-kicker">Web developer • SEO specialist • systems builder</div>
 
-          <h1>
-            I build <span class="soft">websites and systems</span> that help businesses look better, rank better, and work better.
+          <h1 class="intro-title" id="introTitle">
+            I build<br>
+            <span class="ghost">for the web.</span>
           </h1>
 
-          <p class="hero-copy">
-            I work across WordPress, Shopify, GoHighLevel, front end development, SEO, website fixes, and automation. My strength is not just making pages look good. It is turning messy websites and manual tasks into cleaner digital systems clients can actually use.
+          <div class="scroll-cue"><i></i>Scroll to enter</div>
+
+          <p class="intro-copy" id="introCopy">
+            I work across <strong>WordPress, Shopify, GoHighLevel, SEO, custom front end development, and automation</strong>. The work changes from client to client. The goal does not: make the website clearer, stronger, and more useful to the business.
           </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#work">See my work</a>
-            <a class="btn btn-secondary" href="#about">Read my story</a>
-          </div>
-
-          <div class="hero-tags" aria-label="Core skills">
-            <span class="chip">WordPress</span>
-            <span class="chip">Elementor</span>
-            <span class="chip">Shopify</span>
-            <span class="chip">GoHighLevel</span>
-            <span class="chip">SEO</span>
-            <span class="chip">HTML / CSS / JavaScript</span>
-            <span class="chip">Automation</span>
-            <span class="chip">Virtual Assistant Operations</span>
-          </div>
-        </div>
-
-        <aside class="hero-card reveal" aria-label="Quick overview card">
-          <div class="mini-top">
-            <span>How I work</span>
-            <span class="mini-dots"><i></i><i></i><i></i></span>
-          </div>
-
-          <h3>One person across the site and the systems behind it.</h3>
-          <p>
-            I can redesign the page, fix the form, improve the SEO, connect the automation, and explain the update in a way a client can understand.
-          </p>
-
-          <div class="mini-grid">
-            <div class="mini-box">
-              <small>Selected projects</small>
-              <strong>09</strong>
-            </div>
-            <div class="mini-box">
-              <small>Core focus</small>
-              <strong>Web + SEO + Ops</strong>
-            </div>
-            <div class="mini-box">
-              <small>Platforms</small>
-              <strong>WP / Shopify / GHL</strong>
-            </div>
-            <div class="mini-box">
-              <small>Work style</small>
-              <strong>Fast, practical, client-ready</strong>
-            </div>
-          </div>
-
-          <div class="mini-list">
-            <div class="mini-row"><span>Build and redesign</span><span>Pages and full-site sections</span></div>
-            <div class="mini-row"><span>Optimize and fix</span><span>SEO, mobile, UX, technical issues</span></div>
-            <div class="mini-row"><span>Automate operations</span><span>Forms, email, CRM, reminders</span></div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="manifesto">
-      <div class="container manifesto-grid">
-        <div class="manifesto-label">What this portfolio is about</div>
-        <div class="manifesto-copy">
-          Not just “pretty websites.” I care about <span>clarity</span>, <span>conversion</span>, and <span>systems that actually help the business run better</span>.
         </div>
       </div>
     </section>
 
-    <section class="section" id="work">
-      <div class="container">
-        <div class="section-head reveal">
-          <div>
-            <div class="kicker">Selected work</div>
-            <h2>Real client projects I’ve worked on.</h2>
+    <section class="statement" data-label="What I do">
+      <div class="statement-inner">
+        <p>
+          Design when it needs design.<br>
+          <span class="muted">Code when it needs code.</span><br>
+          Optimize when it needs traffic.<br>
+          <span class="accent">Automate when it needs a system.</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="scene" data-label="WASSWA Capital" data-theme="blue">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>01</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Private equity • WordPress</small>
+            WASSWA<br>Capital
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">wasswacorporation.com</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Private Equity for Technology-Driven Transformation.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwasswacorporation.com%2F?w=1400&amp;h=900" alt="WASSWA Capital website preview" onerror="this.style.display='none'">
+            </div>
           </div>
-          <p>
-            These are websites and systems I helped build, redesign, optimize, fix, or automate during our time working together. The goal was always the same: make the client’s online presence stronger and more useful.
-          </p>
-        </div>
 
-        <div class="projects-wrap">
-          <article class="project reveal" data-no="01">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>wasswacorporation.com</span>
-                </div>
-                <h3>WASSWA Capital</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwasswacorporation.com%2F?w=1200&amp;h=800" alt="WASSWA Capital website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">Private equity • WordPress</span>
-              </div>
-              <h3>WASSWA Capital</h3>
-              <p class="project-subtitle">Premium WordPress website, strategic structure, SEO content, and client-facing systems.</p>
-              <p class="project-body">
-                I helped shape the site around the positioning “Private Equity for Technology-Driven Transformation.” Work included custom page sections, homepage interaction, navigation structure, blog and SEO setup, legal pages, AI chatbot integration, and inquiry flow improvements.
-              </p>
-              <div class="tags">
-                <span class="tag">WordPress</span>
-                <span class="tag">Elementor</span>
-                <span class="tag">Custom UI</span>
-                <span class="tag">SEO</span>
-                <span class="tag">AI Chatbot</span>
-                <span class="tag">Forms & Email</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://wasswacorporation.com/" target="_blank" rel="noopener noreferrer">Visit website</a>
-              </div>
-            </div>
-          </article>
+          <div class="scene-copy">
+            <p><strong>More than a redesign.</strong> I helped shape the site around WASSWA’s current positioning, built and refined page sections, worked on navigation, blog structure, SEO content, legal pages, inquiry flows, and AI chatbot integration.</p>
+            <div class="scene-tags"><span>WordPress</span><span>Elementor</span><span>Custom UI</span><span>SEO</span><span>AI Chatbot</span><span>Forms</span></div>
+          </div>
 
-          <article class="project reveal" data-no="02">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>ridebts.com</span>
-                </div>
-                <h3>Black Truck Service</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fridebts.com%2F?w=1200&amp;h=800" alt="Black Truck Service website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">Executive transportation • WordPress</span>
-              </div>
-              <h3>Black Truck Service</h3>
-              <p class="project-subtitle">Luxury transportation website redesign, reservation UX, and operations planning.</p>
-              <p class="project-body">
-                I worked on the premium redesign direction, interactive service and fleet sections, reservation page updates, SEO metadata improvements, email delivery setup, and workflow planning for future payment and ride tracking functionality.
-              </p>
-              <div class="tags">
-                <span class="tag">WordPress</span>
-                <span class="tag">Responsive UI</span>
-                <span class="tag">Reservation Flow</span>
-                <span class="tag">SEO</span>
-                <span class="tag">SMTP</span>
-                <span class="tag">Workflow Design</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://ridebts.com/" target="_blank" rel="noopener noreferrer">Visit website</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project reveal" data-no="03">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>gonorthhemp.com</span>
-                </div>
-                <h3>Go North Hemp</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgonorthhemp.com%2F?w=1200&amp;h=800" alt="Go North Hemp website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">B2B ecommerce • Shopify</span>
-              </div>
-              <h3>Go North Hemp</h3>
-              <p class="project-subtitle">Shopify product page updates, SEO refinement, landing pages, and reindexing support.</p>
-              <p class="project-body">
-                I updated multiple product pages, improved titles and metadata, cleaned product presentation, worked on content structure, fixed template conflicts, and supported search indexing and visibility improvements for priority pages.
-              </p>
-              <div class="tags">
-                <span class="tag">Shopify</span>
-                <span class="tag">Product SEO</span>
-                <span class="tag">Landing Pages</span>
-                <span class="tag">Metadata</span>
-                <span class="tag">Reindexing</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://gonorthhemp.com/" target="_blank" rel="noopener noreferrer">Visit website</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project reveal" data-no="04">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>texashistorichomes.com</span>
-                </div>
-                <h3>Texas Historic Homes</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Ftexashistorichomes.com%2F?w=1200&amp;h=800" alt="Texas Historic Homes website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">Real estate • WordPress</span>
-              </div>
-              <h3>Texas Historic Homes</h3>
-              <p class="project-subtitle">Historic real estate redesign work, compliance updates, and content restructuring.</p>
-              <p class="project-body">
-                I supported page revamps, navigation updates, featured listing sections, contact page improvements, visual cleanup, and TREC / NAR compliance work including IABS and Consumer Protection Notice placement and brokerage visibility updates.
-              </p>
-              <div class="tags">
-                <span class="tag">WordPress</span>
-                <span class="tag">Compliance</span>
-                <span class="tag">Navigation</span>
-                <span class="tag">Responsive Layout</span>
-                <span class="tag">Real Estate Content</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://texashistorichomes.com/" target="_blank" rel="noopener noreferrer">Visit website</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project reveal" data-no="05">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>hopefromlove.com</span>
-                </div>
-                <h3>Hope From Love</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fhopefromlove.com%2Fagent-contractor%2F?w=1200&amp;h=800" alt="Hope From Love website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">Lead generation • Website improvement</span>
-              </div>
-              <h3>Hope From Love</h3>
-              <p class="project-subtitle">Landing page improvements and legal support pages for a cleaner client journey.</p>
-              <p class="project-body">
-                I reviewed the page structure, worked on front end improvements, helped create privacy and terms pages, and improved clarity in the user flow so the page would feel more trustworthy and complete.
-              </p>
-              <div class="tags">
-                <span class="tag">HTML</span>
-                <span class="tag">Landing Page</span>
-                <span class="tag">Privacy Policy</span>
-                <span class="tag">Terms & Conditions</span>
-                <span class="tag">UX Cleanup</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://hopefromlove.com/agent-contractor/" target="_blank" rel="noopener noreferrer">Visit page</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project reveal" data-no="06">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>perspectivetherapy.com</span>
-                </div>
-                <h3>Perspective Therapy</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fperspectivetherapy.com%2F?w=1200&amp;h=800" alt="Perspective Therapy website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">Frontend • Deployment</span>
-              </div>
-              <h3>Perspective Therapy</h3>
-              <p class="project-subtitle">Frontend implementation, deployment support, and booking system connection.</p>
-              <p class="project-body">
-                I worked on the public site experience, Vercel deployment flow, domain migration and routing, and the connection between the site experience and the client booking setup.
-              </p>
-              <div class="tags">
-                <span class="tag">Frontend</span>
-                <span class="tag">Vercel</span>
-                <span class="tag">DNS</span>
-                <span class="tag">Domain Transfer</span>
-                <span class="tag">Acuity Booking</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://perspectivetherapy.com/" target="_blank" rel="noopener noreferrer">Visit website</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project reveal" data-no="07">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>vitalityplus.io</span>
-                </div>
-                <h3>VitalityPlus</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fvitalityplus.io%2F?w=1200&amp;h=800" alt="VitalityPlus website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">Agency site • WordPress</span>
-              </div>
-              <h3>VitalityPlus</h3>
-              <p class="project-subtitle">Elementor improvements, custom blog functionality, and technical setup support.</p>
-              <p class="project-body">
-                I handled visual and structural updates across the site, built dynamic Elementor blog behavior, and helped solve DNS, SSL, and WordPress URL issues during the overall site revamp process.
-              </p>
-              <div class="tags">
-                <span class="tag">WordPress</span>
-                <span class="tag">Elementor</span>
-                <span class="tag">Custom Widget</span>
-                <span class="tag">DNS</span>
-                <span class="tag">SSL</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://vitalityplus.io/" target="_blank" rel="noopener noreferrer">Visit website</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project reveal" data-no="08">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>trusolacecbd.com</span>
-                </div>
-                <h3>TruSolace CBD</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Ftrusolacecbd.com%2F?w=1200&amp;h=800" alt="TruSolace CBD website preview" onerror="this.style.display='none'" />
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">CBD ecommerce bridge • Landing experience</span>
-              </div>
-              <h3>TruSolace CBD</h3>
-              <p class="project-subtitle">Conversion-focused landing page, product sections, and clean storefront entry points.</p>
-              <p class="project-body">
-                I helped build a simplified conversion page with hero CTAs, product discovery, grouped item sections, usage content, trust-building blocks, and direct product shopping links to support the ecommerce experience.
-              </p>
-              <div class="tags">
-                <span class="tag">WordPress</span>
-                <span class="tag">Landing Page</span>
-                <span class="tag">Product Catalog</span>
-                <span class="tag">Responsive Merchandising</span>
-              </div>
-              <div class="project-actions">
-                <a class="btn btn-soft" href="https://trusolacecbd.com/" target="_blank" rel="noopener noreferrer">Visit website</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project reveal" data-no="09">
-            <div class="project-media">
-              <div class="project-fallback">
-                <div class="project-browser">
-                  <span><i></i><i></i><i></i></span>
-                  <span>private client systems</span>
-                </div>
-                <h3>GoHighLevel Workflows</h3>
-                <div class="project-ui"><div></div><div></div><div></div></div>
-              </div>
-            </div>
-            <div class="project-copy">
-              <div class="project-meta">
-                <span class="project-type">Automation • CRM systems</span>
-              </div>
-              <h3>Booking & Follow Up Workflows</h3>
-              <p class="project-subtitle">Calendars, reminders, confirmations, tagging, and practical CRM automation.</p>
-              <p class="project-body">
-                I built or mapped GoHighLevel systems including branded calendars, registration flows, immediate confirmations, timed reminders, internal alerts, and contact tagging for lead capture and event or session management.
-              </p>
-              <div class="tags">
-                <span class="tag">GoHighLevel</span>
-                <span class="tag">Calendars</span>
-                <span class="tag">Email</span>
-                <span class="tag">SMS</span>
-                <span class="tag">Tags</span>
-                <span class="tag">Workflows</span>
-              </div>
-              <div class="project-actions">
-                <span class="btn btn-secondary" style="cursor: default;">Private client systems</span>
-              </div>
-            </div>
-          </article>
+          <a class="scene-link" href="https://wasswacorporation.com/" target="_blank" rel="noopener noreferrer">View live</a>
         </div>
       </div>
     </section>
 
-    <section class="section" id="services">
-      <div class="container">
-        <div class="section-head reveal">
-          <div>
-            <div class="kicker">What I do</div>
-            <h2>Services that actually help clients move forward.</h2>
+    <section class="scene" data-label="Black Truck Service" data-theme="gold">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>02</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Executive transportation • WordPress</small>
+            Black Truck<br>Service
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">ridebts.com</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Arrive in Distinction.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fridebts.com%2F?w=1400&amp;h=900" alt="Black Truck Service website preview" onerror="this.style.display='none'">
+            </div>
           </div>
-          <p>
-            I’m most useful when a business already has a website or system that feels incomplete, weak, outdated, messy, or underperforming and needs someone who can step in and improve it quickly.
-          </p>
-        </div>
 
-        <div class="services-grid">
-          <article class="service reveal">
-            <span class="service-num">01</span>
-            <h3>Website Development</h3>
-            <p>Custom pages, WordPress sections, Elementor implementation, responsive fixes, HTML/CSS/JS updates, and practical front end improvements.</p>
-          </article>
+          <div class="scene-copy">
+            <p><strong>A premium client experience from page to reservation.</strong> I worked on the redesign direction, interactive service and fleet experiences, reservation UX, SEO metadata, email delivery, and the operating flow behind payment and ride tracking.</p>
+            <div class="scene-tags"><span>WordPress</span><span>Custom JS</span><span>Reservation UX</span><span>SEO</span><span>SMTP</span><span>Workflow Design</span></div>
+          </div>
 
-          <article class="service reveal">
-            <span class="service-num">02</span>
-            <h3>Website Redesign</h3>
-            <p>Stronger structure, clearer content hierarchy, premium presentation, better flow, and conversion-focused redesign work for websites that need a fresh direction.</p>
-          </article>
-
-          <article class="service reveal">
-            <span class="service-num">03</span>
-            <h3>SEO Optimization</h3>
-            <p>On-page SEO, title and meta improvements, keyword structure, content optimization, product SEO, internal linking, and Search Console support.</p>
-          </article>
-
-          <article class="service reveal">
-            <span class="service-num">04</span>
-            <h3>Shopify Support</h3>
-            <p>Product page updates, collection improvements, metadata cleanup, template issue fixes, landing pages, and ecommerce content improvements.</p>
-          </article>
-
-          <article class="service reveal">
-            <span class="service-num">05</span>
-            <h3>Automation & CRM</h3>
-            <p>GoHighLevel workflows, booking calendars, tags, confirmations, reminders, and lead follow-up systems that reduce manual work.</p>
-          </article>
-
-          <article class="service reveal">
-            <span class="service-num">06</span>
-            <h3>Website Operations</h3>
-            <p>Form fixes, email delivery setup, legal pages, navigation cleanup, content polish, accessibility and compliance support, and ongoing maintenance.</p>
-          </article>
+          <a class="scene-link" href="https://ridebts.com/" target="_blank" rel="noopener noreferrer">View live</a>
         </div>
       </div>
     </section>
 
-    <section class="section" id="about">
-      <div class="container story-wrap">
-        <aside class="story-card reveal">
-          <div class="kicker">About me</div>
-          <h3>Builder first. Problem-solver always.</h3>
-          <p>
-            I sit in the overlap between web development, SEO, and systems support.
-          </p>
+    <section class="scene" data-label="Go North Hemp" data-theme="green">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>03</b> Selected work</div>
 
-          <div class="story-mini">
+          <h2 class="scene-title">
+            <small>B2B ecommerce • Shopify</small>
+            Go North<br>Hemp
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">gonorthhemp.com</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Product pages built to sell and rank.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgonorthhemp.com%2F?w=1400&amp;h=900" alt="Go North Hemp website preview" onerror="this.style.display='none'">
+            </div>
+          </div>
+
+          <div class="scene-copy">
+            <p><strong>Hands-on Shopify optimization.</strong> I updated product pages, SEO titles and metadata, landing pages, product presentation, and template issues while supporting reindexing and visibility improvements for priority content.</p>
+            <div class="scene-tags"><span>Shopify</span><span>Product SEO</span><span>Metadata</span><span>Landing Pages</span><span>Reindexing</span></div>
+          </div>
+
+          <a class="scene-link" href="https://gonorthhemp.com/" target="_blank" rel="noopener noreferrer">View live</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" data-label="Texas Historic Homes" data-theme="brown">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>04</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Real estate • WordPress</small>
+            Texas Historic<br>Homes
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">texashistorichomes.com</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Historic real estate, rebuilt for clarity and compliance.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Ftexashistorichomes.com%2F?w=1400&amp;h=900" alt="Texas Historic Homes website preview" onerror="this.style.display='none'">
+            </div>
+          </div>
+
+          <div class="scene-copy">
+            <p><strong>Design and compliance had to work together.</strong> I supported page revamps, navigation, listings, contact UX, visual cleanup, and TREC / NAR compliance updates including IABS, Consumer Protection Notice, and brokerage visibility.</p>
+            <div class="scene-tags"><span>WordPress</span><span>Real Estate</span><span>Compliance</span><span>Responsive Layout</span><span>Navigation</span></div>
+          </div>
+
+          <a class="scene-link" href="https://texashistorichomes.com/" target="_blank" rel="noopener noreferrer">View live</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" data-label="Hope From Love" data-theme="rose">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>05</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Lead generation • Website improvement</small>
+            Hope From<br>Love
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">hopefromlove.com/agent-contractor</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Cleaner funnel. Stronger trust.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fhopefromlove.com%2Fagent-contractor%2F?w=1400&amp;h=900" alt="Hope From Love website preview" onerror="this.style.display='none'">
+            </div>
+          </div>
+
+          <div class="scene-copy">
+            <p><strong>Improving a lead page without overcomplicating it.</strong> I worked on front end cleanup, stronger page structure, privacy and terms support pages, and a more complete client-facing funnel experience.</p>
+            <div class="scene-tags"><span>HTML</span><span>Landing Page</span><span>UX Cleanup</span><span>Privacy Policy</span><span>Terms</span></div>
+          </div>
+
+          <a class="scene-link" href="https://hopefromlove.com/agent-contractor/" target="_blank" rel="noopener noreferrer">View live</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" data-label="Perspective Therapy" data-theme="violet">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>06</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Frontend • Deployment</small>
+            Perspective<br>Therapy
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">perspectivetherapy.com</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Frontend delivery from deployment to booking.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fperspectivetherapy.com%2F?w=1400&amp;h=900" alt="Perspective Therapy website preview" onerror="this.style.display='none'">
+            </div>
+          </div>
+
+          <div class="scene-copy">
+            <p><strong>Not just the public page.</strong> I worked on the frontend experience, Vercel deployment flow, domain migration and routing, and the connection between the website and the client booking setup.</p>
+            <div class="scene-tags"><span>Frontend</span><span>Vercel</span><span>DNS</span><span>Domain Migration</span><span>Acuity</span></div>
+          </div>
+
+          <a class="scene-link" href="https://perspectivetherapy.com/" target="_blank" rel="noopener noreferrer">View live</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" data-label="VitalityPlus" data-theme="orange">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>07</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Agency website • WordPress</small>
+            Vitality<br>Plus
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">vitalityplus.io</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Visual cleanup plus the technical work behind it.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fvitalityplus.io%2F?w=1400&amp;h=900" alt="VitalityPlus website preview" onerror="this.style.display='none'">
+            </div>
+          </div>
+
+          <div class="scene-copy">
+            <p><strong>Site revamp plus infrastructure.</strong> I handled visual updates, dynamic Elementor blog functionality, and technical fixes across DNS, SSL, and WordPress URL setup during the revamp.</p>
+            <div class="scene-tags"><span>WordPress</span><span>Elementor</span><span>Custom Widget</span><span>DNS</span><span>SSL</span></div>
+          </div>
+
+          <a class="scene-link" href="https://vitalityplus.io/" target="_blank" rel="noopener noreferrer">View live</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" data-label="TruSolace CBD" data-theme="slate">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>08</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Landing experience • Ecommerce bridge</small>
+            TruSolace<br>CBD
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">trusolacecbd.com</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>A cleaner path from content to product.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Ftrusolacecbd.com%2F?w=1400&amp;h=900" alt="TruSolace CBD website preview" onerror="this.style.display='none'">
+            </div>
+          </div>
+
+          <div class="scene-copy">
+            <p><strong>Conversion-focused landing structure.</strong> I built and refined hero CTAs, product catalog sections, grouped product merchandising, usage content, trust content, and direct shopping links into the ecommerce store.</p>
+            <div class="scene-tags"><span>WordPress</span><span>Landing Page</span><span>Product Catalog</span><span>Responsive UI</span><span>Ecommerce</span></div>
+          </div>
+
+          <a class="scene-link" href="https://trusolacecbd.com/" target="_blank" rel="noopener noreferrer">View live</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" data-label="GoHighLevel Systems" data-theme="red">
+      <div class="scene-sticky">
+        <div class="scene-inner">
+          <div class="scene-index"><b>09</b> Selected work</div>
+
+          <h2 class="scene-title">
+            <small>Automation • CRM systems</small>
+            Booking &<br>Follow-up
+          </h2>
+
+          <div class="scene-browser">
+            <div class="browser-top">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-url">private client systems / GoHighLevel</span>
+            </div>
+            <div class="browser-view">
+              <div class="browser-fallback">
+                <strong>Calendars. Confirmations. Reminders. Follow-up.</strong>
+                <div class="browser-fallback-grid"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scene-copy">
+            <p><strong>The website is only half the job.</strong> I also build and map GoHighLevel calendars, registration flows, confirmations, reminders, contact tagging, email and SMS sequences, and internal notifications.</p>
+            <div class="scene-tags"><span>GoHighLevel</span><span>Calendars</span><span>Email</span><span>SMS</span><span>Tags</span><span>Workflows</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="work-transition" data-label="How I work">
+      <div class="work-transition-inner">
+        <h2>
+          The page is only the surface.<br>
+          <span>I care about what happens behind it.</span>
+        </h2>
+      </div>
+    </section>
+
+    <section class="skills-runway" data-label="Capabilities">
+      <div class="skills-sticky">
+        <div class="skills-inner">
+          <div class="skills-label">The systems I work across</div>
+
+          <div class="skills-list">
+            <div><strong>WordPress</strong><span>Custom sections, Elementor, responsive fixes, navigation, forms, site operations.</span></div>
+            <div><strong>Shopify</strong><span>Product pages, SEO metadata, landing pages, ecommerce content, template troubleshooting.</span></div>
+            <div><strong>SEO</strong><span>On-page structure, keyword implementation, Rank Math, internal linking, Search Console support.</span></div>
+            <div><strong>GoHighLevel</strong><span>Calendars, workflows, email, SMS, tags, confirmations, reminders, CRM automation.</span></div>
+            <div><strong>Front end</strong><span>HTML, CSS, JavaScript, responsive UI, custom interactions, deployment and debugging.</span></div>
+            <div><strong>Operations</strong><span>SMTP, legal pages, accessibility and compliance updates, DNS, SSL, QA and client handoff.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" data-label="About Kyle">
+      <div class="about-inner">
+        <aside class="about-aside">
+          <div class="label">About</div>
+          <h3>Kyle</h3>
+          <p>Web developer, SEO specialist, automation-focused virtual assistant, and hands-on digital operator.</p>
+
+          <div class="about-meta">
             <div><span>Based in</span><span>Philippines</span></div>
-            <div><span>Work model</span><span>Remote freelance & client support</span></div>
-            <div><span>Strength</span><span>Practical builds with business value</span></div>
+            <div><span>Work model</span><span>Remote</span></div>
+            <div><span>Core focus</span><span>Web + SEO + systems</span></div>
             <div><span>Best fit</span><span>Clients who need someone hands-on</span></div>
           </div>
         </aside>
 
-        <div class="story-content reveal">
-          <div class="kicker">My story</div>
-          <h2>I help businesses turn scattered digital work into something cleaner, stronger, and easier to manage.</h2>
+        <div class="about-main">
+          <div class="label">Why I work this way</div>
+          <h2>I like making complicated digital work feel simple.</h2>
 
           <p>
-            My work doesn’t fit into only one box. I’m not just a designer, and I’m not only a developer either. I’m the kind of person who can jump into a live website, spot what is weak, improve the page structure, fix the user journey, make the content read better, tighten the SEO, and connect the system behind it.
+            My work sits between a traditional virtual assistant, a front end developer, and an SEO operator. I’m comfortable stepping into a live client website, finding what is weak, building the fix, testing the real user path, and then explaining the result in language the client can understand.
           </p>
 
           <p>
-            Over time, I’ve worked across private equity, transportation, ecommerce, real estate, lead generation, and internal business systems. Some projects needed redesign. Some needed technical cleanup. Some needed SEO. Some needed automation. What I enjoy most is making everything feel more usable, more polished, and more valuable to the client.
+            I have worked across <strong>private equity, executive transportation, ecommerce, real estate, lead generation, and internal business systems</strong>. Some projects needed design. Some needed code. Some needed SEO. Some needed automation. I prefer being able to solve the whole problem instead of only one piece of it.
           </p>
-
-          <div class="toolbox" aria-label="Tools and platforms">
-            <span class="chip">WordPress</span>
-            <span class="chip">Elementor</span>
-            <span class="chip">Shopify</span>
-            <span class="chip">GoHighLevel</span>
-            <span class="chip">HTML</span>
-            <span class="chip">CSS</span>
-            <span class="chip">JavaScript</span>
-            <span class="chip">Rank Math</span>
-            <span class="chip">Google Search Console</span>
-            <span class="chip">WPForms</span>
-            <span class="chip">SMTP</span>
-            <span class="chip">Gemini AI</span>
-          </div>
-
-          <div class="approach">
-            <div class="approach-row">
-              <span class="n">01</span>
-              <div>
-                <strong>Understand the real problem</strong>
-                <p>I start by finding what is actually broken, unclear, underperforming, or unfinished.</p>
-              </div>
-              <span>Audit first</span>
-            </div>
-
-            <div class="approach-row">
-              <span class="n">02</span>
-              <div>
-                <strong>Build the practical solution</strong>
-                <p>That might mean a redesign, custom section, page cleanup, SEO fix, or workflow setup.</p>
-              </div>
-              <span>Implement fast</span>
-            </div>
-
-            <div class="approach-row">
-              <span class="n">03</span>
-              <div>
-                <strong>Check the real user path</strong>
-                <p>I test links, mobile views, forms, CTAs, content flow, and the client-facing experience.</p>
-              </div>
-              <span>QA matters</span>
-            </div>
-
-            <div class="approach-row">
-              <span class="n">04</span>
-              <div>
-                <strong>Make it client-ready</strong>
-                <p>I like work that is not just functional, but clear enough to present confidently to a client.</p>
-              </div>
-              <span>Communicate clearly</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="contact-box reveal">
-          <div class="kicker">Let’s build something</div>
-          <h2>If you need a website fixed, improved, redesigned, or connected to better systems, I can help.</h2>
-          <p>
-            I’m available for freelance work, client support, web updates, SEO implementation, Shopify tasks, GoHighLevel automation, and long-term remote roles where web and systems work matter.
-          </p>
+    <section class="final" data-label="Contact">
+      <div class="final-inner">
+        <div class="label">Available for client work</div>
 
-          <div class="contact-actions">
-            <a class="btn btn-primary" id="emailCta" href="#" style="display:none;">Email me</a>
-            <a class="btn btn-secondary" id="githubCta" href="https://github.com/zyeleeveangelista" target="_blank" rel="noopener noreferrer">View GitHub</a>
-            <a class="btn btn-secondary" href="#work">See selected work</a>
-          </div>
+        <h2>
+          Have something<br>
+          <span>that needs to be better?</span>
+        </h2>
 
-          <div class="contact-note" id="contactNote">
-            Add your real email below in the code so clients can contact you directly from this section.
-          </div>
+        <p>
+          I’m available for freelance projects, ongoing website support, SEO implementation, Shopify work, GoHighLevel automation, and remote roles where web and digital systems matter.
+        </p>
+
+        <div class="final-actions">
+          <a class="primary" id="emailCta" href="#" style="display:none">Email me</a>
+          <a href="https://github.com/zyeleeveangelista" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href="#top">Run it back ↑</a>
         </div>
+
+        <div class="contact-note" id="contactNote">Add your real email in the small configuration block near the bottom of this file before publishing.</div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container footer-row">
-      <span>© <span id="year"></span> Kyle • Web Development, SEO, and Digital Systems Support</span>
-      <div class="footer-links">
-        <a href="#work">Work</a>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </div>
+    <div class="inner">
+      <span>© <span id="year"></span> Kyle / Web, SEO & Digital Systems</span>
+      <span>Built as one continuous scroll</span>
     </div>
   </footer>
 
@@ -1660,62 +1317,126 @@
       github: "https://github.com/zyeleeveangelista"
     };
 
-    const header = document.getElementById("siteHeader");
+    const clamp = (n, min = 0, max = 1) => Math.min(Math.max(n, min), max);
+    const lerp = (a, b, t) => a + (b - a) * t;
+
     const progressBar = document.getElementById("progressBar");
-    const menuBtn = document.getElementById("menuBtn");
-    const navLinks = document.getElementById("navLinks");
-    const emailCta = document.getElementById("emailCta");
-    const githubCta = document.getElementById("githubCta");
-    const contactNote = document.getElementById("contactNote");
+    const percent = document.getElementById("percent");
+    const sceneLabel = document.getElementById("sceneLabel");
+    const intro = document.querySelector(".intro");
+    const introTitle = document.getElementById("introTitle");
+    const introCopy = document.getElementById("introCopy");
+    const scenes = [...document.querySelectorAll(".scene")];
+    const labelledSections = [...document.querySelectorAll("[data-label]")];
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    function handleScrollUI() {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-
-      header.classList.toggle("scrolled", scrollTop > 14);
-      progressBar.style.width = progress + "%";
+    function sectionProgress(el) {
+      const rect = el.getBoundingClientRect();
+      const travel = el.offsetHeight - window.innerHeight;
+      if (travel <= 0) return rect.top <= 0 ? 1 : 0;
+      return clamp(-rect.top / travel);
     }
 
-    window.addEventListener("scroll", handleScrollUI, { passive: true });
-    handleScrollUI();
+    function renderIntro() {
+      const p = sectionProgress(intro);
+      const titleY = lerp(0, -70, clamp((p - .28) / .58));
+      const titleScale = lerp(1, .78, clamp((p - .24) / .7));
+      const titleOpacity = lerp(1, .12, clamp((p - .64) / .32));
+      const copyY = lerp(0, -46, clamp((p - .36) / .54));
+      const copyOpacity = lerp(1, .05, clamp((p - .68) / .28));
 
-    menuBtn.addEventListener("click", () => {
-      const open = navLinks.classList.toggle("open");
-      menuBtn.setAttribute("aria-expanded", String(open));
-      menuBtn.textContent = open ? "×" : "☰";
-    });
+      introTitle.style.transform = `translateY(calc(-50% + ${titleY}px)) scale(${titleScale})`;
+      introTitle.style.opacity = titleOpacity;
+      introCopy.style.transform = `translateY(${copyY}px)`;
+      introCopy.style.opacity = copyOpacity;
+    }
 
-    navLinks.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.textContent = "☰";
-      });
-    });
+    function renderScene(scene) {
+      const p = sectionProgress(scene);
+      const title = scene.querySelector(".scene-title");
+      const browser = scene.querySelector(".scene-browser");
+      const copy = scene.querySelector(".scene-copy");
+      const link = scene.querySelector(".scene-link");
 
-    const revealEls = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
+      const enter = clamp(p / .22);
+      const settle = clamp((p - .12) / .35);
+      const exit = clamp((p - .76) / .24);
 
-    revealEls.forEach(el => observer.observe(el));
+      const titleX = lerp(-70, 0, enter) + lerp(0, -45, exit);
+      const titleY = lerp(28, 0, enter) + lerp(0, -28, exit);
+      const titleScale = lerp(.92, 1, enter) * lerp(1, .93, exit);
+      const titleOpacity = enter * lerp(1, .12, exit);
+
+      const browserX = lerp(140, 0, settle) + lerp(0, -85, exit);
+      const browserY = lerp(-32, -42, settle) + lerp(0, -18, exit);
+      const browserScale = lerp(.83, 1, settle) * lerp(1, .95, exit);
+      const browserOpacity = clamp(settle * 1.45) * lerp(1, .06, exit);
+
+      const copyEnter = clamp((p - .34) / .26);
+      const copyY = lerp(34, 0, copyEnter) + lerp(0, -20, exit);
+      const copyOpacity = copyEnter * lerp(1, .08, exit);
+
+      title.style.transform = `translate(${titleX}px, ${titleY}px) scale(${titleScale})`;
+      title.style.opacity = titleOpacity;
+
+      browser.style.transform = `translate(${browserX}px, ${browserY}%) scale(${browserScale})`;
+      browser.style.opacity = browserOpacity;
+
+      copy.style.transform = `translateY(${copyY}px)`;
+      copy.style.opacity = copyOpacity;
+
+      if (link) {
+        link.style.opacity = clamp((p - .48) / .18) * lerp(1, .1, exit);
+        link.style.transform = `translateY(${lerp(12, 0, clamp((p - .48) / .18))}px)`;
+      }
+    }
+
+    function renderGlobalProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const p = maxScroll > 0 ? clamp(scrollTop / maxScroll) : 0;
+      progressBar.style.width = `${p * 100}%`;
+      percent.textContent = `${String(Math.round(p * 100)).padStart(2, "0")}%`;
+    }
+
+    function renderLabel() {
+      const marker = window.innerHeight * .45;
+      let active = labelledSections[0];
+      for (const section of labelledSections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= marker) active = section;
+      }
+      sceneLabel.textContent = active.dataset.label || "Portfolio";
+    }
+
+    let ticking = false;
+    function render() {
+      ticking = false;
+      renderGlobalProgress();
+      renderIntro();
+      scenes.forEach(renderScene);
+      renderLabel();
+    }
+
+    function requestRender() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(render);
+      }
+    }
+
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender);
+    render();
+
+    const emailCta = document.getElementById("emailCta");
+    const contactNote = document.getElementById("contactNote");
 
     if (portfolioConfig.email.trim()) {
       emailCta.style.display = "inline-flex";
       emailCta.href = `mailto:${portfolioConfig.email}?subject=Project Inquiry from your Portfolio`;
       contactNote.textContent = `Direct inquiries: ${portfolioConfig.email}`;
-    }
-
-    if (portfolioConfig.github.trim()) {
-      githubCta.href = portfolioConfig.github;
     }
   </script>
 </body>
