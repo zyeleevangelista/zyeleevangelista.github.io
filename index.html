@@ -232,9 +232,9 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 64%;
+      width: 68%;
       margin: 0;
-      font-size: clamp(66px, 9.7vw, 154px);
+      font-size: clamp(68px, 10.1vw, 160px);
       line-height: .76;
       letter-spacing: -.085em;
       font-weight: 950;
@@ -325,63 +325,48 @@
       box-shadow: 0 0 0 6px rgba(13,127,103,.08);
     }
 
-    .hero-quick {
+
+    .hero-actions {
       position: absolute;
-      right: 0;
-      top: 8%;
-      z-index: 7;
-      width: min(31vw, 390px);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      left: 0;
+      bottom: 2.2%;
+      z-index: 8;
+      display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       will-change: transform, opacity;
     }
 
-    .hero-quick-card {
-      min-height: 132px;
-      padding: 15px;
-      border: 1px solid rgba(17,17,17,.10);
-      border-radius: 18px;
-      background: rgba(255,253,249,.78);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 14px 38px rgba(0,0,0,.045);
+    .hero-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 1px solid rgba(17,17,17,.14);
+      border-radius: 999px;
+      background: rgba(255,253,249,.82);
+      backdrop-filter: blur(10px);
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 28px rgba(0,0,0,.035);
       transition: transform .2s ease, background .2s ease, border-color .2s ease;
     }
 
-    .hero-quick-card:hover {
-      transform: translateY(-3px);
-      background: rgba(255,255,255,.94);
-      border-color: rgba(17,17,17,.2);
+    .hero-action:hover {
+      transform: translateY(-2px);
+      background: white;
+      border-color: rgba(17,17,17,.24);
     }
 
-    .hero-quick-card small {
-      display: block;
-      color: #969696;
-      font-size: 9px;
-      font-weight: 850;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    .hero-quick-card strong {
-      display: block;
-      font-size: 14px;
-      line-height: 1.12;
-      letter-spacing: -.02em;
-    }
-
-    .hero-quick-card span {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.35;
-    }
-
-    .hero-quick-card.contact strong {
-      font-size: 12px;
-      overflow-wrap: anywhere;
+    .hero-action::after {
+      content: "↗";
+      color: var(--blue);
+      font-size: 13px;
     }
 
     .intro-copy {
@@ -401,8 +386,8 @@
 
     .scroll-cue {
       position: absolute;
-      left: 0;
-      bottom: 3%;
+      left: 245px;
+      bottom: 3.05%;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -1426,32 +1411,17 @@
         display: none;
       }
 
-      .hero-quick {
+
+      .hero-actions {
         left: 0;
-        right: auto;
-        top: auto;
-        bottom: 20%;
-        width: min(92%, 430px);
-        grid-template-columns: 1fr 1fr;
+        bottom: 2%;
         gap: 8px;
-        z-index: 7;
       }
 
-      .hero-quick-card {
-        min-height: 102px;
-        padding: 12px;
-      }
-
-      .hero-quick-card small {
-        margin-bottom: 14px;
-      }
-
-      .hero-quick-card strong {
-        font-size: 12px;
-      }
-
-      .hero-quick-card span {
-        font-size: 9px;
+      .hero-action {
+        min-height: 40px;
+        padding: 0 13px;
+        font-size: 10px;
       }
 
       .scroll-cue { display: none; }
@@ -1626,25 +1596,16 @@
             >
           </div>
 
-          <div class="hero-quick" id="heroQuick">
-            <a class="hero-quick-card" href="#aboutSection">
-              <small>About</small>
-              <strong>1+ year of live client work</strong>
-              <span>Web development • SEO • digital systems</span>
-            </a>
-
-            <a class="hero-quick-card contact" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">
-              <small>Contact</small>
-              <strong>zyeleevangelista@gmail.com</strong>
-              <span>0910971605 • Philippines • Remote</span>
-            </a>
-          </div>
-
           <div class="scroll-cue"><i></i>Scroll to enter</div>
 
           <p class="intro-copy" id="introCopy">
             I work across <strong>WordPress, Shopify, GoHighLevel, SEO, custom front end development, and automation</strong>. The work changes from client to client. The goal does not: make the website clearer, stronger, and more useful to the business.
           </p>
+
+          <div class="hero-actions" id="heroActions">
+            <a class="hero-action" href="#aboutSection">About me</a>
+            <a class="hero-action" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">Contact me</a>
+          </div>
         </div>
       </div>
     </section>
@@ -2137,7 +2098,7 @@
     const introTitle = document.getElementById("introTitle");
     const introCopy = document.getElementById("introCopy");
     const introPortrait = document.getElementById("introPortrait");
-    const heroQuick = document.getElementById("heroQuick");
+    const heroActions = document.getElementById("heroActions");
     const sideNav = document.getElementById("sideNav");
     const sideNavLinks = sideNav ? [...sideNav.querySelectorAll("a")] : [];
     const scenes = [...document.querySelectorAll(".scene")];
@@ -2196,10 +2157,10 @@
         introPortrait.style.opacity = portraitOpacity;
       }
 
-      if (heroQuick) {
-        const quickExit = clamp((p - .42) / .48);
-        heroQuick.style.transform = `translateY(${lerp(0, -26, quickExit)}px)`;
-        heroQuick.style.opacity = lerp(1, .05, clamp((p - .68) / .25));
+      if (heroActions) {
+        const actionExit = clamp((p - .34) / .48);
+        heroActions.style.transform = `translateY(${lerp(0, -18, actionExit)}px)`;
+        heroActions.style.opacity = lerp(1, .04, clamp((p - .64) / .28));
       }
     }
 
