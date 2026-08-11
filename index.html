@@ -115,6 +115,73 @@
       will-change: width;
     }
 
+    .side-nav {
+      position: fixed;
+      left: 18px;
+      top: 50%;
+      transform: translate(-16px, -50%);
+      z-index: 95;
+      display: grid;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .28s ease, transform .28s ease;
+    }
+
+    .side-nav.visible {
+      opacity: 1;
+      transform: translate(0, -50%);
+      pointer-events: auto;
+    }
+
+    .side-nav a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: 42px;
+      min-height: 42px;
+      overflow: hidden;
+      padding: 0 11px;
+      border: 1px solid rgba(17,17,17,.09);
+      border-radius: 999px;
+      background: rgba(255,253,249,.76);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.035);
+      color: #787878;
+      transition: width .25s var(--ease), background .2s ease, color .2s ease, border-color .2s ease;
+      white-space: nowrap;
+    }
+
+    .side-nav a:hover,
+    .side-nav a.active {
+      width: 112px;
+      background: rgba(255,255,255,.94);
+      color: var(--ink);
+      border-color: rgba(17,17,17,.18);
+    }
+
+    .side-nav i {
+      flex: 0 0 auto;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #b3b3b3;
+      transition: background .2s ease, box-shadow .2s ease;
+    }
+
+    .side-nav a.active i {
+      background: var(--blue);
+      box-shadow: 0 0 0 5px rgba(36,87,255,.08);
+    }
+
+    .side-nav span {
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
     .intro {
       position: relative;
       min-height: 220vh;
@@ -165,9 +232,9 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 72%;
+      width: 64%;
       margin: 0;
-      font-size: clamp(68px, 10.5vw, 164px);
+      font-size: clamp(66px, 9.7vw, 154px);
       line-height: .76;
       letter-spacing: -.085em;
       font-weight: 950;
@@ -256,6 +323,65 @@
       border-radius: 50%;
       background: var(--green);
       box-shadow: 0 0 0 6px rgba(13,127,103,.08);
+    }
+
+    .hero-quick {
+      position: absolute;
+      right: 0;
+      top: 8%;
+      z-index: 7;
+      width: min(31vw, 390px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      will-change: transform, opacity;
+    }
+
+    .hero-quick-card {
+      min-height: 132px;
+      padding: 15px;
+      border: 1px solid rgba(17,17,17,.10);
+      border-radius: 18px;
+      background: rgba(255,253,249,.78);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 38px rgba(0,0,0,.045);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .hero-quick-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.94);
+      border-color: rgba(17,17,17,.2);
+    }
+
+    .hero-quick-card small {
+      display: block;
+      color: #969696;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-quick-card strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.12;
+      letter-spacing: -.02em;
+    }
+
+    .hero-quick-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .hero-quick-card.contact strong {
+      font-size: 12px;
+      overflow-wrap: anywhere;
     }
 
     .intro-copy {
@@ -1151,6 +1277,72 @@
 
     .final-actions a:hover { transform: translateY(-2px); }
 
+    .contact-grid {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 920px;
+    }
+
+    .contact-card {
+      position: relative;
+      min-height: 150px;
+      padding: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.58);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.84);
+      border-color: rgba(17,17,17,.22);
+    }
+
+    .contact-card::after {
+      content: "↗";
+      position: absolute;
+      right: 18px;
+      top: 16px;
+      color: #a2a2a2;
+      font-size: 18px;
+      transition: transform .2s ease, color .2s ease;
+    }
+
+    .contact-card:hover::after {
+      transform: translate(2px,-2px);
+      color: var(--ink);
+    }
+
+    .contact-card small {
+      display: block;
+      margin-bottom: 34px;
+      color: #949494;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .contact-card strong {
+      display: block;
+      padding-right: 28px;
+      font-size: clamp(17px, 2vw, 24px);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .contact-note {
       margin-top: 16px;
       color: #969696;
@@ -1187,6 +1379,7 @@
     @media (max-width: 760px) {
       .topbar { height: 58px; }
       .scroll-meta { display: none; }
+      .side-nav { display: none; }
       .signature { padding: 8px 10px; }
       .signature b { width: 25px; height: 25px; }
 
@@ -1231,6 +1424,34 @@
       .intro-portrait-wrap::after,
       .intro-nameplate {
         display: none;
+      }
+
+      .hero-quick {
+        left: 0;
+        right: auto;
+        top: auto;
+        bottom: 20%;
+        width: min(92%, 430px);
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        z-index: 7;
+      }
+
+      .hero-quick-card {
+        min-height: 102px;
+        padding: 12px;
+      }
+
+      .hero-quick-card small {
+        margin-bottom: 14px;
+      }
+
+      .hero-quick-card strong {
+        font-size: 12px;
+      }
+
+      .hero-quick-card span {
+        font-size: 9px;
       }
 
       .scroll-cue { display: none; }
@@ -1333,6 +1554,14 @@
       .final { min-height: 105vh; }
       .final h2 { font-size: clamp(56px, 16vw, 96px); }
 
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        min-height: 126px;
+      }
+
       footer .inner { flex-direction: column; align-items: flex-start; }
     }
 
@@ -1370,6 +1599,13 @@
 
   <div class="progress"><div id="progressBar"></div></div>
 
+  <nav class="side-nav" id="sideNav" aria-label="Portfolio navigation">
+    <a href="#top" data-nav="Introduction"><i></i><span>Home</span></a>
+    <a href="#work" data-nav="WASSWA Capital"><i></i><span>Work</span></a>
+    <a href="#aboutSection" data-nav="About Kyle"><i></i><span>About</span></a>
+    <a href="#contactSection" data-nav="Contact"><i></i><span>Contact</span></a>
+  </nav>
+
   <main id="top">
     <section class="intro" data-label="Introduction">
       <div class="intro-sticky">
@@ -1388,7 +1624,20 @@
               alt="Kyle pointing toward the viewer"
               onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/hero.png?raw=true';"
             >
-            <div class="intro-nameplate"><i></i>Kyle • Available remotely</div>
+          </div>
+
+          <div class="hero-quick" id="heroQuick">
+            <a class="hero-quick-card" href="#aboutSection">
+              <small>About</small>
+              <strong>1+ year of live client work</strong>
+              <span>Web development • SEO • digital systems</span>
+            </a>
+
+            <a class="hero-quick-card contact" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">
+              <small>Contact</small>
+              <strong>zyeleevangelista@gmail.com</strong>
+              <span>0910971605 • Philippines • Remote</span>
+            </a>
           </div>
 
           <div class="scroll-cue"><i></i>Scroll to enter</div>
@@ -1454,7 +1703,7 @@
       </div>
     </section>
 
-    <section class="scene" data-label="WASSWA Capital" data-theme="blue">
+    <section class="scene" id="work" data-label="WASSWA Capital" data-theme="blue">
       <div class="scene-sticky">
         <div class="scene-inner">
           <div class="scene-index"><b>01</b> Selected work</div>
@@ -1826,26 +2075,40 @@
       </div>
     </section>
 
-    <section class="final" data-label="Contact">
+    <section class="final" id="contactSection" data-label="Contact">
       <div class="final-inner">
-        <div class="label">Available for client work</div>
+        <div class="label">Let’s work together</div>
 
         <h2>
-          Have something<br>
-          <span>that needs to be better?</span>
+          Have a website<br>
+          <span>that needs to work better?</span>
         </h2>
 
         <p>
-          I’m available for freelance projects, ongoing website support, SEO implementation, Shopify work, GoHighLevel automation, and remote roles where web and digital systems matter.
+          I’m available for freelance projects, ongoing website support, SEO implementation, Shopify work, GoHighLevel automation, and remote roles where web and digital systems matter. If you have a project in mind, send me the details directly.
         </p>
 
+        <div class="contact-grid">
+          <a class="contact-card" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">
+            <small>Email</small>
+            <strong>zyeleevangelista@gmail.com</strong>
+            <span>Best for project details and longer inquiries.</span>
+          </a>
+
+          <a class="contact-card" href="tel:0910971605">
+            <small>Phone</small>
+            <strong>0910971605</strong>
+            <span>For direct contact and quick project discussions.</span>
+          </a>
+        </div>
+
         <div class="final-actions">
-          <a class="primary" id="emailCta" href="#" style="display:none">Email me</a>
-          <a href="https://github.com/zyeleeveangelista" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a class="primary" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">Start a project →</a>
+          <a href="https://github.com/zyeleevangelista" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           <a href="#top">Run it back ↑</a>
         </div>
 
-        <div class="contact-note" id="contactNote">Add your real email in the small configuration block near the bottom of this file before publishing.</div>
+        <div class="contact-note">Remote • Philippines • Available for project-based and ongoing client work</div>
       </div>
     </section>
   </main>
@@ -1859,7 +2122,8 @@
 
   <script>
     const portfolioConfig = {
-      email: "",
+      email: "zyeleevangelista@gmail.com",
+      phone: "0910971605",
       github: "https://github.com/zyeleeveangelista"
     };
 
@@ -1873,6 +2137,9 @@
     const introTitle = document.getElementById("introTitle");
     const introCopy = document.getElementById("introCopy");
     const introPortrait = document.getElementById("introPortrait");
+    const heroQuick = document.getElementById("heroQuick");
+    const sideNav = document.getElementById("sideNav");
+    const sideNavLinks = sideNav ? [...sideNav.querySelectorAll("a")] : [];
     const scenes = [...document.querySelectorAll(".scene")];
     const labelledSections = [...document.querySelectorAll("[data-label]")];
     const statementSection = document.getElementById("statementSection");
@@ -1927,6 +2194,12 @@
       if (introPortrait) {
         introPortrait.style.transform = `translate(${portraitX}px, ${portraitY}px) scale(${portraitScale}) rotate(${portraitRotate}deg)`;
         introPortrait.style.opacity = portraitOpacity;
+      }
+
+      if (heroQuick) {
+        const quickExit = clamp((p - .42) / .48);
+        heroQuick.style.transform = `translateY(${lerp(0, -26, quickExit)}px)`;
+        heroQuick.style.opacity = lerp(1, .05, clamp((p - .68) / .25));
       }
     }
 
@@ -2040,6 +2313,28 @@
       percent.textContent = `${String(Math.round(p * 100)).padStart(2, "0")}%`;
     }
 
+    function renderSideNav() {
+      if (!sideNav) return;
+
+      sideNav.classList.toggle("visible", window.scrollY > window.innerHeight * .30);
+
+      const marker = window.innerHeight * .45;
+      let activeLabel = "Introduction";
+
+      for (const section of labelledSections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= marker) activeLabel = section.dataset.label || activeLabel;
+      }
+
+      sideNavLinks.forEach(link => {
+        const nav = link.dataset.nav;
+        const active =
+          nav === activeLabel ||
+          (nav === "WASSWA Capital" && activeLabel !== "Introduction" && activeLabel !== "About Kyle" && activeLabel !== "Contact" && activeLabel !== "Capabilities" && activeLabel !== "How I work");
+        link.classList.toggle("active", active);
+      });
+    }
+
     function renderLabel() {
       const marker = window.innerHeight * .45;
       let active = labelledSections[0];
@@ -2058,6 +2353,7 @@
       renderStatement();
       scenes.forEach(renderScene);
       renderAbout();
+      renderSideNav();
       renderLabel();
     }
 
@@ -2072,14 +2368,7 @@
     window.addEventListener("resize", requestRender);
     render();
 
-    const emailCta = document.getElementById("emailCta");
-    const contactNote = document.getElementById("contactNote");
 
-    if (portfolioConfig.email.trim()) {
-      emailCta.style.display = "inline-flex";
-      emailCta.href = `mailto:${portfolioConfig.email}?subject=Project Inquiry from your Portfolio`;
-      contactNote.textContent = `Direct inquiries: ${portfolioConfig.email}`;
-    }
   </script>
 </body>
 </html>
