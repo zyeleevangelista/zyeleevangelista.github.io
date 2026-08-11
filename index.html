@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#071014" />
+  <meta name="description" content="Kyle is a web developer, SEO specialist, and automation virtual assistant working across WordPress, Shopify, GoHighLevel, custom front end development, CRM workflows, and website optimization." />
+  <meta property="og:title" content="Kyle | Web Developer, SEO & Automation" />
+  <meta property="og:description" content="Selected client work across WordPress, Shopify, SEO, CRM automation, and conversion focused web development." />
+  <meta property="og:type" content="website" />
+  <title>Kyle | Web Developer, SEO & Automation</title>
+
+  <style>
+    :root {
+      --bg: #071014;
+      --bg-2: #0b171c;
+      --surface: rgba(15, 29, 35, 0.78);
+      --surface-2: #102128;
+      --line: rgba(255,255,255,0.09);
+      --text: #f4f7f8;
+      --muted: #93a5ac;
+      --accent: #8fffc7;
+      --accent-2: #6fb7ff;
+      --shadow: 0 24px 70px rgba(0,0,0,0.28);
+      --radius: 26px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(111,183,255,0.12), transparent 26%),
+        radial-gradient(circle at 88% 4%, rgba(143,255,199,0.10), transparent 22%),
+        linear-gradient(180deg, #071014 0%, #081216 44%, #061014 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container { width: min(calc(100% - 36px), var(--max)); margin-inline: auto; }
+    .section { padding: 112px 0; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(143,255,199,.08);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+    .section-head h2 {
+      max-width: 760px;
+      margin: 10px 0 0;
+      font-size: clamp(38px, 5vw, 66px);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+    .section-head p {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 16px 0;
+      transition: .25s ease;
+    }
+    .site-header.scrolled {
+      background: rgba(7,16,20,.78);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 850;
+      letter-spacing: -.03em;
+    }
+    .brand-mark {
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(143,255,199,.25);
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(143,255,199,.16), rgba(111,183,255,.06));
+      color: var(--accent);
+      font-weight: 900;
+      box-shadow: inset 0 0 24px rgba(143,255,199,.05);
+    }
+    .nav-links { display: flex; gap: 7px; align-items: center; }
+    .nav-links a {
+      color: #c7d2d6;
+      padding: 10px 13px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,.05); color: white; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 19px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: #071014; box-shadow: 0 12px 34px rgba(143,255,199,.15); }
+    .btn-secondary { border-color: var(--line); background: rgba(255,255,255,.03); color: white; }
+    .btn-sm { min-height: 42px; padding: 0 15px; border-radius: 12px; }
+
+    .menu-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      color: white;
+      background: rgba(255,255,255,.04);
+      border-radius: 12px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 138px 0 80px;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.16fr .84fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.025);
+      color: #c4d0d4;
+      font-size: 13px;
+      font-weight: 750;
+    }
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(143,255,199,.45);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 9px rgba(143,255,199,0); } 100% { box-shadow: 0 0 0 0 rgba(143,255,199,0); } }
+    .hero h1 {
+      margin: 0;
+      max-width: 800px;
+      font-size: clamp(55px, 7.7vw, 105px);
+      line-height: .88;
+      letter-spacing: -.07em;
+      font-weight: 900;
+    }
+    .hero h1 .soft { color: #8fa1a7; }
+    .hero-copy {
+      max-width: 680px;
+      margin: 28px 0 0;
+      font-size: clamp(17px, 2vw, 21px);
+      color: #a8b8bd;
+      line-height: 1.65;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 34px; }
+    .chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.025);
+      color: #9fb0b6;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .hero-panel {
+      position: relative;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(18,35,41,.92), rgba(9,19,23,.86));
+      border-radius: 30px;
+      min-height: 580px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: rgba(143,255,199,.13);
+      filter: blur(80px);
+      right: -120px;
+      top: -80px;
+    }
+    .panel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 19px 20px;
+      border-bottom: 1px solid var(--line);
+      color: #9aabb1;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+    }
+    .dots { display: flex; gap: 6px; }
+    .dots span { width: 8px; height: 8px; border-radius: 50%; background: #52636a; }
+    .panel-body { padding: 28px; position: relative; z-index: 1; }
+    .panel-kicker { color: var(--accent); font-size: 12px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+    .panel-body h3 { font-size: 34px; line-height: 1.03; letter-spacing: -.045em; margin: 12px 0 10px; }
+    .panel-body p { color: #97a9af; margin: 0; }
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 26px; }
+    .metric {
+      padding: 17px;
+      min-height: 122px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.025);
+    }
+    .metric strong { display: block; font-size: 24px; letter-spacing: -.04em; margin-top: 18px; }
+    .metric span { color: #83969d; font-size: 12px; }
+    .panel-stack { margin-top: 12px; display: grid; gap: 10px; }
+    .stack-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #0d1b20;
+      font-size: 13px;
+    }
+    .stack-row span:last-child { color: #7e9299; }
+
+    .logo-strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.018);
+    }
+    .logo-strip-inner {
+      min-height: 92px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 28px;
+    }
+    .logo-strip small { color: #72868e; text-transform: uppercase; letter-spacing: .12em; font-weight: 850; }
+    .marquee { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent); }
+    .marquee-track { display: flex; width: max-content; gap: 42px; animation: marquee 22s linear infinite; }
+    .marquee-track span { color: #b8c5c9; font-weight: 820; white-space: nowrap; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .filter-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.025);
+      color: #9db0b6;
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .filter-btn.active { background: white; color: #071014; border-color: white; }
+
+    .projects { display: grid; grid-template-columns: repeat(12, 1fr); gap: 22px; }
+    .project-card {
+      grid-column: span 6;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(11,23,28,.75);
+      overflow: hidden;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+      box-shadow: 0 18px 48px rgba(0,0,0,.13);
+    }
+    .project-card:hover { transform: translateY(-6px); border-color: rgba(143,255,199,.24); background: rgba(14,28,34,.95); }
+    .project-card.hidden { display: none; }
+    .project-visual {
+      position: relative;
+      min-height: 340px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(145deg, #10242b, #091519);
+    }
+    .project-visual img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      object-position: top;
+      position: relative;
+      z-index: 2;
+      transition: transform .7s ease;
+    }
+    .project-card:hover .project-visual img { transform: scale(1.025); }
+    .project-fallback {
+      position: absolute;
+      inset: 0;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,.44);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .browser-dots { display: flex; gap: 5px; }
+    .browser-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.25); }
+    .fallback-title { max-width: 410px; }
+    .fallback-title small { color: var(--accent); font-size: 11px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    .fallback-title h3 { font-size: clamp(33px, 4vw, 56px); line-height: .92; letter-spacing: -.055em; margin: 12px 0 0; }
+    .fallback-ui { display: grid; grid-template-columns: 1.3fr .7fr; gap: 10px; }
+    .fallback-ui div { height: 44px; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; background: rgba(255,255,255,.035); }
+    .fallback-ui div:first-child { height: 70px; grid-column: 1 / -1; }
+    .tone-blue { background: radial-gradient(circle at 85% 20%, rgba(111,183,255,.26), transparent 35%), linear-gradient(145deg,#0c1a24,#081116); }
+    .tone-gold { background: radial-gradient(circle at 82% 18%, rgba(214,176,103,.21), transparent 36%), linear-gradient(145deg,#1a1713,#0c0d0d); }
+    .tone-green { background: radial-gradient(circle at 80% 18%, rgba(143,255,199,.18), transparent 34%), linear-gradient(145deg,#10201b,#091411); }
+    .tone-cream { background: radial-gradient(circle at 86% 16%, rgba(225,205,161,.15), transparent 36%), linear-gradient(145deg,#211d17,#12120f); }
+    .tone-purple { background: radial-gradient(circle at 85% 20%, rgba(179,140,255,.2), transparent 34%), linear-gradient(145deg,#171421,#0e0d14); }
+    .tone-red { background: radial-gradient(circle at 85% 20%, rgba(255,126,126,.18), transparent 34%), linear-gradient(145deg,#201213,#110b0c); }
+    .tone-cyan { background: radial-gradient(circle at 85% 20%, rgba(105,231,255,.18), transparent 34%), linear-gradient(145deg,#102028,#081318); }
+    .tone-orange { background: radial-gradient(circle at 85% 20%, rgba(255,174,102,.18), transparent 34%), linear-gradient(145deg,#21170f,#120e0a); }
+    .tone-slate { background: radial-gradient(circle at 85% 20%, rgba(180,198,210,.16), transparent 34%), linear-gradient(145deg,#172027,#0b1115); }
+
+    .project-copy { padding: 25px 25px 27px; }
+    .project-top { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
+    .project-copy h3 { margin: 0; font-size: 25px; letter-spacing: -.035em; }
+    .project-copy p { margin: 10px 0 0; color: #93a6ac; }
+    .project-number { color: #5f737a; font-size: 12px; font-weight: 850; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 18px 0 22px; }
+    .tag { color: #a9b8bd; border: 1px solid var(--line); border-radius: 999px; padding: 6px 9px; font-size: 11px; font-weight: 780; }
+    .project-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .text-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 850; color: white; }
+    .text-link::after { content: "↗"; color: var(--accent); }
+
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .service {
+      min-height: 260px;
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.025);
+      position: relative;
+      overflow: hidden;
+    }
+    .service::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(143,255,199,.05);
+      filter: blur(45px);
+      right: -45px;
+      bottom: -60px;
+    }
+    .service-num { color: #63767d; font-size: 11px; font-weight: 850; letter-spacing: .12em; }
+    .service h3 { font-size: 24px; line-height: 1.05; letter-spacing: -.035em; margin: 44px 0 10px; }
+    .service p { color: #8fa2a9; margin: 0; font-size: 14px; }
+
+    .about-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 54px; align-items: start; }
+    .about-card {
+      position: sticky;
+      top: 110px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 28px;
+      background: linear-gradient(145deg,rgba(19,37,44,.8),rgba(8,19,23,.88));
+      box-shadow: var(--shadow);
+    }
+    .about-card h3 { font-size: 34px; line-height: 1; letter-spacing: -.05em; margin: 12px 0; }
+    .about-card p { color: var(--muted); margin: 0; }
+    .about-list { display: grid; gap: 12px; margin-top: 24px; }
+    .about-item { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); padding-top: 12px; color: #b8c6ca; font-size: 13px; }
+    .about-item span:last-child { color: #71858d; text-align: right; }
+    .story h2 { margin: 0; font-size: clamp(40px,5vw,70px); line-height: .98; letter-spacing: -.055em; }
+    .story p { font-size: 18px; color: #9eb0b6; margin: 24px 0 0; }
+    .toolbox { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 9px; }
+
+    .process { margin-top: 52px; display: grid; gap: 12px; }
+    .process-row {
+      display: grid;
+      grid-template-columns: 66px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+    }
+    .process-row strong { font-size: 18px; }
+    .process-row p { margin: 0; color: #7f939a; font-size: 13px; max-width: 420px; }
+    .process-row .num { color: #5e737a; font-size: 12px; font-weight: 850; }
+
+    .contact-shell {
+      border: 1px solid rgba(143,255,199,.18);
+      border-radius: 34px;
+      padding: clamp(28px,5vw,62px);
+      background:
+        radial-gradient(circle at 88% 15%, rgba(143,255,199,.13), transparent 32%),
+        radial-gradient(circle at 10% 100%, rgba(111,183,255,.11), transparent 28%),
+        linear-gradient(145deg,#102229,#09171b);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .contact-shell h2 { max-width: 850px; margin: 12px 0 18px; font-size: clamp(46px,7vw,86px); line-height: .91; letter-spacing: -.06em; }
+    .contact-shell p { max-width: 700px; color: #9cadb3; font-size: 18px; }
+    .contact-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .contact-note { margin-top: 24px; color: #758a91; font-size: 12px; }
+
+    footer { padding: 34px 0 42px; color: #6f838b; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; align-items: center; border-top: 1px solid var(--line); padding-top: 25px; font-size: 12px; }
+    .footer-links { display: flex; gap: 14px; }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .hero-grid, .about-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .hero-panel { min-height: 520px; }
+      .project-card { grid-column: span 12; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .about-card { position: relative; top: auto; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 760px) {
+      .section { padding: 82px 0; }
+      .nav-links {
+        position: absolute;
+        top: 72px;
+        left: 18px;
+        right: 18px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(7,16,20,.97);
+        backdrop-filter: blur(16px);
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px; }
+      .menu-btn { display: inline-grid; place-items: center; }
+      .desktop-cta { display: none; }
+      .hero { padding-top: 124px; }
+      .hero-grid { gap: 34px; }
+      .hero-panel { min-height: 500px; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .logo-strip-inner { grid-template-columns: 1fr; gap: 10px; padding: 20px 0; }
+      .services-grid { grid-template-columns: 1fr; }
+      .process-row { grid-template-columns: 48px 1fr; }
+      .process-row p { grid-column: 2; }
+      .project-visual, .project-visual img { min-height: 285px; height: 285px; }
+      .footer-row { flex-direction: column; align-items: start; }
+    }
+
+    @media (max-width: 520px) {
+      .container { width: min(calc(100% - 24px), var(--max)); }
+      .hero h1 { font-size: 54px; }
+      .hero-copy { font-size: 16px; }
+      .hero-panel { min-height: 520px; }
+      .metric-grid { grid-template-columns: 1fr; }
+      .metric { min-height: 92px; }
+      .metric strong { margin-top: 8px; }
+      .project-copy { padding: 20px; }
+      .contact-shell { border-radius: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Kyle portfolio home">
+        <span class="brand-mark">K</span>
+        <span>Kyle <span style="color:#71858d">/ Digital Systems</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="btn btn-primary btn-sm desktop-cta" href="#contact">Start a project</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="availability"><span class="pulse"></span> Available for remote freelance and long term client work</div>
+          <h1>I build <span class="soft">websites</span> that work harder.</h1>
+          <p class="hero-copy">I am a web developer, SEO specialist, and automation virtual assistant focused on WordPress, Shopify, GoHighLevel, custom front end development, CRM workflows, and conversion focused website improvements.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#work">View selected work</a>
+            <a class="btn btn-secondary" href="#services">See what I do</a>
+          </div>
+          <div class="hero-tags" aria-label="Core capabilities">
+            <span class="chip">WordPress</span>
+            <span class="chip">Elementor</span>
+            <span class="chip">Shopify</span>
+            <span class="chip">GoHighLevel</span>
+            <span class="chip">SEO</span>
+            <span class="chip">HTML / CSS / JavaScript</span>
+            <span class="chip">CRM Automation</span>
+          </div>
+        </div>
+
+        <aside class="hero-panel reveal" aria-label="Portfolio capability overview">
+          <div class="panel-top"><span>Client Delivery System</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <div class="panel-body">
+            <div class="panel-kicker">Build + optimize + automate</div>
+            <h3>One operator across the website and the systems behind it.</h3>
+            <p>From front end implementation to SEO, forms, email workflows, booking systems, and conversion paths.</p>
+            <div class="metric-grid">
+              <div class="metric"><span>Featured client projects</span><strong>08</strong></div>
+              <div class="metric"><span>Core platforms</span><strong>04+</strong></div>
+              <div class="metric"><span>Delivery focus</span><strong>Web + SEO</strong></div>
+              <div class="metric"><span>Operations layer</span><strong>Automation</strong></div>
+            </div>
+            <div class="panel-stack">
+              <div class="stack-row"><span>Front end systems</span><span>Responsive</span></div>
+              <div class="stack-row"><span>Search optimization</span><span>On page SEO</span></div>
+              <div class="stack-row"><span>Lead workflows</span><span>Forms + CRM</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="logo-strip" aria-label="Platforms and tools">
+      <div class="container logo-strip-inner">
+        <small>Working stack</small>
+        <div class="marquee">
+          <div class="marquee-track">
+            <span>WordPress</span><span>Elementor</span><span>Shopify</span><span>GoHighLevel</span><span>Rank Math</span><span>Google Search Console</span><span>WPForms</span><span>SMTP</span><span>HTML / CSS / JS</span><span>Gemini AI</span>
+            <span>WordPress</span><span>Elementor</span><span>Shopify</span><span>GoHighLevel</span><span>Rank Math</span><span>Google Search Console</span><span>WPForms</span><span>SMTP</span><span>HTML / CSS / JS</span><span>Gemini AI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Selected client work</div>
+            <h2>Real websites, real client problems, practical solutions.</h2>
+          </div>
+          <p>These projects reflect hands on work completed across redesign, SEO, ecommerce, booking flows, compliance, automation, and custom front end development.</p>
+        </div>
+
+        <div class="filters" aria-label="Project filters">
+          <button class="filter-btn active" data-filter="all">All work</button>
+          <button class="filter-btn" data-filter="wordpress">WordPress</button>
+          <button class="filter-btn" data-filter="shopify">Shopify</button>
+          <button class="filter-btn" data-filter="seo">SEO</button>
+          <button class="filter-btn" data-filter="automation">Automation</button>
+        </div>
+
+        <div class="projects">
+          <article class="project-card reveal" data-category="wordpress seo automation">
+            <div class="project-visual tone-blue">
+              <div class="project-fallback tone-blue">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> wasswacorporation.com</div>
+                <div class="fallback-title"><small>Private equity website</small><h3>WASSWA Capital</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwasswacorporation.com%2F?w=1200&amp;h=800" alt="WASSWA Capital website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>WASSWA Capital</h3><p>Technology driven private equity website and lead system.</p></div><span class="project-number">01</span></div>
+              <div class="tags"><span class="tag">WordPress</span><span class="tag">Elementor</span><span class="tag">Custom UI</span><span class="tag">SEO</span><span class="tag">AI Chatbot</span><span class="tag">Email Automation</span></div>
+              <p>Scope included a premium responsive site system, custom navigation, interactive homepage sections, investment focused page architecture, SEO content, legal pages, chatbot integration, inquiry forms, SMTP and email workflow setup.</p>
+              <div class="project-actions"><a class="text-link" href="https://wasswacorporation.com/" target="_blank" rel="noopener noreferrer">Visit live website</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="wordpress seo automation">
+            <div class="project-visual tone-gold">
+              <div class="project-fallback tone-gold">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> ridebts.com</div>
+                <div class="fallback-title"><small>Executive transportation</small><h3>Black Truck Service</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fridebts.com%2F?w=1200&amp;h=800" alt="Black Truck Service website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>Black Truck Service</h3><p>Premium transportation website, reservation flow, and operational setup.</p></div><span class="project-number">02</span></div>
+              <div class="tags"><span class="tag">WordPress</span><span class="tag">Custom JavaScript</span><span class="tag">Reservation UX</span><span class="tag">SMTP</span><span class="tag">SEO</span><span class="tag">Workflow Design</span></div>
+              <p>Redesigned key customer facing sections, built interactive service and fleet experiences, created a dedicated reservation page, improved metadata and sharing setup, connected email delivery, and mapped payment and ride tracking workflows.</p>
+              <div class="project-actions"><a class="text-link" href="https://ridebts.com/" target="_blank" rel="noopener noreferrer">Visit live website</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="shopify seo">
+            <div class="project-visual tone-green">
+              <div class="project-fallback tone-green">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> gonorthhemp.com</div>
+                <div class="fallback-title"><small>B2B ecommerce</small><h3>Go North Hemp</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fgonorthhemp.com%2F?w=1200&amp;h=800" alt="Go North Hemp website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>Go North Hemp</h3><p>Shopify product optimization and search focused content updates.</p></div><span class="project-number">03</span></div>
+              <div class="tags"><span class="tag">Shopify</span><span class="tag">Product SEO</span><span class="tag">Metadata</span><span class="tag">Landing Pages</span><span class="tag">Internal Linking</span></div>
+              <p>Updated product pages and collection content, improved SEO titles and descriptions, created new landing page structures, refined product presentation, handled image and template fixes, and supported reindexing work.</p>
+              <div class="project-actions"><a class="text-link" href="https://gonorthhemp.com/" target="_blank" rel="noopener noreferrer">Visit live website</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="wordpress seo">
+            <div class="project-visual tone-cream">
+              <div class="project-fallback tone-cream">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> texashistorichomes.com</div>
+                <div class="fallback-title"><small>Real estate and compliance</small><h3>Texas Historic Homes</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Ftexashistorichomes.com%2F?w=1200&amp;h=800" alt="Texas Historic Homes website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>Texas Historic Homes</h3><p>Website revamp, listings, compliance, and information architecture.</p></div><span class="project-number">04</span></div>
+              <div class="tags"><span class="tag">WordPress</span><span class="tag">Real Estate</span><span class="tag">TREC Compliance</span><span class="tag">Responsive UI</span><span class="tag">Content Architecture</span></div>
+              <p>Worked on homepage and interior page redesigns, buyers and sellers pages, Texas history content, contact flow, property listings, navigation, brokerage information, and required TREC consumer and brokerage disclosures.</p>
+              <div class="project-actions"><a class="text-link" href="https://texashistorichomes.com/" target="_blank" rel="noopener noreferrer">Visit live website</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="wordpress seo">
+            <div class="project-visual tone-purple">
+              <div class="project-fallback tone-purple">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> hopefromlove.com</div>
+                <div class="fallback-title"><small>Recruitment landing page</small><h3>Hope From Love</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fhopefromlove.com%2Fagent-contractor%2F?w=1200&amp;h=800" alt="Hope From Love agent contractor website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>Hope From Love</h3><p>Landing page cleanup and legal page implementation.</p></div><span class="project-number">05</span></div>
+              <div class="tags"><span class="tag">WordPress</span><span class="tag">HTML / CSS</span><span class="tag">Responsive Layout</span><span class="tag">Privacy</span><span class="tag">Terms</span></div>
+              <p>Audited and improved the agent contractor page, corrected visual issues, created matching privacy and terms pages, and added legal navigation into the customer facing footer experience.</p>
+              <div class="project-actions"><a class="text-link" href="https://hopefromlove.com/agent-contractor/" target="_blank" rel="noopener noreferrer">Visit live page</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="wordpress seo">
+            <div class="project-visual tone-cyan">
+              <div class="project-fallback tone-cyan">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> perspectivetherapy.com</div>
+                <div class="fallback-title"><small>Therapy practice website</small><h3>Perspective Therapy</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fperspectivetherapy.com%2F?w=1200&amp;h=800" alt="Perspective Therapy website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>Perspective Therapy</h3><p>Frontend website deployment, domain migration, and booking flow coordination.</p></div><span class="project-number">06</span></div>
+              <div class="tags"><span class="tag">Frontend</span><span class="tag">Vercel</span><span class="tag">DNS</span><span class="tag">Domain Migration</span><span class="tag">Acuity</span></div>
+              <p>Worked on the new public website frontend, Vercel deployment, domain routing and transfer, and the connection between the website experience and the client scheduling flow.</p>
+              <div class="project-actions"><a class="text-link" href="https://perspectivetherapy.com/" target="_blank" rel="noopener noreferrer">Visit live website</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="wordpress seo">
+            <div class="project-visual tone-orange">
+              <div class="project-fallback tone-orange">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> vitalityplus.io</div>
+                <div class="fallback-title"><small>Agency website</small><h3>VitalityPlus</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fvitalityplus.io%2F?w=1200&amp;h=800" alt="VitalityPlus website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>VitalityPlus</h3><p>Elementor revamp, dynamic blog tooling, and domain infrastructure fixes.</p></div><span class="project-number">07</span></div>
+              <div class="tags"><span class="tag">WordPress</span><span class="tag">Elementor</span><span class="tag">Custom Widget</span><span class="tag">DNS</span><span class="tag">SSL</span></div>
+              <p>Handled visual and content fixes across the site, built a dynamic Elementor blog page widget that pulls WordPress posts, and worked through domain, DNS, WordPress URL, and SSL setup during the revamp.</p>
+              <div class="project-actions"><a class="text-link" href="https://vitalityplus.io/" target="_blank" rel="noopener noreferrer">Visit live website</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="wordpress seo">
+            <div class="project-visual tone-slate">
+              <div class="project-fallback tone-slate">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> trusolacecbd.com</div>
+                <div class="fallback-title"><small>CBD ecommerce bridge</small><h3>TruSolace CBD</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+              <img loading="lazy" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Ftrusolacecbd.com%2F?w=1200&amp;h=800" alt="TruSolace CBD website preview" onerror="this.style.display='none'" />
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>TruSolace CBD</h3><p>Conversion landing page and product catalog experience.</p></div><span class="project-number">08</span></div>
+              <div class="tags"><span class="tag">WordPress</span><span class="tag">Landing Page</span><span class="tag">Product Catalog</span><span class="tag">Shopify Links</span><span class="tag">Responsive UI</span></div>
+              <p>Built and refined a navigation free conversion page with hero CTAs, product catalog sections, grouped product merchandising, usage details, trust content, and direct shopping links into the ecommerce store.</p>
+              <div class="project-actions"><a class="text-link" href="https://trusolacecbd.com/" target="_blank" rel="noopener noreferrer">Visit live website</a></div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="automation">
+            <div class="project-visual tone-red">
+              <div class="project-fallback tone-red">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span> crm / booking automation</div>
+                <div class="fallback-title"><small>GoHighLevel systems</small><h3>Booking & Follow Up Workflows</h3></div>
+                <div class="fallback-ui"><div></div><div></div><div></div></div>
+              </div>
+            </div>
+            <div class="project-copy">
+              <div class="project-top"><div><h3>GoHighLevel Booking Systems</h3><p>Calendars, confirmations, reminders, and CRM automation.</p></div><span class="project-number">09</span></div>
+              <div class="tags"><span class="tag">GoHighLevel</span><span class="tag">Calendars</span><span class="tag">Email</span><span class="tag">SMS</span><span class="tag">Tags</span><span class="tag">Workflows</span></div>
+              <p>Built booking calendars and automated registration flows with confirmations, timed reminders, contact tagging, internal notifications, and branded calendar appearance for client campaigns and event funnels.</p>
+              <div class="project-actions"><span class="text-link" style="cursor:default">Private client systems</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><div class="eyebrow">Services</div><h2>Useful work across the whole digital funnel.</h2></div>
+          <p>I can step into an existing site that needs fixing, redesign a weak customer journey, build new pages, improve search visibility, or connect the forms and workflows behind the website.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service reveal"><span class="service-num">01</span><h3>Website Development</h3><p>Responsive WordPress and custom front end builds, Elementor implementation, landing pages, navigation systems, mobile fixes, and UI cleanup.</p></article>
+          <article class="service reveal"><span class="service-num">02</span><h3>Website Redesign</h3><p>Modern visual direction, cleaner hierarchy, stronger CTAs, improved page flow, premium presentation, and conversion focused section design.</p></article>
+          <article class="service reveal"><span class="service-num">03</span><h3>SEO Optimization</h3><p>On page SEO, keyword placement, metadata, internal links, content structure, Rank Math setup, product SEO, and Search Console reindexing support.</p></article>
+          <article class="service reveal"><span class="service-num">04</span><h3>Shopify Optimization</h3><p>Product and collection page updates, SEO copy, template troubleshooting, product presentation, landing pages, metadata, and content cleanup.</p></article>
+          <article class="service reveal"><span class="service-num">05</span><h3>CRM & Automation</h3><p>GoHighLevel workflows, calendars, tags, forms, booking confirmations, reminders, email and SMS sequences, and operational process mapping.</p></article>
+          <article class="service reveal"><span class="service-num">06</span><h3>Website Operations</h3><p>Forms, SMTP, legal pages, accessibility and compliance updates, chatbot integration, analytics oriented improvements, and ongoing site maintenance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <aside class="about-card reveal">
+          <div class="eyebrow">Profile</div>
+          <h3>Builder with an operations mindset.</h3>
+          <p>I work across design, implementation, SEO, and automation instead of treating each one as a separate problem.</p>
+          <div class="about-list">
+            <div class="about-item"><span>Based in</span><span>Philippines</span></div>
+            <div class="about-item"><span>Work model</span><span>Remote</span></div>
+            <div class="about-item"><span>Primary focus</span><span>Web + SEO + automation</span></div>
+            <div class="about-item"><span>Client support</span><span>Builds, fixes, ongoing updates</span></div>
+          </div>
+        </aside>
+
+        <div class="story reveal">
+          <div class="eyebrow">About Kyle</div>
+          <h2>I help businesses turn messy websites and manual processes into cleaner digital systems.</h2>
+          <p>My work sits between a traditional virtual assistant, a front end developer, and an SEO operator. I am comfortable working inside live client websites, fixing issues quickly, building custom sections, improving search presentation, creating booking and form workflows, and documenting changes in language clients can understand.</p>
+          <p>I have worked across private equity, executive transportation, ecommerce, real estate, recruiting, and internal business systems. The common goal is the same: make the website easier to use, easier to manage, and more useful to the business.</p>
+
+          <div class="toolbox" aria-label="Tools and platforms">
+            <span class="chip">WordPress</span><span class="chip">Elementor</span><span class="chip">Shopify</span><span class="chip">GoHighLevel</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Rank Math</span><span class="chip">Search Console</span><span class="chip">WPForms</span><span class="chip">Google APIs</span><span class="chip">Gemini AI</span>
+          </div>
+
+          <div class="process">
+            <div class="process-row"><span class="num">01</span><strong>Audit the current problem</strong><p>Identify the technical, UX, content, SEO, or workflow issue before changing the site.</p></div>
+            <div class="process-row"><span class="num">02</span><strong>Build the practical fix</strong><p>Implement clean code, platform native settings, page updates, or automation with minimal disruption.</p></div>
+            <div class="process-row"><span class="num">03</span><strong>Test the real user path</strong><p>Check desktop and mobile behavior, CTAs, forms, navigation, links, and delivery workflows.</p></div>
+            <div class="process-row"><span class="num">04</span><strong>Document the result</strong><p>Provide a concise client update explaining what changed and what should happen next.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-shell reveal">
+          <div class="eyebrow">Available for client work</div>
+          <h2>Need a website fixed, redesigned, optimized, or automated?</h2>
+          <p>I am available for project based work, ongoing website support, SEO implementation, Shopify updates, GoHighLevel automation, and remote virtual assistant roles with a strong web and systems component.</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" id="emailCta" href="#" style="display:none">Email me</a>
+            <a class="btn btn-secondary" id="githubCta" href="https://github.com/zyeleeveangelista" target="_blank" rel="noopener noreferrer">View my GitHub</a>
+            <a class="btn btn-secondary" href="#work">Review my work</a>
+          </div>
+          <div class="contact-note" id="contactNote">Add your email or LinkedIn once and this section is ready for direct client inquiries.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>© <span id="year"></span> Kyle. Web Development, SEO & Automation.</span>
+      <div class="footer-links"><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a></div>
+    </div>
+  </footer>
+
+  <script>
+    /*
+      QUICK CONTACT SETUP
+      Add your email below before publishing. If left blank, the Email button stays hidden.
+    */
+    const portfolioConfig = {
+      email: "",
+      github: "https://github.com/zyeleeveangelista"
+    };
+
+    const header = document.getElementById('siteHeader');
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const filterButtons = [...document.querySelectorAll('.filter-btn')];
+    const projectCards = [...document.querySelectorAll('.project-card')];
+    const emailCta = document.getElementById('emailCta');
+    const githubCta = document.getElementById('githubCta');
+    const contactNote = document.getElementById('contactNote');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.textContent = open ? '×' : '☰';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.textContent = '☰';
+    }));
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach(btn => btn.classList.toggle('active', btn === button));
+        projectCards.forEach(card => {
+          const categories = card.dataset.category.split(' ');
+          card.classList.toggle('hidden', filter !== 'all' && !categories.includes(filter));
+        });
+      });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.11 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    if (portfolioConfig.email.trim()) {
+      emailCta.style.display = 'inline-flex';
+      emailCta.href = `mailto:${portfolioConfig.email}?subject=Project Inquiry from your Portfolio`;
+      contactNote.textContent = `Direct inquiries: ${portfolioConfig.email}`;
+    }
+
+    if (portfolioConfig.github.trim()) {
+      githubCta.href = portfolioConfig.github;
+    }
+  </script>
+</body>
+</html>
