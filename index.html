@@ -311,31 +311,189 @@
     }
 
     .statement {
-      min-height: 125vh;
-      display: grid;
-      place-items: center;
-      padding: 80px 0;
+      position: relative;
+      min-height: 360vh;
       border-top: 1px solid var(--soft-line);
       border-bottom: 1px solid var(--soft-line);
-      background: rgba(255,255,255,.25);
+      background:
+        radial-gradient(circle at 86% 20%, rgba(36,87,255,.045), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.5));
+    }
+
+    .statement-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 78px 0 38px;
     }
 
     .statement-inner {
-      width: min(calc(100% - 32px), 1120px);
-      margin: auto;
+      width: min(calc(100% - 32px), var(--max));
+      height: 100%;
+      margin: 0 auto;
+      position: relative;
     }
 
-    .statement p {
+    .statement-head {
+      position: absolute;
+      left: 0;
+      top: 6%;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .statement-head::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 7px rgba(36,87,255,.08);
+    }
+
+    .statement-counter {
+      position: absolute;
+      right: 0;
+      top: 6%;
+      z-index: 7;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .1em;
+    }
+
+    .statement-counter strong {
+      color: var(--ink);
+      font-size: 28px;
+      letter-spacing: -.05em;
+    }
+
+    .statement-counter span {
+      color: #9a9a9a;
+      font-size: 10px;
+    }
+
+    .statement-stage {
+      position: absolute;
+      inset: 13% 0 11%;
+      display: grid;
+      align-items: center;
+    }
+
+    .statement-beat {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: .86fr 1.14fr;
+      gap: clamp(36px, 7vw, 110px);
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .statement-word {
+      position: relative;
       margin: 0;
-      font-size: clamp(42px, 6.7vw, 104px);
-      line-height: .95;
-      letter-spacing: -.06em;
-      font-weight: 840;
+      font-size: clamp(76px, 12vw, 184px);
+      line-height: .72;
+      letter-spacing: -.09em;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .statement-word::after {
+      content: attr(data-number);
+      position: absolute;
+      left: -.03em;
+      top: -.44em;
+      z-index: -1;
+      color: rgba(17,17,17,.035);
+      font-size: 2.15em;
+      letter-spacing: -.1em;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .statement-beat:nth-child(1) .statement-word { color: #111; }
+    .statement-beat:nth-child(2) .statement-word { color: #3e5964; }
+    .statement-beat:nth-child(3) .statement-word { color: #2457ff; }
+    .statement-beat:nth-child(4) .statement-word { color: #0d7f67; }
+
+    .statement-detail {
+      align-self: center;
+      max-width: 610px;
+    }
+
+    .statement-detail small {
+      display: block;
+      margin-bottom: 15px;
+      color: #929292;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .statement-detail h3 {
+      margin: 0;
+      font-size: clamp(34px, 4.2vw, 62px);
+      line-height: .98;
+      letter-spacing: -.055em;
       text-wrap: balance;
     }
 
-    .statement .muted { color: #9a9a9a; }
-    .statement .accent { color: var(--blue); }
+    .statement-detail p {
+      margin: 20px 0 0;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 18px);
+      line-height: 1.6;
+    }
+
+    .statement-detail strong { color: var(--ink); }
+
+    .statement-rail {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 4%;
+      height: 1px;
+      background: var(--soft-line);
+      overflow: hidden;
+    }
+
+    .statement-rail > i {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #111 0%, var(--blue) 58%, var(--green) 100%);
+      will-change: width;
+    }
+
+    .statement-foot {
+      position: absolute;
+      right: 0;
+      bottom: 1%;
+      color: #9a9a9a;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
 
     .scene {
       --accent: #2457ff;
@@ -1167,10 +1325,45 @@
 
       .scroll-cue { display: none; }
 
-      .statement { min-height: 105vh; }
-      .statement p {
-        font-size: clamp(40px, 11vw, 72px);
-        line-height: .97;
+      .statement { min-height: 320vh; }
+      .statement-sticky { padding-top: 66px; }
+      .statement-head { top: 7%; }
+      .statement-counter { top: 7%; }
+      .statement-counter strong { font-size: 22px; }
+
+      .statement-stage {
+        inset: 14% 0 10%;
+      }
+
+      .statement-beat {
+        grid-template-columns: 1fr;
+        align-content: center;
+        gap: 28px;
+      }
+
+      .statement-word {
+        font-size: clamp(68px, 21vw, 110px);
+        line-height: .76;
+      }
+
+      .statement-detail {
+        align-self: start;
+        max-width: 100%;
+      }
+
+      .statement-detail h3 {
+        font-size: clamp(30px, 8.6vw, 46px);
+        line-height: 1;
+      }
+
+      .statement-detail p {
+        margin-top: 14px;
+        font-size: 14px;
+      }
+
+      .statement-foot {
+        left: 0;
+        right: auto;
       }
 
       .scene { min-height: 225vh; }
@@ -1297,14 +1490,57 @@
       </div>
     </section>
 
-    <section class="statement" data-label="What I do">
-      <div class="statement-inner">
-        <p>
-          Design when it needs design.<br>
-          <span class="muted">Code when it needs code.</span><br>
-          Optimize when it needs traffic.<br>
-          <span class="accent">Automate when it needs a system.</span>
-        </p>
+    <section class="statement" data-label="What I do" id="statementSection">
+      <div class="statement-sticky">
+        <div class="statement-inner">
+          <div class="statement-head">One operator / four modes</div>
+
+          <div class="statement-counter">
+            <strong id="statementCount">01</strong>
+            <span>/ 04</span>
+          </div>
+
+          <div class="statement-stage">
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="01">Build</h2>
+              <div class="statement-detail">
+                <small>Web development</small>
+                <h3>Make the website feel intentional from the first screen to the last click.</h3>
+                <p>I build and rebuild <strong>WordPress pages, Elementor sections, landing pages, custom front end interactions, and responsive layouts</strong> for real client websites.</p>
+              </div>
+            </article>
+
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="02">Fix</h2>
+              <div class="statement-detail">
+                <small>Hands-on website operations</small>
+                <h3>Find what is weak, broken, confusing, or unfinished — then clean it up.</h3>
+                <p>That can mean <strong>mobile issues, navigation, forms, SMTP, DNS, SSL, legal pages, UX problems, content cleanup, or a live-page bug</strong> that needs to be solved without rebuilding everything.</p>
+              </div>
+            </article>
+
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="03">Rank</h2>
+              <div class="statement-detail">
+                <small>SEO implementation</small>
+                <h3>Give the page a better chance of being found — without writing for robots.</h3>
+                <p>I work on <strong>on-page SEO, titles, metadata, keyword structure, internal links, product SEO, Rank Math, and Search Console indexing</strong> while keeping the page readable for actual people.</p>
+              </div>
+            </article>
+
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="04">Automate</h2>
+              <div class="statement-detail">
+                <small>Systems behind the website</small>
+                <h3>Make something useful happen after the visitor clicks.</h3>
+                <p>I connect <strong>forms, booking calendars, GoHighLevel workflows, confirmations, reminders, tags, email, SMS, and operational follow-up</strong> so the site supports the business instead of becoming another manual task.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="statement-rail"><i id="statementRail"></i></div>
+          <div class="statement-foot">Build → Fix → Rank → Automate</div>
+        </div>
       </div>
     </section>
 
@@ -1743,6 +1979,10 @@
     const introPortrait = document.getElementById("introPortrait");
     const scenes = [...document.querySelectorAll(".scene")];
     const labelledSections = [...document.querySelectorAll("[data-label]")];
+    const statementSection = document.getElementById("statementSection");
+    const statementBeats = [...document.querySelectorAll(".statement-beat")];
+    const statementCount = document.getElementById("statementCount");
+    const statementRail = document.getElementById("statementRail");
     const aboutSection = document.getElementById("aboutSection");
     const aboutCopy = document.getElementById("aboutCopy");
     const fenceShell = document.getElementById("fenceShell");
@@ -1761,20 +2001,27 @@
     function renderIntro() {
       const p = sectionProgress(intro);
 
-      const titleY = lerp(0, -78, clamp((p - .25) / .58));
-      const titleScale = lerp(1, .80, clamp((p - .24) / .68));
-      const titleOpacity = lerp(1, .10, clamp((p - .66) / .30));
+      // The opening frame is intentionally complete at page load.
+      // Nothing waits for the visitor to scroll before becoming visible.
+      const titleMove = clamp((p - .18) / .62);
+      const titleExit = clamp((p - .72) / .25);
+      const titleY = lerp(0, -72, titleMove);
+      const titleScale = lerp(1, .82, titleMove);
+      const titleOpacity = lerp(1, .08, titleExit);
 
-      const copyY = lerp(0, -52, clamp((p - .34) / .55));
-      const copyOpacity = lerp(1, .04, clamp((p - .70) / .26));
+      const copyMove = clamp((p - .26) / .52);
+      const copyExit = clamp((p - .72) / .25);
+      const copyY = lerp(0, -44, copyMove);
+      const copyOpacity = lerp(1, .04, copyExit);
 
-      const portraitEnter = clamp((p + .04) / .18);
-      const portraitExit = clamp((p - .63) / .34);
-      const portraitX = lerp(90, 0, portraitEnter) + lerp(0, 120, portraitExit);
-      const portraitY = lerp(38, 0, portraitEnter) + lerp(0, -42, portraitExit);
-      const portraitScale = lerp(.90, 1, portraitEnter) * lerp(1, .88, portraitExit);
-      const portraitRotate = lerp(1.5, 0, portraitEnter) + lerp(0, -2.5, portraitExit);
-      const portraitOpacity = portraitEnter * lerp(1, .04, portraitExit);
+      // Portrait starts fully present and holds like a proper intro portrait.
+      // Only after the first part of the scroll does it drift out.
+      const portraitExit = clamp((p - .42) / .50);
+      const portraitX = lerp(0, 125, portraitExit);
+      const portraitY = lerp(0, -36, portraitExit);
+      const portraitScale = lerp(1, .90, portraitExit);
+      const portraitRotate = lerp(0, -2.2, portraitExit);
+      const portraitOpacity = lerp(1, .04, clamp((p - .70) / .25));
 
       introTitle.style.transform = `translateY(calc(-50% + ${titleY}px)) scale(${titleScale})`;
       introTitle.style.opacity = titleOpacity;
@@ -1785,6 +2032,38 @@
       if (introPortrait) {
         introPortrait.style.transform = `translate(${portraitX}px, ${portraitY}px) scale(${portraitScale}) rotate(${portraitRotate}deg)`;
         introPortrait.style.opacity = portraitOpacity;
+      }
+    }
+
+    function renderStatement() {
+      if (!statementSection || !statementBeats.length) return;
+
+      const p = sectionProgress(statementSection);
+      const maxIndex = statementBeats.length - 1;
+      const position = p * maxIndex;
+      const nearest = Math.round(position);
+
+      statementBeats.forEach((beat, index) => {
+        const delta = index - position;
+        const distance = Math.abs(delta);
+
+        const opacity = clamp(1 - distance * 1.25);
+        const y = delta * 82;
+        const scale = lerp(1, .94, clamp(distance));
+        const blur = lerp(0, 3, clamp(distance));
+
+        beat.style.opacity = opacity;
+        beat.style.transform = `translateY(${y}px) scale(${scale})`;
+        beat.style.filter = `blur(${blur}px)`;
+        beat.style.zIndex = String(10 - Math.round(distance * 2));
+      });
+
+      if (statementCount) {
+        statementCount.textContent = String(nearest + 1).padStart(2, "0");
+      }
+
+      if (statementRail) {
+        statementRail.style.width = `${p * 100}%`;
       }
     }
 
@@ -1887,6 +2166,7 @@
       ticking = false;
       renderGlobalProgress();
       renderIntro();
+      renderStatement();
       scenes.forEach(renderScene);
       renderAbout();
       renderLabel();
