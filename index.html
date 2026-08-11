@@ -671,32 +671,42 @@
     }
 
     .about {
-      min-height: 130vh;
-      display: grid;
-      place-items: center;
-      padding: 90px 0;
+      position: relative;
+      min-height: 205vh;
+      border-top: 1px solid var(--soft-line);
+      background:
+        radial-gradient(circle at 78% 35%, rgba(36,87,255,.045), transparent 26%),
+        linear-gradient(180deg, #f7f5f0 0%, #fbfaf7 100%);
+    }
+
+    .about-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 76px 0 38px;
     }
 
     .about-inner {
-      width: min(calc(100% - 32px), 1120px);
-      margin: auto;
+      width: min(calc(100% - 32px), var(--max));
+      height: 100%;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: .78fr 1.22fr;
-      gap: 54px;
-      align-items: start;
+      grid-template-columns: .88fr 1.12fr;
+      gap: clamp(34px, 5vw, 76px);
+      align-items: center;
     }
 
-    .about-aside {
-      position: sticky;
-      top: 100px;
-      padding: 26px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255,255,255,.62);
+    .about-copy {
+      position: relative;
+      z-index: 5;
+      max-width: 640px;
+      will-change: transform, opacity;
     }
 
-    .about-aside .label,
-    .about-main .label,
+    .about-copy .label,
     .final .label {
       color: var(--muted);
       font-size: 11px;
@@ -705,51 +715,311 @@
       text-transform: uppercase;
     }
 
-    .about-aside h3 {
-      margin: 12px 0 6px;
-      font-size: 34px;
-      line-height: 1;
-      letter-spacing: -.05em;
+    .about-copy h2 {
+      margin: 14px 0 0;
+      font-size: clamp(52px, 6.5vw, 96px);
+      line-height: .88;
+      letter-spacing: -.07em;
+      text-wrap: balance;
     }
 
-    .about-aside p {
-      margin: 0;
+    .about-copy h2 span {
+      color: #969696;
+    }
+
+    .about-copy p {
+      margin: 24px 0 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: clamp(15px, 1.45vw, 18px);
+      max-width: 590px;
+    }
+
+    .about-copy p strong {
+      color: var(--ink);
+      font-weight: 760;
     }
 
     .about-meta {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
       gap: 10px;
-      margin-top: 22px;
+      margin-top: 28px;
+      max-width: 560px;
     }
 
     .about-meta div {
+      min-height: 78px;
+      padding: 13px 14px;
+      border: 1px solid var(--soft-line);
+      border-radius: 15px;
+      background: rgba(255,255,255,.46);
+    }
+
+    .about-meta small {
+      display: block;
+      color: #979797;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .about-meta strong {
+      font-size: 13px;
+      letter-spacing: -.01em;
+    }
+
+    .fence-shell {
+      position: relative;
+      height: min(78vh, 760px);
+      min-height: 560px;
+      width: 100%;
+      max-width: 660px;
+      justify-self: end;
+      will-change: transform, opacity;
+    }
+
+    .fence-note {
+      position: absolute;
+      left: -6px;
+      top: 3%;
+      z-index: 9;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,17,17,.1);
+      background: rgba(255,253,249,.82);
+      backdrop-filter: blur(12px);
+      color: #565656;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      box-shadow: 0 12px 32px rgba(0,0,0,.04);
+    }
+
+    .fence-note i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(13,127,103,.08);
+    }
+
+    .fence-frame {
+      position: absolute;
+      inset: 4% 0 0 7%;
+      border: 1px solid rgba(17,17,17,.18);
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(17,17,17,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,17,17,.025) 1px, transparent 1px),
+        rgba(255,255,255,.56);
+      background-size: 28px 28px;
+      box-shadow: 0 34px 90px rgba(0,0,0,.075);
+    }
+
+    .fence-frame::before {
+      content: "THE OTHER SIDE";
+      position: absolute;
+      left: 20px;
+      bottom: 18px;
+      z-index: 1;
+      color: rgba(17,17,17,.12);
+      font-size: clamp(44px, 5vw, 72px);
+      font-weight: 930;
+      line-height: .82;
+      letter-spacing: -.07em;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      pointer-events: none;
+    }
+
+    .fence-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(247,245,240,.26), transparent 16%),
+        linear-gradient(90deg, rgba(247,245,240,.16), transparent 15%, transparent 85%, rgba(247,245,240,.14));
+    }
+
+    .fence-person-wrap {
+      position: absolute;
+      inset: 5% -2% 0 9%;
+      z-index: 2;
       display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      padding-top: 10px;
-      border-top: 1px solid var(--soft-line);
-      font-size: 12px;
+      align-items: flex-end;
+      justify-content: center;
+      pointer-events: none;
+      will-change: transform, opacity;
     }
 
-    .about-meta span:last-child { color: var(--muted); text-align: right; }
-
-    .about-main h2 {
-      margin: 12px 0 0;
-      font-size: clamp(46px, 6vw, 86px);
-      line-height: .93;
-      letter-spacing: -.065em;
+    .fence-person {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 28px 40px rgba(0,0,0,.13));
+      user-select: none;
     }
 
-    .about-main p {
-      margin: 24px 0 0;
-      color: var(--muted);
-      font-size: 18px;
-      max-width: 760px;
+    .fence-bars {
+      position: absolute;
+      inset: 0;
+      z-index: 7;
+      pointer-events: none;
+      overflow: hidden;
     }
 
-    .about-main p strong { color: var(--ink); }
+    .fence-bars::before,
+    .fence-bars::after {
+      content: "";
+      position: absolute;
+      left: -5%;
+      width: 110%;
+      height: 15px;
+      border-radius: 999px;
+      background: #1a1a1a;
+      box-shadow: 0 8px 18px rgba(0,0,0,.16);
+      opacity: .94;
+    }
+
+    .fence-bars::before { top: 23%; }
+    .fence-bars::after { bottom: 22%; }
+
+    .fence-bar {
+      position: absolute;
+      top: -4%;
+      bottom: -4%;
+      width: 17px;
+      margin-left: -8.5px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg, #0e0e0e, #282828 45%, #111 100%);
+      box-shadow:
+        8px 0 16px rgba(0,0,0,.14),
+        inset 1px 0 rgba(255,255,255,.09);
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    .fence-bar:nth-child(1) { left: 8%; }
+    .fence-bar:nth-child(2) { left: 22%; }
+    .fence-bar:nth-child(3) { left: 36%; }
+    .fence-bar:nth-child(4) { left: 50%; }
+    .fence-bar:nth-child(5) { left: 64%; }
+    .fence-bar:nth-child(6) { left: 78%; }
+    .fence-bar:nth-child(7) { left: 92%; }
+
+    .fence-depth {
+      position: absolute;
+      right: -1%;
+      bottom: 1%;
+      z-index: 8;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #8a8a8a;
+      transform: rotate(90deg) translateX(100%);
+      transform-origin: right bottom;
+    }
+
+    @media (max-width: 1050px) {
+      .about {
+        min-height: 190vh;
+      }
+
+      .about-inner {
+        grid-template-columns: .96fr 1.04fr;
+        gap: 28px;
+      }
+
+      .fence-shell {
+        height: min(70vh, 680px);
+        min-height: 500px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .about {
+        min-height: 210vh;
+      }
+
+      .about-sticky {
+        padding: 70px 0 28px;
+        align-items: stretch;
+      }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .about-copy {
+        max-width: 100%;
+      }
+
+      .about-copy h2 {
+        font-size: clamp(42px, 11vw, 62px);
+      }
+
+      .about-copy p {
+        margin-top: 14px;
+        font-size: 14px;
+        max-width: 96%;
+      }
+
+      .about-meta {
+        display: none;
+      }
+
+      .fence-shell {
+        width: 100%;
+        max-width: none;
+        min-height: 0;
+        height: 48vh;
+        justify-self: stretch;
+      }
+
+      .fence-frame {
+        inset: 0;
+        border-radius: 22px;
+      }
+
+      .fence-person-wrap {
+        inset: 0 -7% 0 1%;
+      }
+
+      .fence-note {
+        top: 12px;
+        left: 12px;
+      }
+
+      .fence-frame::before,
+      .fence-depth {
+        display: none;
+      }
+
+      .fence-bar {
+        width: 11px;
+        margin-left: -5.5px;
+      }
+
+      .fence-bars::before,
+      .fence-bars::after {
+        height: 10px;
+      }
+    }
 
     .final {
       min-height: 120vh;
@@ -1367,32 +1637,59 @@
       </div>
     </section>
 
-    <section class="about" data-label="About Kyle">
-      <div class="about-inner">
-        <aside class="about-aside">
-          <div class="label">About</div>
-          <h3>Kyle</h3>
-          <p>Web developer, SEO specialist, automation-focused virtual assistant, and hands-on digital operator.</p>
+    <section class="about" data-label="About Kyle" id="aboutSection">
+      <div class="about-sticky">
+        <div class="about-inner">
+          <div class="about-copy" id="aboutCopy">
+            <div class="label">About Kyle / 1+ year of live client work</div>
 
-          <div class="about-meta">
-            <div><span>Based in</span><span>Philippines</span></div>
-            <div><span>Work model</span><span>Remote</span></div>
-            <div><span>Core focus</span><span>Web + SEO + systems</span></div>
-            <div><span>Best fit</span><span>Clients who need someone hands-on</span></div>
+            <h2>
+              I help businesses look better online
+              <span>and work better behind the scenes.</span>
+            </h2>
+
+            <p>
+              Over the past year, I’ve been working hands-on across real client websites and digital systems. I’ve supported businesses with <strong>WordPress, Shopify, GoHighLevel, SEO, custom front end updates, and day-to-day website operations</strong> by stepping into live projects and improving what already exists.
+            </p>
+
+            <p>
+              What makes me valuable is that I can handle more than one layer of the work. I can improve the page, tighten the content, fix the user flow, connect the forms, support the automation, and present the update clearly. I don’t just make pages look finished. I help businesses feel more professional, more credible, and easier to work with online.
+            </p>
+
+            <div class="about-meta">
+              <div><small>Experience</small><strong>1+ year of live client work</strong></div>
+              <div><small>Based in</small><strong>Philippines • Remote</strong></div>
+              <div><small>Main tools</small><strong>WordPress, Shopify, GHL, SEO</strong></div>
+              <div><small>Working style</small><strong>Hands-on, practical, client-ready</strong></div>
+            </div>
           </div>
-        </aside>
 
-        <div class="about-main">
-          <div class="label">Why I work this way</div>
-          <h2>I like making complicated digital work feel simple.</h2>
+          <div class="fence-shell" id="fenceShell" aria-label="Portrait of Kyle behind an architectural fence">
+            <div class="fence-note"><i></i>1+ year building for real clients</div>
 
-          <p>
-            My work sits between a traditional virtual assistant, a front end developer, and an SEO operator. I’m comfortable stepping into a live client website, finding what is weak, building the fix, testing the real user path, and then explaining the result in language the client can understand.
-          </p>
+            <div class="fence-frame">
+              <div class="fence-person-wrap" id="fencePerson">
+                <img
+                  class="fence-person"
+                  src="media/About.png"
+                  alt="Kyle"
+                  onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/About.png?raw=true';"
+                >
+              </div>
 
-          <p>
-            I have worked across <strong>private equity, executive transportation, ecommerce, real estate, lead generation, and internal business systems</strong>. Some projects needed design. Some needed code. Some needed SEO. Some needed automation. I prefer being able to solve the whole problem instead of only one piece of it.
-          </p>
+              <div class="fence-bars" aria-hidden="true">
+                <span class="fence-bar" data-bar="-3"></span>
+                <span class="fence-bar" data-bar="-2"></span>
+                <span class="fence-bar" data-bar="-1"></span>
+                <span class="fence-bar" data-bar="0"></span>
+                <span class="fence-bar" data-bar="1"></span>
+                <span class="fence-bar" data-bar="2"></span>
+                <span class="fence-bar" data-bar="3"></span>
+              </div>
+            </div>
+
+            <div class="fence-depth">1+ year / Web / SEO / Systems</div>
+          </div>
         </div>
       </div>
     </section>
@@ -1446,6 +1743,11 @@
     const introPortrait = document.getElementById("introPortrait");
     const scenes = [...document.querySelectorAll(".scene")];
     const labelledSections = [...document.querySelectorAll("[data-label]")];
+    const aboutSection = document.getElementById("aboutSection");
+    const aboutCopy = document.getElementById("aboutCopy");
+    const fenceShell = document.getElementById("fenceShell");
+    const fencePerson = document.getElementById("fencePerson");
+    const fenceBars = [...document.querySelectorAll(".fence-bar")];
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -1526,6 +1828,42 @@
       }
     }
 
+    function renderAbout() {
+      if (!aboutSection || !fenceShell || !fencePerson) return;
+
+      const p = sectionProgress(aboutSection);
+      const enter = clamp(p / .22);
+      const reveal = clamp((p - .18) / .48);
+      const exit = clamp((p - .78) / .22);
+
+      const shellX = lerp(90, 0, enter) + lerp(0, 54, exit);
+      const shellScale = lerp(.94, 1, enter) * lerp(1, .96, exit);
+      const shellOpacity = enter * lerp(1, .12, exit);
+
+      const personX = lerp(50, -8, reveal) + lerp(0, 34, exit);
+      const personY = lerp(28, 0, reveal) + lerp(0, -18, exit);
+      const personScale = lerp(.96, 1.035, reveal) * lerp(1, .97, exit);
+
+      fenceShell.style.transform = `translateX(${shellX}px) scale(${shellScale})`;
+      fenceShell.style.opacity = shellOpacity;
+
+      fencePerson.style.transform = `translate(${personX}px, ${personY}px) scale(${personScale})`;
+
+      if (aboutCopy) {
+        const copyX = lerp(-48, 0, enter) + lerp(0, -24, exit);
+        const copyOpacity = enter * lerp(1, .18, exit);
+        aboutCopy.style.transform = `translateX(${copyX}px)`;
+        aboutCopy.style.opacity = copyOpacity;
+      }
+
+      const spread = lerp(0, 16, reveal);
+      const lean = lerp(-1.8, 0, reveal);
+      fenceBars.forEach(bar => {
+        const idx = Number(bar.dataset.bar || 0);
+        bar.style.transform = `translateX(${idx * spread}px) rotate(${idx * lean * .18}deg)`;
+      });
+    }
+
     function renderGlobalProgress() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -1550,6 +1888,7 @@
       renderGlobalProgress();
       renderIntro();
       scenes.forEach(renderScene);
+      renderAbout();
       renderLabel();
     }
 
