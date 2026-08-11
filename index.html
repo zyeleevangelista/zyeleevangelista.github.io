@@ -830,11 +830,11 @@
 
     .about {
       position: relative;
-      min-height: 200vh;
+      min-height: 190vh;
       border-top: 1px solid var(--soft-line);
       background:
-        radial-gradient(circle at 16% 28%, rgba(13,127,103,.04), transparent 24%),
-        radial-gradient(circle at 86% 70%, rgba(36,87,255,.04), transparent 24%),
+        radial-gradient(circle at 18% 22%, rgba(13,127,103,.04), transparent 24%),
+        radial-gradient(circle at 84% 74%, rgba(36,87,255,.04), transparent 24%),
         linear-gradient(180deg, #f7f5f0 0%, #fbfaf7 100%);
     }
 
@@ -853,7 +853,7 @@
       height: 100%;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.02fr .98fr;
+      grid-template-columns: .92fr 1.08fr;
       gap: clamp(34px, 5vw, 84px);
       align-items: center;
     }
@@ -861,7 +861,7 @@
     .about-visual {
       position: relative;
       width: 100%;
-      max-width: 700px;
+      max-width: 660px;
       height: min(78vh, 760px);
       min-height: 560px;
       will-change: transform, opacity;
@@ -870,7 +870,7 @@
     .about-badge {
       position: absolute;
       left: 0;
-      top: 3%;
+      top: 5%;
       z-index: 8;
       display: inline-flex;
       align-items: center;
@@ -896,95 +896,52 @@
       box-shadow: 0 0 0 6px rgba(13,127,103,.08);
     }
 
-    .about-card {
+    .about-portrait-wrap {
       position: absolute;
-      inset: 8% 3% 0 0;
-      overflow: hidden;
-      border-radius: 30px;
-      border: 1px solid rgba(17,17,17,.14);
-      background:
-        linear-gradient(rgba(17,17,17,.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(17,17,17,.022) 1px, transparent 1px),
-        rgba(255,255,255,.62);
-      background-size: 28px 28px;
-      box-shadow: 0 34px 90px rgba(0,0,0,.075);
-    }
-
-    .about-card::before {
-      content: "";
-      position: absolute;
-      width: 74%;
-      aspect-ratio: 1;
-      left: 6%;
-      top: 14%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(36,87,255,.08), rgba(36,87,255,.02) 48%, transparent 70%);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .about-card::after {
-      content: "INSIDE THE WORK";
-      position: absolute;
-      right: 22px;
-      bottom: 18px;
-      z-index: 1;
-      color: rgba(17,17,17,.095);
-      font-size: clamp(38px, 4vw, 60px);
-      font-weight: 930;
-      line-height: .86;
-      letter-spacing: -.07em;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      pointer-events: none;
-    }
-
-    .about-person-wrap {
-      position: absolute;
-      inset: 6% 0 0 -10%;
+      inset: 10% 0 0 0;
       z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
       pointer-events: none;
-      will-change: transform;
-    }
-
-    .about-person {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: left bottom;
-      filter: drop-shadow(0 28px 40px rgba(0,0,0,.13));
-      user-select: none;
-    }
-
-    .about-panels {
-      position: absolute;
-      inset: 0;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .about-panel {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 18%;
-      border-left: 1px solid rgba(17,17,17,.1);
-      border-right: 1px solid rgba(17,17,17,.1);
-      background: rgba(255,255,255,.62);
-      backdrop-filter: blur(5px);
-      box-shadow:
-        inset 0 1px rgba(255,255,255,.8),
-        0 18px 40px rgba(0,0,0,.03);
       will-change: transform, opacity;
     }
 
-    .about-panel:nth-child(1) { left: 26%; }
-    .about-panel:nth-child(2) { left: 50%; }
-    .about-panel:nth-child(3) { left: 74%; }
+    .about-portrait-wrap::before {
+      content: "";
+      position: absolute;
+      width: 82%;
+      aspect-ratio: 1;
+      left: 8%;
+      top: 12%;
+      border: 1px solid rgba(17,17,17,.10);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(36,87,255,.07), rgba(36,87,255,.02) 48%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .about-portrait-wrap::after {
+      content: "WEB / SEO / SYSTEMS";
+      position: absolute;
+      left: -10px;
+      top: 48%;
+      transform: rotate(-90deg) translateX(-50%);
+      transform-origin: left center;
+      color: rgba(17,17,17,.28);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .24em;
+      white-space: nowrap;
+      z-index: 4;
+    }
+
+    .about-portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 28px 40px rgba(0,0,0,.13));
+      user-select: none;
+    }
 
     .about-copy {
       position: relative;
@@ -1060,7 +1017,7 @@
 
     @media (max-width: 1050px) {
       .about {
-        min-height: 185vh;
+        min-height: 180vh;
       }
 
       .about-inner {
@@ -1076,7 +1033,7 @@
 
     @media (max-width: 760px) {
       .about {
-        min-height: 205vh;
+        min-height: 190vh;
       }
 
       .about-sticky {
@@ -1099,30 +1056,17 @@
         height: 48vh;
       }
 
-      .about-card {
-        inset: 0;
-        border-radius: 22px;
-      }
-
-      .about-person-wrap {
-        inset: 0 -3% 0 -12%;
-      }
-
-      .about-card::after {
-        display: none;
-      }
-
-      .about-panel {
-        width: 22%;
-      }
-
-      .about-panel:nth-child(1) { left: 18%; }
-      .about-panel:nth-child(2) { left: 46%; }
-      .about-panel:nth-child(3) { left: 74%; }
-
       .about-badge {
         top: 12px;
         left: 12px;
+      }
+
+      .about-portrait-wrap {
+        inset: 6% 0 0 0;
+      }
+
+      .about-portrait-wrap::after {
+        display: none;
       }
 
       .about-copy {
@@ -1842,24 +1786,16 @@
     <section class="about" data-label="About Kyle" id="aboutSection">
       <div class="about-sticky">
         <div class="about-inner">
-          <div class="about-visual" id="aboutVisual" aria-label="Portrait of Kyle inside an editorial frame">
+          <div class="about-visual" id="aboutVisual" aria-label="Portrait of Kyle">
             <div class="about-badge"><i></i>1+ year building for real clients</div>
 
-            <div class="about-card">
-              <div class="about-person-wrap" id="aboutPersonWrap">
-                <img
-                  class="about-person"
-                  src="media/About.png"
-                  alt="Kyle"
-                  onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/About.png?raw=true';"
-                >
-              </div>
-
-              <div class="about-panels" aria-hidden="true">
-                <span class="about-panel" data-panel="-1"></span>
-                <span class="about-panel" data-panel="0"></span>
-                <span class="about-panel" data-panel="1"></span>
-              </div>
+            <div class="about-portrait-wrap" id="aboutPortrait">
+              <img
+                class="about-portrait"
+                src="media/About.png"
+                alt="Kyle"
+                onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/About.png?raw=true';"
+              >
             </div>
           </div>
 
@@ -1946,8 +1882,7 @@
     const aboutSection = document.getElementById("aboutSection");
     const aboutCopy = document.getElementById("aboutCopy");
     const aboutVisual = document.getElementById("aboutVisual");
-    const aboutPersonWrap = document.getElementById("aboutPersonWrap");
-    const aboutPanels = [...document.querySelectorAll(".about-panel")];
+    const aboutPortrait = document.getElementById("aboutPortrait");
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -2068,24 +2003,26 @@
     }
 
     function renderAbout() {
-      if (!aboutSection || !aboutVisual || !aboutPersonWrap) return;
+      if (!aboutSection || !aboutVisual || !aboutPortrait) return;
 
       const p = sectionProgress(aboutSection);
       const enter = clamp(p / .22);
       const reveal = clamp((p - .18) / .46);
       const exit = clamp((p - .80) / .20);
 
-      const visualX = lerp(-70, 0, enter) + lerp(0, -28, exit);
-      const visualScale = lerp(.95, 1, enter) * lerp(1, .97, exit);
+      const visualX = lerp(-54, 0, enter) + lerp(0, -22, exit);
+      const visualScale = lerp(.96, 1, enter) * lerp(1, .98, exit);
       const visualOpacity = enter * lerp(1, .14, exit);
 
-      const personX = lerp(-36, 0, reveal) + lerp(0, 20, exit);
-      const personY = lerp(24, 0, reveal) + lerp(0, -10, exit);
-      const personScale = lerp(.97, 1.03, reveal) * lerp(1, .98, exit);
+      const portraitY = lerp(28, 0, reveal) + lerp(0, -12, exit);
+      const portraitScale = lerp(.97, 1.03, reveal) * lerp(1, .98, exit);
+      const portraitOpacity = lerp(1, .18, exit);
 
       aboutVisual.style.transform = `translateX(${visualX}px) scale(${visualScale})`;
       aboutVisual.style.opacity = visualOpacity;
-      aboutPersonWrap.style.transform = `translate(${personX}px, ${personY}px) scale(${personScale})`;
+
+      aboutPortrait.style.transform = `translateY(${portraitY}px) scale(${portraitScale})`;
+      aboutPortrait.style.opacity = portraitOpacity;
 
       if (aboutCopy) {
         const copyX = lerp(60, 0, enter) + lerp(0, 24, exit);
@@ -2093,13 +2030,6 @@
         aboutCopy.style.transform = `translateX(${copyX}px)`;
         aboutCopy.style.opacity = copyOpacity;
       }
-
-      const spread = lerp(0, 10, reveal);
-      aboutPanels.forEach((panel, index) => {
-        const offset = index - 1;
-        panel.style.transform = `translateX(${offset * spread}px)`;
-        panel.style.opacity = String(lerp(.88, .62, clamp(reveal)));
-      });
     }
 
     function renderGlobalProgress() {
