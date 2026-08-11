@@ -165,9 +165,9 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 100%;
+      width: 72%;
       margin: 0;
-      font-size: clamp(72px, 12vw, 188px);
+      font-size: clamp(68px, 10.5vw, 164px);
       line-height: .76;
       letter-spacing: -.085em;
       font-weight: 950;
@@ -180,11 +180,90 @@
       font-weight: 750;
     }
 
+    .intro-portrait-wrap {
+      position: absolute;
+      right: -2%;
+      bottom: -2%;
+      width: min(47vw, 650px);
+      height: min(79vh, 820px);
+      z-index: 2;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .intro-portrait-wrap::before {
+      content: "";
+      position: absolute;
+      width: 82%;
+      aspect-ratio: 1;
+      right: 5%;
+      top: 12%;
+      border: 1px solid rgba(17,17,17,.10);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(36,87,255,.07), rgba(36,87,255,.025) 47%, transparent 70%);
+      z-index: -2;
+    }
+
+    .intro-portrait-wrap::after {
+      content: "WEB / SEO / SYSTEMS";
+      position: absolute;
+      right: -14px;
+      top: 46%;
+      transform: rotate(90deg) translateX(50%);
+      transform-origin: right center;
+      color: rgba(17,17,17,.32);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .24em;
+      white-space: nowrap;
+      z-index: 4;
+    }
+
+    .intro-portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 34px 44px rgba(0,0,0,.12));
+      user-select: none;
+    }
+
+    .intro-nameplate {
+      position: absolute;
+      right: 4%;
+      bottom: 8%;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border: 1px solid rgba(17,17,17,.11);
+      border-radius: 999px;
+      background: rgba(255,253,249,.78);
+      backdrop-filter: blur(10px);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      box-shadow: 0 14px 34px rgba(0,0,0,.045);
+    }
+
+    .intro-nameplate i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(13,127,103,.08);
+    }
+
     .intro-copy {
       position: absolute;
-      right: 0;
+      left: 0;
+      right: auto;
       bottom: 8%;
-      max-width: 560px;
+      max-width: min(46vw, 600px);
       margin: 0;
       color: var(--muted);
       font-size: clamp(16px, 1.5vw, 20px);
@@ -197,7 +276,7 @@
     .scroll-cue {
       position: absolute;
       left: 0;
-      bottom: 8%;
+      bottom: 3%;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -777,17 +856,45 @@
       .intro-sticky { padding-top: 72px; }
       .intro-kicker { top: 7%; }
       .intro-title {
-        top: 39%;
-        font-size: clamp(58px, 19vw, 92px);
+        top: 27%;
+        width: 94%;
+        font-size: clamp(58px, 17vw, 88px);
         line-height: .82;
+        z-index: 4;
       }
       .intro-copy {
         left: 0;
         right: auto;
-        bottom: 8%;
-        max-width: 94%;
-        font-size: 16px;
+        bottom: 7%;
+        max-width: 92%;
+        font-size: 15px;
+        z-index: 5;
+        padding: 13px 14px;
+        border-radius: 16px;
+        background: rgba(247,245,240,.82);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(17,17,17,.08);
       }
+
+      .intro-portrait-wrap {
+        width: min(94vw, 520px);
+        height: 58vh;
+        right: -16%;
+        bottom: 13%;
+        opacity: .96;
+      }
+
+      .intro-portrait-wrap::before {
+        width: 78%;
+        right: 8%;
+        top: 12%;
+      }
+
+      .intro-portrait-wrap::after,
+      .intro-nameplate {
+        display: none;
+      }
+
       .scroll-cue { display: none; }
 
       .statement { min-height: 105vh; }
@@ -900,6 +1007,16 @@
             I build<br>
             <span class="ghost">for the web.</span>
           </h1>
+
+          <div class="intro-portrait-wrap" id="introPortrait">
+            <img
+              class="intro-portrait"
+              src="media/hero.png"
+              alt="Kyle pointing toward the viewer"
+              onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/hero.png?raw=true';"
+            >
+            <div class="intro-nameplate"><i></i>Kyle • Available remotely</div>
+          </div>
 
           <div class="scroll-cue"><i></i>Scroll to enter</div>
 
@@ -1326,6 +1443,7 @@
     const intro = document.querySelector(".intro");
     const introTitle = document.getElementById("introTitle");
     const introCopy = document.getElementById("introCopy");
+    const introPortrait = document.getElementById("introPortrait");
     const scenes = [...document.querySelectorAll(".scene")];
     const labelledSections = [...document.querySelectorAll("[data-label]")];
 
@@ -1340,16 +1458,32 @@
 
     function renderIntro() {
       const p = sectionProgress(intro);
-      const titleY = lerp(0, -70, clamp((p - .28) / .58));
-      const titleScale = lerp(1, .78, clamp((p - .24) / .7));
-      const titleOpacity = lerp(1, .12, clamp((p - .64) / .32));
-      const copyY = lerp(0, -46, clamp((p - .36) / .54));
-      const copyOpacity = lerp(1, .05, clamp((p - .68) / .28));
+
+      const titleY = lerp(0, -78, clamp((p - .25) / .58));
+      const titleScale = lerp(1, .80, clamp((p - .24) / .68));
+      const titleOpacity = lerp(1, .10, clamp((p - .66) / .30));
+
+      const copyY = lerp(0, -52, clamp((p - .34) / .55));
+      const copyOpacity = lerp(1, .04, clamp((p - .70) / .26));
+
+      const portraitEnter = clamp((p + .04) / .18);
+      const portraitExit = clamp((p - .63) / .34);
+      const portraitX = lerp(90, 0, portraitEnter) + lerp(0, 120, portraitExit);
+      const portraitY = lerp(38, 0, portraitEnter) + lerp(0, -42, portraitExit);
+      const portraitScale = lerp(.90, 1, portraitEnter) * lerp(1, .88, portraitExit);
+      const portraitRotate = lerp(1.5, 0, portraitEnter) + lerp(0, -2.5, portraitExit);
+      const portraitOpacity = portraitEnter * lerp(1, .04, portraitExit);
 
       introTitle.style.transform = `translateY(calc(-50% + ${titleY}px)) scale(${titleScale})`;
       introTitle.style.opacity = titleOpacity;
+
       introCopy.style.transform = `translateY(${copyY}px)`;
       introCopy.style.opacity = copyOpacity;
+
+      if (introPortrait) {
+        introPortrait.style.transform = `translate(${portraitX}px, ${portraitY}px) scale(${portraitScale}) rotate(${portraitRotate}deg)`;
+        introPortrait.style.opacity = portraitOpacity;
+      }
     }
 
     function renderScene(scene) {
