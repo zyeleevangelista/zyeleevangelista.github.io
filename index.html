@@ -830,10 +830,11 @@
 
     .about {
       position: relative;
-      min-height: 205vh;
+      min-height: 200vh;
       border-top: 1px solid var(--soft-line);
       background:
-        radial-gradient(circle at 78% 35%, rgba(36,87,255,.045), transparent 26%),
+        radial-gradient(circle at 16% 28%, rgba(13,127,103,.04), transparent 24%),
+        radial-gradient(circle at 86% 70%, rgba(36,87,255,.04), transparent 24%),
         linear-gradient(180deg, #f7f5f0 0%, #fbfaf7 100%);
     }
 
@@ -852,15 +853,143 @@
       height: 100%;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: .88fr 1.12fr;
-      gap: clamp(34px, 5vw, 76px);
+      grid-template-columns: 1.02fr .98fr;
+      gap: clamp(34px, 5vw, 84px);
       align-items: center;
     }
 
+    .about-visual {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      height: min(78vh, 760px);
+      min-height: 560px;
+      will-change: transform, opacity;
+    }
+
+    .about-badge {
+      position: absolute;
+      left: 0;
+      top: 3%;
+      z-index: 8;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,17,17,.1);
+      background: rgba(255,253,249,.84);
+      backdrop-filter: blur(12px);
+      color: #585858;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      box-shadow: 0 12px 32px rgba(0,0,0,.04);
+    }
+
+    .about-badge i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(13,127,103,.08);
+    }
+
+    .about-card {
+      position: absolute;
+      inset: 8% 3% 0 0;
+      overflow: hidden;
+      border-radius: 30px;
+      border: 1px solid rgba(17,17,17,.14);
+      background:
+        linear-gradient(rgba(17,17,17,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,17,17,.022) 1px, transparent 1px),
+        rgba(255,255,255,.62);
+      background-size: 28px 28px;
+      box-shadow: 0 34px 90px rgba(0,0,0,.075);
+    }
+
+    .about-card::before {
+      content: "";
+      position: absolute;
+      width: 74%;
+      aspect-ratio: 1;
+      left: 6%;
+      top: 14%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(36,87,255,.08), rgba(36,87,255,.02) 48%, transparent 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .about-card::after {
+      content: "INSIDE THE WORK";
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      z-index: 1;
+      color: rgba(17,17,17,.095);
+      font-size: clamp(38px, 4vw, 60px);
+      font-weight: 930;
+      line-height: .86;
+      letter-spacing: -.07em;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      pointer-events: none;
+    }
+
+    .about-person-wrap {
+      position: absolute;
+      inset: 6% 0 0 -10%;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .about-person {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: left bottom;
+      filter: drop-shadow(0 28px 40px rgba(0,0,0,.13));
+      user-select: none;
+    }
+
+    .about-panels {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .about-panel {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 18%;
+      border-left: 1px solid rgba(17,17,17,.1);
+      border-right: 1px solid rgba(17,17,17,.1);
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(5px);
+      box-shadow:
+        inset 0 1px rgba(255,255,255,.8),
+        0 18px 40px rgba(0,0,0,.03);
+      will-change: transform, opacity;
+    }
+
+    .about-panel:nth-child(1) { left: 26%; }
+    .about-panel:nth-child(2) { left: 50%; }
+    .about-panel:nth-child(3) { left: 74%; }
+
     .about-copy {
       position: relative;
-      z-index: 5;
-      max-width: 640px;
+      z-index: 6;
+      max-width: 650px;
       will-change: transform, opacity;
     }
 
@@ -875,14 +1004,14 @@
 
     .about-copy h2 {
       margin: 14px 0 0;
-      font-size: clamp(52px, 6.5vw, 96px);
+      font-size: clamp(52px, 6.4vw, 96px);
       line-height: .88;
       letter-spacing: -.07em;
       text-wrap: balance;
     }
 
     .about-copy h2 span {
-      color: #969696;
+      color: #9a9a9a;
     }
 
     .about-copy p {
@@ -890,6 +1019,7 @@
       color: var(--muted);
       font-size: clamp(15px, 1.45vw, 18px);
       max-width: 590px;
+      line-height: 1.56;
     }
 
     .about-copy p strong {
@@ -928,179 +1058,17 @@
       letter-spacing: -.01em;
     }
 
-    .fence-shell {
-      position: relative;
-      height: min(78vh, 760px);
-      min-height: 560px;
-      width: 100%;
-      max-width: 660px;
-      justify-self: end;
-      will-change: transform, opacity;
-    }
-
-    .fence-note {
-      position: absolute;
-      left: -6px;
-      top: 3%;
-      z-index: 9;
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(17,17,17,.1);
-      background: rgba(255,253,249,.82);
-      backdrop-filter: blur(12px);
-      color: #565656;
-      font-size: 9px;
-      font-weight: 850;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      box-shadow: 0 12px 32px rgba(0,0,0,.04);
-    }
-
-    .fence-note i {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 6px rgba(13,127,103,.08);
-    }
-
-    .fence-frame {
-      position: absolute;
-      inset: 4% 0 0 7%;
-      border: 1px solid rgba(17,17,17,.18);
-      border-radius: 28px;
-      overflow: hidden;
-      background:
-        linear-gradient(rgba(17,17,17,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(17,17,17,.025) 1px, transparent 1px),
-        rgba(255,255,255,.56);
-      background-size: 28px 28px;
-      box-shadow: 0 34px 90px rgba(0,0,0,.075);
-    }
-
-    .fence-frame::before {
-      content: "THE OTHER SIDE";
-      position: absolute;
-      left: 20px;
-      bottom: 18px;
-      z-index: 1;
-      color: rgba(17,17,17,.12);
-      font-size: clamp(44px, 5vw, 72px);
-      font-weight: 930;
-      line-height: .82;
-      letter-spacing: -.07em;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      pointer-events: none;
-    }
-
-    .fence-frame::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      pointer-events: none;
-      background:
-        linear-gradient(180deg, rgba(247,245,240,.26), transparent 16%),
-        linear-gradient(90deg, rgba(247,245,240,.16), transparent 15%, transparent 85%, rgba(247,245,240,.14));
-    }
-
-    .fence-person-wrap {
-      position: absolute;
-      inset: 5% -2% 0 9%;
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    .fence-person {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center bottom;
-      filter: drop-shadow(0 28px 40px rgba(0,0,0,.13));
-      user-select: none;
-    }
-
-    .fence-bars {
-      position: absolute;
-      inset: 0;
-      z-index: 7;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .fence-bars::before,
-    .fence-bars::after {
-      content: "";
-      position: absolute;
-      left: -5%;
-      width: 110%;
-      height: 15px;
-      border-radius: 999px;
-      background: #1a1a1a;
-      box-shadow: 0 8px 18px rgba(0,0,0,.16);
-      opacity: .94;
-    }
-
-    .fence-bars::before { top: 23%; }
-    .fence-bars::after { bottom: 22%; }
-
-    .fence-bar {
-      position: absolute;
-      top: -4%;
-      bottom: -4%;
-      width: 17px;
-      margin-left: -8.5px;
-      border-radius: 999px;
-      background:
-        linear-gradient(90deg, #0e0e0e, #282828 45%, #111 100%);
-      box-shadow:
-        8px 0 16px rgba(0,0,0,.14),
-        inset 1px 0 rgba(255,255,255,.09);
-      transform-origin: center;
-      will-change: transform;
-    }
-
-    .fence-bar:nth-child(1) { left: 8%; }
-    .fence-bar:nth-child(2) { left: 22%; }
-    .fence-bar:nth-child(3) { left: 36%; }
-    .fence-bar:nth-child(4) { left: 50%; }
-    .fence-bar:nth-child(5) { left: 64%; }
-    .fence-bar:nth-child(6) { left: 78%; }
-    .fence-bar:nth-child(7) { left: 92%; }
-
-    .fence-depth {
-      position: absolute;
-      right: -1%;
-      bottom: 1%;
-      z-index: 8;
-      font-size: 9px;
-      font-weight: 850;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: #8a8a8a;
-      transform: rotate(90deg) translateX(100%);
-      transform-origin: right bottom;
-    }
-
     @media (max-width: 1050px) {
       .about {
-        min-height: 190vh;
+        min-height: 185vh;
       }
 
       .about-inner {
-        grid-template-columns: .96fr 1.04fr;
+        grid-template-columns: 1fr 1fr;
         gap: 28px;
       }
 
-      .fence-shell {
+      .about-visual {
         height: min(70vh, 680px);
         min-height: 500px;
       }
@@ -1108,7 +1076,7 @@
 
     @media (max-width: 760px) {
       .about {
-        min-height: 210vh;
+        min-height: 205vh;
       }
 
       .about-sticky {
@@ -1118,12 +1086,47 @@
 
       .about-inner {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: 1fr auto;
         gap: 18px;
         align-items: start;
       }
 
+      .about-visual {
+        order: 1;
+        width: 100%;
+        max-width: none;
+        min-height: 0;
+        height: 48vh;
+      }
+
+      .about-card {
+        inset: 0;
+        border-radius: 22px;
+      }
+
+      .about-person-wrap {
+        inset: 0 -3% 0 -12%;
+      }
+
+      .about-card::after {
+        display: none;
+      }
+
+      .about-panel {
+        width: 22%;
+      }
+
+      .about-panel:nth-child(1) { left: 18%; }
+      .about-panel:nth-child(2) { left: 46%; }
+      .about-panel:nth-child(3) { left: 74%; }
+
+      .about-badge {
+        top: 12px;
+        left: 12px;
+      }
+
       .about-copy {
+        order: 2;
         max-width: 100%;
       }
 
@@ -1139,43 +1142,6 @@
 
       .about-meta {
         display: none;
-      }
-
-      .fence-shell {
-        width: 100%;
-        max-width: none;
-        min-height: 0;
-        height: 48vh;
-        justify-self: stretch;
-      }
-
-      .fence-frame {
-        inset: 0;
-        border-radius: 22px;
-      }
-
-      .fence-person-wrap {
-        inset: 0 -7% 0 1%;
-      }
-
-      .fence-note {
-        top: 12px;
-        left: 12px;
-      }
-
-      .fence-frame::before,
-      .fence-depth {
-        display: none;
-      }
-
-      .fence-bar {
-        width: 11px;
-        margin-left: -5.5px;
-      }
-
-      .fence-bars::before,
-      .fence-bars::after {
-        height: 10px;
       }
     }
 
@@ -1876,6 +1842,27 @@
     <section class="about" data-label="About Kyle" id="aboutSection">
       <div class="about-sticky">
         <div class="about-inner">
+          <div class="about-visual" id="aboutVisual" aria-label="Portrait of Kyle inside an editorial frame">
+            <div class="about-badge"><i></i>1+ year building for real clients</div>
+
+            <div class="about-card">
+              <div class="about-person-wrap" id="aboutPersonWrap">
+                <img
+                  class="about-person"
+                  src="media/About.png"
+                  alt="Kyle"
+                  onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/About.png?raw=true';"
+                >
+              </div>
+
+              <div class="about-panels" aria-hidden="true">
+                <span class="about-panel" data-panel="-1"></span>
+                <span class="about-panel" data-panel="0"></span>
+                <span class="about-panel" data-panel="1"></span>
+              </div>
+            </div>
+          </div>
+
           <div class="about-copy" id="aboutCopy">
             <div class="label">About Kyle / 1+ year of live client work</div>
 
@@ -1898,33 +1885,6 @@
               <div><small>Main tools</small><strong>WordPress, Shopify, GHL, SEO</strong></div>
               <div><small>Working style</small><strong>Hands-on, practical, client-ready</strong></div>
             </div>
-          </div>
-
-          <div class="fence-shell" id="fenceShell" aria-label="Portrait of Kyle behind an architectural fence">
-            <div class="fence-note"><i></i>1+ year building for real clients</div>
-
-            <div class="fence-frame">
-              <div class="fence-person-wrap" id="fencePerson">
-                <img
-                  class="fence-person"
-                  src="media/About.png"
-                  alt="Kyle"
-                  onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/About.png?raw=true';"
-                >
-              </div>
-
-              <div class="fence-bars" aria-hidden="true">
-                <span class="fence-bar" data-bar="-3"></span>
-                <span class="fence-bar" data-bar="-2"></span>
-                <span class="fence-bar" data-bar="-1"></span>
-                <span class="fence-bar" data-bar="0"></span>
-                <span class="fence-bar" data-bar="1"></span>
-                <span class="fence-bar" data-bar="2"></span>
-                <span class="fence-bar" data-bar="3"></span>
-              </div>
-            </div>
-
-            <div class="fence-depth">1+ year / Web / SEO / Systems</div>
           </div>
         </div>
       </div>
@@ -1985,9 +1945,9 @@
     const statementRail = document.getElementById("statementRail");
     const aboutSection = document.getElementById("aboutSection");
     const aboutCopy = document.getElementById("aboutCopy");
-    const fenceShell = document.getElementById("fenceShell");
-    const fencePerson = document.getElementById("fencePerson");
-    const fenceBars = [...document.querySelectorAll(".fence-bar")];
+    const aboutVisual = document.getElementById("aboutVisual");
+    const aboutPersonWrap = document.getElementById("aboutPersonWrap");
+    const aboutPanels = [...document.querySelectorAll(".about-panel")];
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -2108,38 +2068,37 @@
     }
 
     function renderAbout() {
-      if (!aboutSection || !fenceShell || !fencePerson) return;
+      if (!aboutSection || !aboutVisual || !aboutPersonWrap) return;
 
       const p = sectionProgress(aboutSection);
       const enter = clamp(p / .22);
-      const reveal = clamp((p - .18) / .48);
-      const exit = clamp((p - .78) / .22);
+      const reveal = clamp((p - .18) / .46);
+      const exit = clamp((p - .80) / .20);
 
-      const shellX = lerp(90, 0, enter) + lerp(0, 54, exit);
-      const shellScale = lerp(.94, 1, enter) * lerp(1, .96, exit);
-      const shellOpacity = enter * lerp(1, .12, exit);
+      const visualX = lerp(-70, 0, enter) + lerp(0, -28, exit);
+      const visualScale = lerp(.95, 1, enter) * lerp(1, .97, exit);
+      const visualOpacity = enter * lerp(1, .14, exit);
 
-      const personX = lerp(50, -8, reveal) + lerp(0, 34, exit);
-      const personY = lerp(28, 0, reveal) + lerp(0, -18, exit);
-      const personScale = lerp(.96, 1.035, reveal) * lerp(1, .97, exit);
+      const personX = lerp(-36, 0, reveal) + lerp(0, 20, exit);
+      const personY = lerp(24, 0, reveal) + lerp(0, -10, exit);
+      const personScale = lerp(.97, 1.03, reveal) * lerp(1, .98, exit);
 
-      fenceShell.style.transform = `translateX(${shellX}px) scale(${shellScale})`;
-      fenceShell.style.opacity = shellOpacity;
-
-      fencePerson.style.transform = `translate(${personX}px, ${personY}px) scale(${personScale})`;
+      aboutVisual.style.transform = `translateX(${visualX}px) scale(${visualScale})`;
+      aboutVisual.style.opacity = visualOpacity;
+      aboutPersonWrap.style.transform = `translate(${personX}px, ${personY}px) scale(${personScale})`;
 
       if (aboutCopy) {
-        const copyX = lerp(-48, 0, enter) + lerp(0, -24, exit);
+        const copyX = lerp(60, 0, enter) + lerp(0, 24, exit);
         const copyOpacity = enter * lerp(1, .18, exit);
         aboutCopy.style.transform = `translateX(${copyX}px)`;
         aboutCopy.style.opacity = copyOpacity;
       }
 
-      const spread = lerp(0, 16, reveal);
-      const lean = lerp(-1.8, 0, reveal);
-      fenceBars.forEach(bar => {
-        const idx = Number(bar.dataset.bar || 0);
-        bar.style.transform = `translateX(${idx * spread}px) rotate(${idx * lean * .18}deg)`;
+      const spread = lerp(0, 10, reveal);
+      aboutPanels.forEach((panel, index) => {
+        const offset = index - 1;
+        panel.style.transform = `translateX(${offset * spread}px)`;
+        panel.style.opacity = String(lerp(.88, .62, clamp(reveal)));
       });
     }
 
