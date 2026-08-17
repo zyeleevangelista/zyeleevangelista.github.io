@@ -1756,6 +1756,99 @@
       .browser-view { aspect-ratio: 16 / 9; }
     }
 
+    /*
+      Work scene desktop composition
+      Keeps all text in one left column and reserves the full right column for
+      the website preview, preventing title or description overlap.
+    */
+    @media (min-width: 901px) {
+      .scene-inner {
+        display: grid;
+        grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+        grid-template-rows: auto auto minmax(0, 1fr) auto;
+        column-gap: clamp(44px, 5vw, 72px);
+        padding-top: clamp(8px, 1.8vh, 18px);
+      }
+
+      .scene-index {
+        position: relative;
+        left: auto;
+        top: auto;
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+      }
+
+      .scene-title {
+        position: relative;
+        left: auto;
+        top: auto;
+        grid-column: 1;
+        grid-row: 2;
+        align-self: start;
+        width: 100%;
+        max-width: 100%;
+        margin: clamp(22px, 3vh, 34px) 0 0;
+        font-size: clamp(52px, 5vw, 80px);
+        line-height: .84;
+      }
+
+      .scene-copy {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        grid-column: 1;
+        grid-row: 3;
+        align-self: start;
+        width: 100%;
+        max-width: 100%;
+        margin-top: clamp(22px, 3vh, 32px);
+      }
+
+      .scene-browser {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        grid-column: 2;
+        grid-row: 1 / 4;
+        align-self: center;
+        justify-self: stretch;
+        width: 100%;
+        max-width: 760px;
+      }
+
+      .scene-link {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        top: auto;
+        grid-column: 2;
+        grid-row: 4;
+        align-self: end;
+        justify-self: end;
+        margin-top: 12px;
+      }
+    }
+
+    @media (min-width: 901px) and (max-height: 720px) {
+      .scene-inner {
+        column-gap: clamp(38px, 4vw, 58px);
+        padding-top: 4px;
+      }
+      .scene-title {
+        margin-top: 16px;
+        font-size: clamp(46px, 4.5vw, 66px);
+      }
+      .scene-title small { margin-bottom: 9px; font-size: 10px; }
+      .scene-copy { margin-top: 16px; }
+      .scene-copy p { font-size: 13px; line-height: 1.45; }
+      .scene-tags { margin-top: 9px; gap: 5px; }
+      .scene-tags span { padding: 5px 7px; font-size: 8px; }
+      .scene-link { margin-top: 8px; padding: 9px 12px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .scroll-cue i::after { animation: none; }
@@ -2414,8 +2507,13 @@
       const titleScale = lerp(.92, 1, enter) * lerp(1, .93, exit);
       const titleOpacity = enter * lerp(1, .12, exit);
 
-      const browserX = lerp(140, 0, settle) + lerp(0, -85, exit);
-      const browserY = lerp(-32, -42, settle) + lerp(0, -18, exit);
+      const desktopWorkLayout = window.innerWidth > 900;
+      const browserX = desktopWorkLayout
+        ? lerp(90, 0, settle) + lerp(0, -48, exit)
+        : lerp(140, 0, settle) + lerp(0, -85, exit);
+      const browserY = desktopWorkLayout
+        ? lerp(18, 0, settle) + lerp(0, -12, exit)
+        : lerp(-32, -42, settle) + lerp(0, -18, exit);
       const browserScale = lerp(.83, 1, settle) * lerp(1, .95, exit);
       const browserOpacity = clamp(settle * 1.45) * lerp(1, .06, exit);
 
@@ -2426,7 +2524,9 @@
       title.style.transform = `translate(${titleX}px, ${titleY}px) scale(${titleScale})`;
       title.style.opacity = titleOpacity;
 
-      browser.style.transform = `translate(${browserX}px, ${browserY}%) scale(${browserScale})`;
+      browser.style.transform = desktopWorkLayout
+        ? `translate(${browserX}px, ${browserY}px) scale(${browserScale})`
+        : `translate(${browserX}px, ${browserY}%) scale(${browserScale})`;
       browser.style.opacity = browserOpacity;
 
       copy.style.transform = `translateY(${copyY}px)`;
