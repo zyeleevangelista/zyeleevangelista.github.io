@@ -30,6 +30,15 @@
       scroll-snap-type: y proximity;
     }
 
+    html.is-snapping {
+      scroll-behavior: auto;
+      scroll-snap-type: none;
+    }
+
+    @media (min-width: 761px) {
+      html { scroll-snap-type: none; }
+    }
+
     [data-label] {
       scroll-snap-align: start;
       scroll-snap-stop: always;
@@ -123,6 +132,79 @@
       will-change: width;
     }
 
+    .side-nav {
+      position: fixed;
+      right: 18px;
+      top: 50%;
+      width: 116px;
+      padding: 6px;
+      border: 1px solid var(--soft-line);
+      border-radius: 18px;
+      background: rgba(255,253,249,.80);
+      box-shadow: 0 18px 50px rgba(0,0,0,.07);
+      backdrop-filter: blur(16px);
+      transform: translate(16px, -50%);
+      z-index: 95;
+      display: grid;
+      gap: 4px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .28s ease, transform .28s ease;
+    }
+
+    .side-nav.visible {
+      opacity: 1;
+      transform: translate(0, -50%);
+      pointer-events: auto;
+    }
+
+    .side-nav a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 12px;
+      color: #787878;
+      transition: transform .22s ease, background .2s ease, color .2s ease;
+      white-space: nowrap;
+    }
+
+    .side-nav a:hover {
+      color: var(--ink);
+      transform: translateX(-2px);
+    }
+
+    .side-nav a.active {
+      color: #fff;
+      background: var(--ink);
+    }
+
+    .side-nav i {
+      flex: 0 0 auto;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #b3b3b3;
+      transition: background .2s ease, box-shadow .2s ease;
+    }
+
+    .side-nav a.active i {
+      background: #fff;
+      box-shadow: none;
+    }
+
+    .side-nav span {
+      order: -1;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
     .intro {
       position: relative;
       min-height: 220vh;
@@ -173,9 +255,9 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 72%;
+      width: 68%;
       margin: 0;
-      font-size: clamp(68px, 10.5vw, 164px);
+      font-size: clamp(68px, 10.1vw, 160px);
       line-height: .76;
       letter-spacing: -.085em;
       font-weight: 950;
@@ -266,6 +348,50 @@
       box-shadow: 0 0 0 6px rgba(13,127,103,.08);
     }
 
+
+    .hero-actions {
+      position: absolute;
+      left: 0;
+      bottom: 2.2%;
+      z-index: 8;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      will-change: transform, opacity;
+    }
+
+    .hero-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 1px solid rgba(17,17,17,.14);
+      border-radius: 999px;
+      background: rgba(255,253,249,.82);
+      backdrop-filter: blur(10px);
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 28px rgba(0,0,0,.035);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .hero-action:hover {
+      transform: translateY(-2px);
+      background: white;
+      border-color: rgba(17,17,17,.24);
+    }
+
+    .hero-action::after {
+      content: "↗";
+      color: var(--blue);
+      font-size: 13px;
+    }
+
     .intro-copy {
       position: absolute;
       left: 0;
@@ -283,8 +409,8 @@
 
     .scroll-cue {
       position: absolute;
-      left: 0;
-      bottom: 3%;
+      left: 245px;
+      bottom: 3.05%;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -319,31 +445,189 @@
     }
 
     .statement {
-      min-height: 125vh;
-      display: grid;
-      place-items: center;
-      padding: 80px 0;
+      position: relative;
+      min-height: 360vh;
       border-top: 1px solid var(--soft-line);
       border-bottom: 1px solid var(--soft-line);
-      background: rgba(255,255,255,.25);
+      background:
+        radial-gradient(circle at 86% 20%, rgba(36,87,255,.045), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.5));
+    }
+
+    .statement-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 78px 0 38px;
     }
 
     .statement-inner {
-      width: min(calc(100% - 32px), 1120px);
-      margin: auto;
+      width: min(calc(100% - 32px), var(--max));
+      height: 100%;
+      margin: 0 auto;
+      position: relative;
     }
 
-    .statement p {
+    .statement-head {
+      position: absolute;
+      left: 0;
+      top: 6%;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .statement-head::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 7px rgba(36,87,255,.08);
+    }
+
+    .statement-counter {
+      position: absolute;
+      right: 0;
+      top: 6%;
+      z-index: 7;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .1em;
+    }
+
+    .statement-counter strong {
+      color: var(--ink);
+      font-size: 28px;
+      letter-spacing: -.05em;
+    }
+
+    .statement-counter span {
+      color: #9a9a9a;
+      font-size: 10px;
+    }
+
+    .statement-stage {
+      position: absolute;
+      inset: 13% 0 11%;
+      display: grid;
+      align-items: center;
+    }
+
+    .statement-beat {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: .86fr 1.14fr;
+      gap: clamp(36px, 7vw, 110px);
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .statement-word {
+      position: relative;
       margin: 0;
-      font-size: clamp(42px, 6.7vw, 104px);
-      line-height: .95;
-      letter-spacing: -.06em;
-      font-weight: 840;
+      font-size: clamp(76px, 12vw, 184px);
+      line-height: .72;
+      letter-spacing: -.09em;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .statement-word::after {
+      content: attr(data-number);
+      position: absolute;
+      left: -.03em;
+      top: -.44em;
+      z-index: -1;
+      color: rgba(17,17,17,.035);
+      font-size: 2.15em;
+      letter-spacing: -.1em;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .statement-beat:nth-child(1) .statement-word { color: #111; }
+    .statement-beat:nth-child(2) .statement-word { color: #3e5964; }
+    .statement-beat:nth-child(3) .statement-word { color: #2457ff; }
+    .statement-beat:nth-child(4) .statement-word { color: #0d7f67; }
+
+    .statement-detail {
+      align-self: center;
+      max-width: 610px;
+    }
+
+    .statement-detail small {
+      display: block;
+      margin-bottom: 15px;
+      color: #929292;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .statement-detail h3 {
+      margin: 0;
+      font-size: clamp(34px, 4.2vw, 62px);
+      line-height: .98;
+      letter-spacing: -.055em;
       text-wrap: balance;
     }
 
-    .statement .muted { color: #9a9a9a; }
-    .statement .accent { color: var(--blue); }
+    .statement-detail p {
+      margin: 20px 0 0;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 18px);
+      line-height: 1.6;
+    }
+
+    .statement-detail strong { color: var(--ink); }
+
+    .statement-rail {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 4%;
+      height: 1px;
+      background: var(--soft-line);
+      overflow: hidden;
+    }
+
+    .statement-rail > i {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #111 0%, var(--blue) 58%, var(--green) 100%);
+      will-change: width;
+    }
+
+    .statement-foot {
+      position: absolute;
+      right: 0;
+      bottom: 1%;
+      color: #9a9a9a;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
 
     .scene {
       --accent: #2457ff;
@@ -403,7 +687,7 @@
       left: 0;
       top: 18%;
       margin: 0;
-      max-width: 820px;
+      max-width: 720px;
       font-size: clamp(54px, 7.4vw, 112px);
       line-height: .82;
       letter-spacing: -.075em;
@@ -427,7 +711,7 @@
       position: absolute;
       right: 0;
       top: 50%;
-      width: min(64vw, 820px);
+      width: min(58vw, 760px);
       transform: translateY(-42%);
       border: 1px solid var(--line);
       border-radius: 22px;
@@ -535,7 +819,8 @@
       position: absolute;
       left: 0;
       bottom: 8%;
-      max-width: 540px;
+      width: min(36vw, 460px);
+      max-width: 460px;
       z-index: 4;
       will-change: transform, opacity;
     }
@@ -680,10 +965,11 @@
 
     .about {
       position: relative;
-      min-height: 205vh;
+      min-height: 190vh;
       border-top: 1px solid var(--soft-line);
       background:
-        radial-gradient(circle at 78% 35%, rgba(36,87,255,.045), transparent 26%),
+        radial-gradient(circle at 18% 22%, rgba(13,127,103,.04), transparent 24%),
+        radial-gradient(circle at 84% 74%, rgba(36,87,255,.04), transparent 24%),
         linear-gradient(180deg, #f7f5f0 0%, #fbfaf7 100%);
     }
 
@@ -702,15 +988,100 @@
       height: 100%;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: .88fr 1.12fr;
-      gap: clamp(34px, 5vw, 76px);
+      grid-template-columns: .92fr 1.08fr;
+      gap: clamp(34px, 5vw, 84px);
       align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+      width: 100%;
+      max-width: 660px;
+      height: min(78vh, 760px);
+      min-height: 560px;
+      will-change: transform, opacity;
+    }
+
+    .about-badge {
+      position: absolute;
+      left: 0;
+      top: 5%;
+      z-index: 8;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,17,17,.1);
+      background: rgba(255,253,249,.84);
+      backdrop-filter: blur(12px);
+      color: #585858;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      box-shadow: 0 12px 32px rgba(0,0,0,.04);
+    }
+
+    .about-badge i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(13,127,103,.08);
+    }
+
+    .about-portrait-wrap {
+      position: absolute;
+      inset: 10% 0 0 0;
+      z-index: 2;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .about-portrait-wrap::before {
+      content: "";
+      position: absolute;
+      width: 82%;
+      aspect-ratio: 1;
+      left: 8%;
+      top: 12%;
+      border: 1px solid rgba(17,17,17,.10);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(36,87,255,.07), rgba(36,87,255,.02) 48%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .about-portrait-wrap::after {
+      content: "WEB / SEO / SYSTEMS";
+      position: absolute;
+      left: -10px;
+      top: 48%;
+      transform: rotate(-90deg) translateX(-50%);
+      transform-origin: left center;
+      color: rgba(17,17,17,.28);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .24em;
+      white-space: nowrap;
+      z-index: 4;
+    }
+
+    .about-portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 28px 40px rgba(0,0,0,.13));
+      user-select: none;
     }
 
     .about-copy {
       position: relative;
-      z-index: 5;
-      max-width: 640px;
+      z-index: 6;
+      max-width: 650px;
       will-change: transform, opacity;
     }
 
@@ -725,14 +1096,14 @@
 
     .about-copy h2 {
       margin: 14px 0 0;
-      font-size: clamp(52px, 6.5vw, 96px);
+      font-size: clamp(52px, 6.4vw, 96px);
       line-height: .88;
       letter-spacing: -.07em;
       text-wrap: balance;
     }
 
     .about-copy h2 span {
-      color: #969696;
+      color: #9a9a9a;
     }
 
     .about-copy p {
@@ -740,6 +1111,7 @@
       color: var(--muted);
       font-size: clamp(15px, 1.45vw, 18px);
       max-width: 590px;
+      line-height: 1.56;
     }
 
     .about-copy p strong {
@@ -778,188 +1150,25 @@
       letter-spacing: -.01em;
     }
 
-    .fence-shell {
-      position: relative;
-      height: min(78vh, 760px);
-      min-height: 560px;
-      width: 100%;
-      max-width: 660px;
-      justify-self: end;
-      will-change: transform, opacity;
-    }
-
-    .fence-note {
-      position: absolute;
-      left: -6px;
-      top: 3%;
-      z-index: 9;
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(17,17,17,.1);
-      background: rgba(255,253,249,.82);
-      backdrop-filter: blur(12px);
-      color: #565656;
-      font-size: 9px;
-      font-weight: 850;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      box-shadow: 0 12px 32px rgba(0,0,0,.04);
-    }
-
-    .fence-note i {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 0 6px rgba(13,127,103,.08);
-    }
-
-    .fence-frame {
-      position: absolute;
-      inset: 4% 0 0 7%;
-      border: 1px solid rgba(17,17,17,.18);
-      border-radius: 28px;
-      overflow: hidden;
-      background:
-        linear-gradient(rgba(17,17,17,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(17,17,17,.025) 1px, transparent 1px),
-        rgba(255,255,255,.56);
-      background-size: 28px 28px;
-      box-shadow: 0 34px 90px rgba(0,0,0,.075);
-    }
-
-    .fence-frame::before {
-      content: "THE OTHER SIDE";
-      position: absolute;
-      left: 20px;
-      bottom: 18px;
-      z-index: 1;
-      color: rgba(17,17,17,.12);
-      font-size: clamp(44px, 5vw, 72px);
-      font-weight: 930;
-      line-height: .82;
-      letter-spacing: -.07em;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      pointer-events: none;
-    }
-
-    .fence-frame::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      pointer-events: none;
-      background:
-        linear-gradient(180deg, rgba(247,245,240,.26), transparent 16%),
-        linear-gradient(90deg, rgba(247,245,240,.16), transparent 15%, transparent 85%, rgba(247,245,240,.14));
-    }
-
-    .fence-person-wrap {
-      position: absolute;
-      inset: 5% -2% 0 9%;
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    .fence-person {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center bottom;
-      filter: drop-shadow(0 28px 40px rgba(0,0,0,.13));
-      user-select: none;
-    }
-
-    .fence-bars {
-      position: absolute;
-      inset: 0;
-      z-index: 7;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .fence-bars::before,
-    .fence-bars::after {
-      content: "";
-      position: absolute;
-      left: -5%;
-      width: 110%;
-      height: 15px;
-      border-radius: 999px;
-      background: #1a1a1a;
-      box-shadow: 0 8px 18px rgba(0,0,0,.16);
-      opacity: .94;
-    }
-
-    .fence-bars::before { top: 23%; }
-    .fence-bars::after { bottom: 22%; }
-
-    .fence-bar {
-      position: absolute;
-      top: -4%;
-      bottom: -4%;
-      width: 17px;
-      margin-left: -8.5px;
-      border-radius: 999px;
-      background:
-        linear-gradient(90deg, #0e0e0e, #282828 45%, #111 100%);
-      box-shadow:
-        8px 0 16px rgba(0,0,0,.14),
-        inset 1px 0 rgba(255,255,255,.09);
-      transform-origin: center;
-      will-change: transform;
-    }
-
-    .fence-bar:nth-child(1) { left: 8%; }
-    .fence-bar:nth-child(2) { left: 22%; }
-    .fence-bar:nth-child(3) { left: 36%; }
-    .fence-bar:nth-child(4) { left: 50%; }
-    .fence-bar:nth-child(5) { left: 64%; }
-    .fence-bar:nth-child(6) { left: 78%; }
-    .fence-bar:nth-child(7) { left: 92%; }
-
-    .fence-depth {
-      position: absolute;
-      right: -1%;
-      bottom: 1%;
-      z-index: 8;
-      font-size: 9px;
-      font-weight: 850;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: #8a8a8a;
-      transform: rotate(90deg) translateX(100%);
-      transform-origin: right bottom;
-    }
-
     @media (max-width: 1050px) {
       .about {
-        min-height: 190vh;
+        min-height: 180vh;
       }
 
       .about-inner {
-        grid-template-columns: .96fr 1.04fr;
+        grid-template-columns: 1fr 1fr;
         gap: 28px;
       }
 
-      .fence-shell {
+      .about-visual {
         height: min(70vh, 680px);
         min-height: 500px;
       }
     }
 
     @media (max-width: 760px) {
-      html { scroll-snap-type: y proximity; }
       .about {
-        min-height: 210vh;
+        min-height: 190vh;
       }
 
       .about-sticky {
@@ -969,12 +1178,34 @@
 
       .about-inner {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: 1fr auto;
         gap: 18px;
         align-items: start;
       }
 
+      .about-visual {
+        order: 1;
+        width: 100%;
+        max-width: none;
+        min-height: 0;
+        height: 48vh;
+      }
+
+      .about-badge {
+        top: 12px;
+        left: 12px;
+      }
+
+      .about-portrait-wrap {
+        inset: 6% 0 0 0;
+      }
+
+      .about-portrait-wrap::after {
+        display: none;
+      }
+
       .about-copy {
+        order: 2;
         max-width: 100%;
       }
 
@@ -990,43 +1221,6 @@
 
       .about-meta {
         display: none;
-      }
-
-      .fence-shell {
-        width: 100%;
-        max-width: none;
-        min-height: 0;
-        height: 48vh;
-        justify-self: stretch;
-      }
-
-      .fence-frame {
-        inset: 0;
-        border-radius: 22px;
-      }
-
-      .fence-person-wrap {
-        inset: 0 -7% 0 1%;
-      }
-
-      .fence-note {
-        top: 12px;
-        left: 12px;
-      }
-
-      .fence-frame::before,
-      .fence-depth {
-        display: none;
-      }
-
-      .fence-bar {
-        width: 11px;
-        margin-left: -5.5px;
-      }
-
-      .fence-bars::before,
-      .fence-bars::after {
-        height: 10px;
       }
     }
 
@@ -1092,6 +1286,72 @@
 
     .final-actions a:hover { transform: translateY(-2px); }
 
+    .contact-grid {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 920px;
+    }
+
+    .contact-card {
+      position: relative;
+      min-height: 150px;
+      padding: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.58);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.84);
+      border-color: rgba(17,17,17,.22);
+    }
+
+    .contact-card::after {
+      content: "↗";
+      position: absolute;
+      right: 18px;
+      top: 16px;
+      color: #a2a2a2;
+      font-size: 18px;
+      transition: transform .2s ease, color .2s ease;
+    }
+
+    .contact-card:hover::after {
+      transform: translate(2px,-2px);
+      color: var(--ink);
+    }
+
+    .contact-card small {
+      display: block;
+      margin-bottom: 34px;
+      color: #949494;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .contact-card strong {
+      display: block;
+      padding-right: 28px;
+      font-size: clamp(17px, 2vw, 24px);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .contact-note {
       margin-top: 16px;
       color: #969696;
@@ -1118,16 +1378,65 @@
     }
 
     @media (max-width: 1050px) {
-      .scene-title { max-width: 680px; }
-      .scene-browser { width: min(70vw, 740px); right: -4vw; }
-      .scene-copy { max-width: 470px; }
-      .about-inner { grid-template-columns: 1fr; }
+      .scene-title { max-width: 610px; }
+      .scene-browser { width: min(56vw, 650px); right: 0; }
+      .scene-copy {
+        width: min(38vw, 390px);
+        max-width: 390px;
+      }
+      .about-inner { grid-template-columns: 1fr 1fr; }
       .about-aside { position: relative; top: auto; }
+    }
+
+    @media (max-width: 900px) {
+      .scroll-meta,
+      .side-nav { display: none; }
+
+      .scene-sticky { padding: 64px 0 28px; }
+      .scene-index { top: 6%; }
+      .scene-title {
+        top: 13%;
+        width: 100%;
+        max-width: 100%;
+        font-size: clamp(48px, 10vw, 78px);
+      }
+
+      .scene-browser {
+        top: 43%;
+        left: 14%;
+        right: auto;
+        width: 72%;
+        border-radius: 18px;
+      }
+
+      .browser-view { aspect-ratio: 16 / 9; }
+
+      .scene-copy {
+        left: 0;
+        right: 0;
+        bottom: 4.5%;
+        width: 100%;
+        max-width: 100%;
+        padding: 12px 14px;
+        border: 1px solid rgba(17,17,17,.08);
+        border-radius: 16px;
+        background: rgba(247,245,240,.93);
+        box-shadow: 0 12px 34px rgba(0,0,0,.035);
+        backdrop-filter: blur(12px);
+      }
+
+      .scene-copy p { font-size: 14px; }
+      .scene-link {
+        top: 6%;
+        right: 0;
+        bottom: auto;
+      }
     }
 
     @media (max-width: 760px) {
       .topbar { height: 58px; }
       .scroll-meta { display: none; }
+      .side-nav { display: none; }
       .signature { padding: 8px 10px; }
       .signature b { width: 25px; height: 25px; }
 
@@ -1174,12 +1483,60 @@
         display: none;
       }
 
+
+      .hero-actions {
+        left: 0;
+        bottom: 2%;
+        gap: 8px;
+      }
+
+      .hero-action {
+        min-height: 40px;
+        padding: 0 13px;
+        font-size: 10px;
+      }
+
       .scroll-cue { display: none; }
 
-      .statement { min-height: 105vh; }
-      .statement p {
-        font-size: clamp(40px, 11vw, 72px);
-        line-height: .97;
+      .statement { min-height: 320vh; }
+      .statement-sticky { padding-top: 66px; }
+      .statement-head { top: 7%; }
+      .statement-counter { top: 7%; }
+      .statement-counter strong { font-size: 22px; }
+
+      .statement-stage {
+        inset: 14% 0 10%;
+      }
+
+      .statement-beat {
+        grid-template-columns: 1fr;
+        align-content: center;
+        gap: 28px;
+      }
+
+      .statement-word {
+        font-size: clamp(68px, 21vw, 110px);
+        line-height: .76;
+      }
+
+      .statement-detail {
+        align-self: start;
+        max-width: 100%;
+      }
+
+      .statement-detail h3 {
+        font-size: clamp(30px, 8.6vw, 46px);
+        line-height: 1;
+      }
+
+      .statement-detail p {
+        margin-top: 14px;
+        font-size: 14px;
+      }
+
+      .statement-foot {
+        left: 0;
+        right: auto;
       }
 
       .scene { min-height: 225vh; }
@@ -1194,21 +1551,21 @@
       .scene-title small { font-size: 10px; margin-bottom: 10px; }
 
       .scene-browser {
-        top: 47%;
-        left: 0;
+        top: 43%;
+        left: 14%;
         right: auto;
-        width: 100%;
-        transform: translateY(-38%);
+        width: 72%;
         border-radius: 18px;
       }
 
       .browser-top { height: 36px; }
-      .browser-view { aspect-ratio: 4/3; }
+      .browser-view { aspect-ratio: 16/9; }
 
       .scene-copy {
         left: 0;
         right: 0;
-        bottom: 6%;
+        bottom: 4%;
+        width: 100%;
         max-width: 100%;
       }
 
@@ -1232,12 +1589,33 @@
       .skills-list strong { display: block; font-size: clamp(34px, 10vw, 62px); }
       .skills-list span { display: block; text-align: left; margin-top: 8px; max-width: 100%; }
 
-      .about { min-height: auto; padding: 80px 0; }
-      .about-main h2 { font-size: clamp(42px, 11vw, 68px); }
-      .about-main p { font-size: 16px; }
+      .about {
+        min-height: auto;
+        padding: 0;
+      }
+      .about-sticky {
+        position: relative;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding: 78px 0 64px;
+      }
+      .about-inner {
+        height: auto;
+        grid-template-rows: auto auto;
+      }
+      .about-visual { height: min(62vh, 520px); }
 
       .final { min-height: 105vh; }
       .final h2 { font-size: clamp(56px, 16vw, 96px); }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        min-height: 126px;
+      }
 
       footer .inner { flex-direction: column; align-items: flex-start; }
     }
@@ -1253,9 +1631,129 @@
         width: min(calc(100% - 22px), var(--max));
       }
 
-      .scene-title { font-size: 44px; }
+      .scene-title {
+        top: 14%;
+        font-size: clamp(38px, 11vw, 46px);
+      }
+      .scene-browser {
+        top: 43%;
+        left: 14%;
+        width: 72%;
+      }
+      .scene-copy {
+        bottom: 3.5%;
+        padding: 10px 11px;
+      }
+      .scene-copy p {
+        font-size: 13px;
+        line-height: 1.48;
+      }
+      .scene-tags span:nth-child(n+5) { display: none; }
       .browser-fallback { padding: 18px; }
       .browser-fallback strong { font-size: 36px; }
+    }
+
+    @media (max-height: 720px) and (min-width: 901px) {
+      .scene-title {
+        top: 14%;
+        max-width: 560px;
+        font-size: clamp(46px, 6.3vw, 82px);
+      }
+      .scene-browser {
+        width: min(54vw, 650px);
+      }
+      .scene-copy {
+        bottom: 4%;
+        width: min(37vw, 410px);
+      }
+      .scene-copy p {
+        font-size: 13px;
+        line-height: 1.45;
+      }
+      .scene-tags { margin-top: 9px; }
+      .scene-tags span { padding: 5px 7px; font-size: 8px; }
+      .scene-link { bottom: 4%; }
+    }
+
+    @media (max-height: 720px) and (min-width: 761px) {
+      .intro-title { font-size: clamp(62px, 9vw, 118px); }
+      .intro-portrait-wrap { height: 72vh; }
+      .intro-copy {
+        max-width: 520px;
+        font-size: 15px;
+      }
+
+      .statement-word { font-size: clamp(62px, 10vw, 130px); }
+      .statement-detail h3 { font-size: clamp(30px, 3.6vw, 48px); }
+      .statement-detail p { margin-top: 12px; font-size: 14px; }
+
+      .skills-sticky { padding: 66px 0 24px; }
+      .skills-list div { padding: 9px 0; }
+      .skills-list strong { font-size: clamp(30px, 4.4vw, 58px); }
+      .skills-list span { font-size: 11px; }
+
+      .about-sticky { padding: 66px 0 24px; }
+      .about-visual {
+        height: 70vh;
+        min-height: 0;
+      }
+      .about-copy h2 { font-size: clamp(42px, 5vw, 68px); }
+      .about-copy p { margin-top: 13px; font-size: 13px; }
+      .about-meta { display: none; }
+    }
+
+    @media (max-height: 560px) and (max-width: 900px) {
+      .intro-kicker { top: 5%; }
+      .intro-title {
+        top: 30%;
+        width: 62%;
+        max-width: 62%;
+        font-size: clamp(46px, 9vw, 74px);
+      }
+      .intro-portrait-wrap {
+        right: 0;
+        bottom: 0;
+        width: 50vw;
+        height: 78vh;
+      }
+      .intro-copy {
+        bottom: 18%;
+        max-width: 54%;
+        padding: 9px 10px;
+        font-size: 12px;
+        line-height: 1.42;
+      }
+      .hero-actions { bottom: 4%; }
+
+      .scene-index,
+      .scene-link { top: 4%; }
+      .scene-title {
+        top: 13%;
+        width: 42%;
+        max-width: 42%;
+        font-size: clamp(34px, 6vw, 52px);
+      }
+      .scene-title small { font-size: 8px; }
+      .scene-browser {
+        top: 49%;
+        left: auto;
+        right: 0;
+        width: 58%;
+      }
+      .scene-copy {
+        left: 0;
+        right: auto;
+        bottom: 4%;
+        width: 38%;
+        max-width: 38%;
+        padding: 9px 10px;
+      }
+      .scene-copy p {
+        font-size: 11px;
+        line-height: 1.36;
+      }
+      .scene-tags { display: none; }
+      .browser-view { aspect-ratio: 16 / 9; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1276,6 +1774,13 @@
 
   <div class="progress"><div id="progressBar"></div></div>
 
+  <nav class="side-nav" id="sideNav" aria-label="Portfolio navigation">
+    <a href="#top" data-nav="Introduction"><i></i><span>Home</span></a>
+    <a href="#work" data-nav="WASSWA Capital"><i></i><span>Work</span></a>
+    <a href="#aboutSection" data-nav="About Kyle"><i></i><span>About</span></a>
+    <a href="#contactSection" data-nav="Contact"><i></i><span>Contact</span></a>
+  </nav>
+
   <main id="top">
     <section class="intro" data-label="Introduction">
       <div class="intro-sticky">
@@ -1294,7 +1799,6 @@
               alt="Kyle pointing toward the viewer"
               onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/hero.png?raw=true';"
             >
-            <div class="intro-nameplate"><i></i>Kyle • Available remotely</div>
           </div>
 
           <div class="scroll-cue"><i></i>Scroll to enter</div>
@@ -1302,22 +1806,70 @@
           <p class="intro-copy" id="introCopy">
             I work across <strong>WordPress, Shopify, GoHighLevel, SEO, custom front end development, and automation</strong>. The work changes from client to client. The goal does not: make the website clearer, stronger, and more useful to the business.
           </p>
+
+          <div class="hero-actions" id="heroActions">
+            <a class="hero-action" href="#aboutSection">About me</a>
+            <a class="hero-action" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">Contact me</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="statement" data-label="What I do">
-      <div class="statement-inner">
-        <p>
-          Design when it needs design.<br>
-          <span class="muted">Code when it needs code.</span><br>
-          Optimize when it needs traffic.<br>
-          <span class="accent">Automate when it needs a system.</span>
-        </p>
+    <section class="statement" data-label="What I do" id="statementSection">
+      <div class="statement-sticky">
+        <div class="statement-inner">
+          <div class="statement-head">One operator / four modes</div>
+
+          <div class="statement-counter">
+            <strong id="statementCount">01</strong>
+            <span>/ 04</span>
+          </div>
+
+          <div class="statement-stage">
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="01">Build</h2>
+              <div class="statement-detail">
+                <small>Web development</small>
+                <h3>Make the website feel intentional from the first screen to the last click.</h3>
+                <p>I build and rebuild <strong>WordPress pages, Elementor sections, landing pages, custom front end interactions, and responsive layouts</strong> for real client websites.</p>
+              </div>
+            </article>
+
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="02">Fix</h2>
+              <div class="statement-detail">
+                <small>Hands-on website operations</small>
+                <h3>Find what is weak, broken, confusing, or unfinished — then clean it up.</h3>
+                <p>That can mean <strong>mobile issues, navigation, forms, SMTP, DNS, SSL, legal pages, UX problems, content cleanup, or a live-page bug</strong> that needs to be solved without rebuilding everything.</p>
+              </div>
+            </article>
+
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="03">Rank</h2>
+              <div class="statement-detail">
+                <small>SEO implementation</small>
+                <h3>Give the page a better chance of being found — without writing for robots.</h3>
+                <p>I work on <strong>on-page SEO, titles, metadata, keyword structure, internal links, product SEO, Rank Math, and Search Console indexing</strong> while keeping the page readable for actual people.</p>
+              </div>
+            </article>
+
+            <article class="statement-beat">
+              <h2 class="statement-word" data-number="04">Automate</h2>
+              <div class="statement-detail">
+                <small>Systems behind the website</small>
+                <h3>Make something useful happen after the visitor clicks.</h3>
+                <p>I connect <strong>forms, booking calendars, GoHighLevel workflows, confirmations, reminders, tags, email, SMS, and operational follow-up</strong> so the site supports the business instead of becoming another manual task.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="statement-rail"><i id="statementRail"></i></div>
+          <div class="statement-foot">Build → Fix → Rank → Automate</div>
+        </div>
       </div>
     </section>
 
-    <section class="scene" data-label="WASSWA Capital" data-theme="blue">
+    <section class="scene" id="work" data-label="WASSWA Capital" data-theme="blue">
       <div class="scene-sticky">
         <div class="scene-inner">
           <div class="scene-index"><b>01</b> Selected work</div>
@@ -1649,6 +2201,19 @@
     <section class="about" data-label="About Kyle" id="aboutSection">
       <div class="about-sticky">
         <div class="about-inner">
+          <div class="about-visual" id="aboutVisual" aria-label="Portrait of Kyle">
+            <div class="about-badge"><i></i>1+ year building for real clients</div>
+
+            <div class="about-portrait-wrap" id="aboutPortrait">
+              <img
+                class="about-portrait"
+                src="media/About.png"
+                alt="Kyle"
+                onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/About.png?raw=true';"
+              >
+            </div>
+          </div>
+
           <div class="about-copy" id="aboutCopy">
             <div class="label">About Kyle / 1+ year of live client work</div>
 
@@ -1672,57 +2237,44 @@
               <div><small>Working style</small><strong>Hands-on, practical, client-ready</strong></div>
             </div>
           </div>
-
-          <div class="fence-shell" id="fenceShell" aria-label="Portrait of Kyle behind an architectural fence">
-            <div class="fence-note"><i></i>1+ year building for real clients</div>
-
-            <div class="fence-frame">
-              <div class="fence-person-wrap" id="fencePerson">
-                <img
-                  class="fence-person"
-                  src="media/About.png"
-                  alt="Kyle"
-                  onerror="this.onerror=null;this.src='https://github.com/zyeleevangelista/zyeleevangelista.github.io/blob/main/media/About.png?raw=true';"
-                >
-              </div>
-
-              <div class="fence-bars" aria-hidden="true">
-                <span class="fence-bar" data-bar="-3"></span>
-                <span class="fence-bar" data-bar="-2"></span>
-                <span class="fence-bar" data-bar="-1"></span>
-                <span class="fence-bar" data-bar="0"></span>
-                <span class="fence-bar" data-bar="1"></span>
-                <span class="fence-bar" data-bar="2"></span>
-                <span class="fence-bar" data-bar="3"></span>
-              </div>
-            </div>
-
-            <div class="fence-depth">1+ year / Web / SEO / Systems</div>
-          </div>
         </div>
       </div>
     </section>
 
-    <section class="final" data-label="Contact">
+    <section class="final" id="contactSection" data-label="Contact">
       <div class="final-inner">
-        <div class="label">Available for client work</div>
+        <div class="label">Let’s work together</div>
 
         <h2>
-          Have something<br>
-          <span>that needs to be better?</span>
+          Have a website<br>
+          <span>that needs to work better?</span>
         </h2>
 
         <p>
-          I’m available for freelance projects, ongoing website support, SEO implementation, Shopify work, GoHighLevel automation, and remote roles where web and digital systems matter.
+          I’m available for freelance projects, ongoing website support, SEO implementation, Shopify work, GoHighLevel automation, and remote roles where web and digital systems matter. If you have a project in mind, send me the details directly.
         </p>
 
+        <div class="contact-grid">
+          <a class="contact-card" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">
+            <small>Email</small>
+            <strong>zyeleevangelista@gmail.com</strong>
+            <span>Best for project details and longer inquiries.</span>
+          </a>
+
+          <a class="contact-card" href="tel:0910971605">
+            <small>Phone</small>
+            <strong>0910971605</strong>
+            <span>For direct contact and quick project discussions.</span>
+          </a>
+        </div>
+
         <div class="final-actions">
-          <a class="primary" id="emailCta" href="#" style="display:none">Email me</a>
-          <a href="https://github.com/zyeleeveangelista" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a class="primary" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">Start a project →</a>
+          <a href="https://github.com/zyeleevangelista" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           <a href="#top">Run it back ↑</a>
         </div>
 
-        <div class="contact-note" id="contactNote">Add your real email in the small configuration block near the bottom of this file before publishing.</div>
+        <div class="contact-note">Remote • Philippines • Available for project-based and ongoing client work</div>
       </div>
     </section>
   </main>
@@ -1736,12 +2288,17 @@
 
   <script>
     const portfolioConfig = {
-      email: "",
+      email: "zyeleevangelista@gmail.com",
+      phone: "0910971605",
       github: "https://github.com/zyeleeveangelista"
     };
 
     const clamp = (n, min = 0, max = 1) => Math.min(Math.max(n, min), max);
     const lerp = (a, b, t) => a + (b - a) * t;
+    const smoothstep = t => {
+      const p = clamp(t);
+      return p * p * (3 - 2 * p);
+    };
 
     const progressBar = document.getElementById("progressBar");
     const percent = document.getElementById("percent");
@@ -1750,13 +2307,19 @@
     const introTitle = document.getElementById("introTitle");
     const introCopy = document.getElementById("introCopy");
     const introPortrait = document.getElementById("introPortrait");
+    const heroActions = document.getElementById("heroActions");
+    const sideNav = document.getElementById("sideNav");
+    const sideNavLinks = sideNav ? [...sideNav.querySelectorAll("a")] : [];
     const scenes = [...document.querySelectorAll(".scene")];
     const labelledSections = [...document.querySelectorAll("[data-label]")];
+    const statementSection = document.getElementById("statementSection");
+    const statementBeats = [...document.querySelectorAll(".statement-beat")];
+    const statementCount = document.getElementById("statementCount");
+    const statementRail = document.getElementById("statementRail");
     const aboutSection = document.getElementById("aboutSection");
     const aboutCopy = document.getElementById("aboutCopy");
-    const fenceShell = document.getElementById("fenceShell");
-    const fencePerson = document.getElementById("fencePerson");
-    const fenceBars = [...document.querySelectorAll(".fence-bar")];
+    const aboutVisual = document.getElementById("aboutVisual");
+    const aboutPortrait = document.getElementById("aboutPortrait");
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -1770,20 +2333,18 @@
     function renderIntro() {
       const p = sectionProgress(intro);
 
-      const titleY = lerp(0, -78, clamp((p - .25) / .58));
-      const titleScale = lerp(1, .80, clamp((p - .24) / .68));
-      const titleOpacity = lerp(1, .10, clamp((p - .66) / .30));
+      // The opening frame is intentionally complete at page load.
+      // Nothing waits for the visitor to scroll before becoming visible.
+      const titleMove = clamp((p - .18) / .62);
+      const titleExit = clamp((p - .72) / .25);
+      const titleY = lerp(0, -72, titleMove);
+      const titleScale = lerp(1, .82, titleMove);
+      const titleOpacity = lerp(1, .08, titleExit);
 
-      const copyY = lerp(0, -52, clamp((p - .34) / .55));
-      const copyOpacity = lerp(1, .04, clamp((p - .70) / .26));
-
-      const portraitEnter = clamp((p + .04) / .18);
-      const portraitExit = clamp((p - .63) / .34);
-      const portraitX = lerp(90, 0, portraitEnter) + lerp(0, 120, portraitExit);
-      const portraitY = lerp(38, 0, portraitEnter) + lerp(0, -42, portraitExit);
-      const portraitScale = lerp(.90, 1, portraitEnter) * lerp(1, .88, portraitExit);
-      const portraitRotate = lerp(1.5, 0, portraitEnter) + lerp(0, -2.5, portraitExit);
-      const portraitOpacity = portraitEnter * lerp(1, .04, portraitExit);
+      const copyMove = clamp((p - .26) / .52);
+      const copyExit = clamp((p - .72) / .25);
+      const copyY = lerp(0, -44, copyMove);
+      const copyOpacity = lerp(1, .04, copyExit);
 
       introTitle.style.transform = `translateY(calc(-50% + ${titleY}px)) scale(${titleScale})`;
       introTitle.style.opacity = titleOpacity;
@@ -1792,8 +2353,48 @@
       introCopy.style.opacity = copyOpacity;
 
       if (introPortrait) {
-        introPortrait.style.transform = `translate(${portraitX}px, ${portraitY}px) scale(${portraitScale}) rotate(${portraitRotate}deg)`;
-        introPortrait.style.opacity = portraitOpacity;
+        // The portrait is a fixed part of the hero composition. It is visible
+        // immediately and does not move, scale, or fade in response to scroll.
+        introPortrait.style.transform = "none";
+        introPortrait.style.opacity = "1";
+      }
+
+      if (heroActions) {
+        const actionExit = clamp((p - .34) / .48);
+        heroActions.style.transform = `translateY(${lerp(0, -18, actionExit)}px)`;
+        heroActions.style.opacity = lerp(1, .04, clamp((p - .64) / .28));
+      }
+    }
+
+    function renderStatement() {
+      if (!statementSection || !statementBeats.length) return;
+
+      const p = sectionProgress(statementSection);
+      const maxIndex = statementBeats.length - 1;
+      const position = p * maxIndex;
+      const nearest = Math.round(position);
+
+      statementBeats.forEach((beat, index) => {
+        const delta = index - position;
+        const distance = Math.abs(delta);
+
+        const opacity = clamp(1 - distance * 1.25);
+        const y = delta * 82;
+        const scale = lerp(1, .94, clamp(distance));
+        const blur = lerp(0, 3, clamp(distance));
+
+        beat.style.opacity = opacity;
+        beat.style.transform = `translateY(${y}px) scale(${scale})`;
+        beat.style.filter = `blur(${blur}px)`;
+        beat.style.zIndex = String(10 - Math.round(distance * 2));
+      });
+
+      if (statementCount) {
+        statementCount.textContent = String(nearest + 1).padStart(2, "0");
+      }
+
+      if (statementRail) {
+        statementRail.style.width = `${p * 100}%`;
       }
     }
 
@@ -1804,9 +2405,9 @@
       const copy = scene.querySelector(".scene-copy");
       const link = scene.querySelector(".scene-link");
 
-      const enter = clamp(p / .22);
-      const settle = clamp((p - .12) / .35);
-      const exit = clamp((p - .76) / .24);
+      const enter = smoothstep(p / .30);
+      const settle = smoothstep((p - .10) / .44);
+      const exit = smoothstep((p - .78) / .22);
 
       const titleX = lerp(-70, 0, enter) + lerp(0, -45, exit);
       const titleY = lerp(28, 0, enter) + lerp(0, -28, exit);
@@ -1818,7 +2419,7 @@
       const browserScale = lerp(.83, 1, settle) * lerp(1, .95, exit);
       const browserOpacity = clamp(settle * 1.45) * lerp(1, .06, exit);
 
-      const copyEnter = clamp((p - .34) / .26);
+      const copyEnter = smoothstep((p - .30) / .31);
       const copyY = lerp(34, 0, copyEnter) + lerp(0, -20, exit);
       const copyOpacity = copyEnter * lerp(1, .08, exit);
 
@@ -1832,45 +2433,52 @@
       copy.style.opacity = copyOpacity;
 
       if (link) {
-        link.style.opacity = clamp((p - .48) / .18) * lerp(1, .1, exit);
-        link.style.transform = `translateY(${lerp(12, 0, clamp((p - .48) / .18))}px)`;
+        const linkEnter = smoothstep((p - .43) / .20);
+        link.style.opacity = linkEnter * lerp(1, .1, exit);
+        link.style.transform = `translateY(${lerp(12, 0, linkEnter)}px)`;
       }
     }
 
     function renderAbout() {
-      if (!aboutSection || !fenceShell || !fencePerson) return;
+      if (!aboutSection || !aboutVisual || !aboutPortrait) return;
+
+      if (window.innerWidth <= 760) {
+        aboutVisual.style.transform = "none";
+        aboutVisual.style.opacity = "1";
+        aboutPortrait.style.transform = "none";
+        aboutPortrait.style.opacity = "1";
+        if (aboutCopy) {
+          aboutCopy.style.transform = "none";
+          aboutCopy.style.opacity = "1";
+        }
+        return;
+      }
 
       const p = sectionProgress(aboutSection);
       const enter = clamp(p / .22);
-      const reveal = clamp((p - .18) / .48);
-      const exit = clamp((p - .78) / .22);
+      const reveal = clamp((p - .18) / .46);
+      const exit = clamp((p - .80) / .20);
 
-      const shellX = lerp(90, 0, enter) + lerp(0, 54, exit);
-      const shellScale = lerp(.94, 1, enter) * lerp(1, .96, exit);
-      const shellOpacity = enter * lerp(1, .12, exit);
+      const visualX = lerp(-54, 0, enter) + lerp(0, -22, exit);
+      const visualScale = lerp(.96, 1, enter) * lerp(1, .98, exit);
+      const visualOpacity = enter * lerp(1, .14, exit);
 
-      const personX = lerp(50, -8, reveal) + lerp(0, 34, exit);
-      const personY = lerp(28, 0, reveal) + lerp(0, -18, exit);
-      const personScale = lerp(.96, 1.035, reveal) * lerp(1, .97, exit);
+      const portraitY = lerp(28, 0, reveal) + lerp(0, -12, exit);
+      const portraitScale = lerp(.97, 1.03, reveal) * lerp(1, .98, exit);
+      const portraitOpacity = lerp(1, .18, exit);
 
-      fenceShell.style.transform = `translateX(${shellX}px) scale(${shellScale})`;
-      fenceShell.style.opacity = shellOpacity;
+      aboutVisual.style.transform = `translateX(${visualX}px) scale(${visualScale})`;
+      aboutVisual.style.opacity = visualOpacity;
 
-      fencePerson.style.transform = `translate(${personX}px, ${personY}px) scale(${personScale})`;
+      aboutPortrait.style.transform = `translateY(${portraitY}px) scale(${portraitScale})`;
+      aboutPortrait.style.opacity = portraitOpacity;
 
       if (aboutCopy) {
-        const copyX = lerp(-48, 0, enter) + lerp(0, -24, exit);
+        const copyX = lerp(60, 0, enter) + lerp(0, 24, exit);
         const copyOpacity = enter * lerp(1, .18, exit);
         aboutCopy.style.transform = `translateX(${copyX}px)`;
         aboutCopy.style.opacity = copyOpacity;
       }
-
-      const spread = lerp(0, 16, reveal);
-      const lean = lerp(-1.8, 0, reveal);
-      fenceBars.forEach(bar => {
-        const idx = Number(bar.dataset.bar || 0);
-        bar.style.transform = `translateX(${idx * spread}px) rotate(${idx * lean * .18}deg)`;
-      });
     }
 
     function renderGlobalProgress() {
@@ -1879,6 +2487,28 @@
       const p = maxScroll > 0 ? clamp(scrollTop / maxScroll) : 0;
       progressBar.style.width = `${p * 100}%`;
       percent.textContent = `${String(Math.round(p * 100)).padStart(2, "0")}%`;
+    }
+
+    function renderSideNav() {
+      if (!sideNav) return;
+
+      sideNav.classList.toggle("visible", window.scrollY > window.innerHeight * .30);
+
+      const marker = window.innerHeight * .45;
+      let activeLabel = "Introduction";
+
+      for (const section of labelledSections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= marker) activeLabel = section.dataset.label || activeLabel;
+      }
+
+      sideNavLinks.forEach(link => {
+        const nav = link.dataset.nav;
+        const active =
+          nav === activeLabel ||
+          (nav === "WASSWA Capital" && activeLabel !== "Introduction" && activeLabel !== "About Kyle" && activeLabel !== "Contact" && activeLabel !== "Capabilities" && activeLabel !== "How I work");
+        link.classList.toggle("active", active);
+      });
     }
 
     function renderLabel() {
@@ -1896,8 +2526,10 @@
       ticking = false;
       renderGlobalProgress();
       renderIntro();
+      renderStatement();
       scenes.forEach(renderScene);
       renderAbout();
+      renderSideNav();
       renderLabel();
     }
 
@@ -1913,27 +2545,46 @@
     render();
 
     /*
-      Section snapping
-      The portfolio uses tall sticky runways for its animations, so the useful
-      snap point for an animated scene is its fully composed frame rather than
-      the very beginning of the runway.
+      Controlled scrollytelling navigation.
+      Each transition uses the same long easing curve so titles, previews,
+      descriptions, and links reveal progressively instead of popping in.
     */
-    const snapSections = labelledSections.filter(section => section.offsetParent !== null);
+    const SNAP_DURATION = 1800;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const snapStops = [];
     let snapIndex = 0;
     let snapLocked = false;
+    let snapAnimationFrame = 0;
     let wheelIntent = 0;
     let wheelIntentTimer;
 
-    function snapPoint(section) {
-      const top = section.offsetTop;
-      const travel = Math.max(0, section.offsetHeight - window.innerHeight);
+    labelledSections
+      .filter(section => section.offsetParent !== null)
+      .forEach(section => {
+        if (section === statementSection && statementBeats.length > 1) {
+          statementBeats.forEach((beat, index) => {
+            snapStops.push({
+              section,
+              progress: index / (statementBeats.length - 1)
+            });
+          });
+          return;
+        }
 
-      if (section.classList.contains("intro")) return top;
-      if (section.classList.contains("scene")) return top + travel * .56;
-      if (section.classList.contains("about")) return top + travel * .54;
-      if (section.classList.contains("skills-runway")) return top + travel * .5;
+        let progress = .5;
+        if (section.classList.contains("intro")) progress = 0;
+        if (section.classList.contains("scene")) progress = .64;
+        if (section.classList.contains("about")) progress = .60;
+        if (section.classList.contains("skills-runway")) progress = .52;
+        snapStops.push({ section, progress });
+      });
 
-      return top + travel * .5;
+    function snapPoint(stop) {
+      const travel = Math.max(0, stop.section.offsetHeight - window.innerHeight);
+      const progress = window.innerWidth <= 760 && stop.section === aboutSection
+        ? 0
+        : stop.progress;
+      return stop.section.offsetTop + travel * progress;
     }
 
     function closestSnapIndex() {
@@ -1941,8 +2592,8 @@
       let closest = 0;
       let distance = Infinity;
 
-      snapSections.forEach((section, index) => {
-        const nextDistance = Math.abs(snapPoint(section) - current);
+      snapStops.forEach((stop, index) => {
+        const nextDistance = Math.abs(snapPoint(stop) - current);
         if (nextDistance < distance) {
           distance = nextDistance;
           closest = index;
@@ -1952,23 +2603,60 @@
       return closest;
     }
 
+    function finishSnap() {
+      cancelAnimationFrame(snapAnimationFrame);
+      snapAnimationFrame = 0;
+      snapLocked = false;
+      wheelIntent = 0;
+      document.documentElement.classList.remove("is-snapping");
+      requestRender();
+    }
+
+    function animateScrollTo(target) {
+      cancelAnimationFrame(snapAnimationFrame);
+
+      const start = window.scrollY;
+      const distance = target - start;
+      if (Math.abs(distance) < 2 || reducedMotion.matches) {
+        window.scrollTo(0, target);
+        finishSnap();
+        return;
+      }
+
+      document.documentElement.classList.add("is-snapping");
+      const startedAt = performance.now();
+
+      function step(now) {
+        const elapsed = clamp((now - startedAt) / SNAP_DURATION);
+        const eased = elapsed < .5
+          ? 4 * elapsed * elapsed * elapsed
+          : 1 - Math.pow(-2 * elapsed + 2, 3) / 2;
+
+        window.scrollTo(0, start + distance * eased);
+
+        if (elapsed < 1) {
+          snapAnimationFrame = requestAnimationFrame(step);
+        } else {
+          window.scrollTo(0, target);
+          finishSnap();
+        }
+      }
+
+      snapAnimationFrame = requestAnimationFrame(step);
+    }
+
     function goToSnap(index) {
-      snapIndex = clamp(index, 0, snapSections.length - 1);
+      snapIndex = clamp(index, 0, snapStops.length - 1);
       snapLocked = true;
-
-      window.scrollTo({
-        top: snapPoint(snapSections[snapIndex]),
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
-      });
-
-      window.setTimeout(() => {
-        snapLocked = false;
-        wheelIntent = 0;
-      }, 850);
+      animateScrollTo(snapPoint(snapStops[snapIndex]));
     }
 
     window.addEventListener("wheel", event => {
-      if (window.innerWidth <= 760 || event.ctrlKey || snapLocked) return;
+      if (window.innerWidth <= 760 || event.ctrlKey) return;
+      if (snapLocked) {
+        event.preventDefault();
+        return;
+      }
 
       wheelIntent += event.deltaY;
       window.clearTimeout(wheelIntentTimer);
@@ -1982,25 +2670,34 @@
     }, { passive: false });
 
     window.addEventListener("keydown", event => {
-      if (window.innerWidth <= 760 || snapLocked) return;
+      if (window.innerWidth <= 760) return;
 
       const forward = ["ArrowDown", "PageDown", " "];
       const backward = ["ArrowUp", "PageUp"];
       if (!forward.includes(event.key) && !backward.includes(event.key)) return;
 
       event.preventDefault();
+      if (snapLocked) return;
       snapIndex = closestSnapIndex();
       goToSnap(snapIndex + (forward.includes(event.key) ? 1 : -1));
     });
 
-    const emailCta = document.getElementById("emailCta");
-    const contactNote = document.getElementById("contactNote");
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", event => {
+        const section = document.querySelector(link.getAttribute("href"));
+        if (!section) return;
 
-    if (portfolioConfig.email.trim()) {
-      emailCta.style.display = "inline-flex";
-      emailCta.href = `mailto:${portfolioConfig.email}?subject=Project Inquiry from your Portfolio`;
-      contactNote.textContent = `Direct inquiries: ${portfolioConfig.email}`;
-    }
+        event.preventDefault();
+        const index = snapStops.findIndex(stop => stop.section === section);
+        if (index >= 0) goToSnap(index);
+        else {
+          snapLocked = true;
+          animateScrollTo(section.offsetTop);
+        }
+      });
+    });
+
+
   </script>
 </body>
 </html>
