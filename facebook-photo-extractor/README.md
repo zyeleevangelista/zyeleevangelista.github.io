@@ -4,6 +4,47 @@ A stand-alone tool at `/facebook-photo-extractor/` in Kyle's GitHub Pages portfo
 
 **Important limitation:** Pasting any arbitrary Facebook URL cannot retrieve all its images without the applicable Meta permissions. This project does not bypass Facebook login, privacy settings, rate limits, or API review.
 
+## Higher-resolution workflow (optional; no Meta API)
+
+**Why:** When Chrome/Brave saves a Facebook Photos grid as "Webpage, Complete", the sibling `_files` directory usually stores **grid previews**. Original camera files are not embedded in the saved HTML. ZIP compression or resizing cannot restore missing image detail.
+
+For the highest-quality rendition Facebook makes available to your account, use the separate **Photo Viewer Quality** workflow. It opens each Page photo **post** in its full Facebook viewer using a local Chromium browser and saves the largest matching viewer image it finds. This requires the [Playwright Python library](https://playwright.dev/python/docs/intro), not a Meta API token.
+
+> **No guarantee of original uploads:** Facebook may resize or recompress photos and may withhold larger renditions. The script never invents image pixels, never bypasses Facebook permissions, and skips images it cannot match to the correct post. If you need actual original camera files, ask the Page owner to supply originals or an authorized high-quality Page export.
+
+### Install once on Windows
+
+Install Python 3 if needed. Open a Windows Terminal in this tool's folder and run:
+
+```powershell
+py -3 -m pip install playwright
+py -3 -m playwright install chromium
+```
+
+Download **viewer_quality.py** and **RUN_VIEWER_QUALITY_WINDOWS.bat** into the same directory. Drag your saved Facebook Photos `.html` file onto **RUN_VIEWER_QUALITY_WINDOWS.bat**. Choose how many photo posts to process (default 20; the captured BK gallery has 84 posts). A separate Chromium browser opens, so sign in to Facebook yourself if prompted, then press Enter in the terminal after the first photo becomes visible.
+
+The script tries to match images strictly using each post's photo ID and saved thumbnail filename prefix, and refuses to download unrelated profile photos. It emits a **Facebook_Photo_Viewer_Quality/** directory and ZIP with:
+
+- photos saved from the larger Facebook viewer when matched;
+- `manifest.json` listing dimensions and reasons for skipped downloads;
+- `PHOTO_POST_LINKS.html` containing Facebook photo-post links for manual downloads if automatic capture fails.
+
+Your Facebook session is held only in a dedicated local Chromium profile folder, `%USERPROFILE%\.facebook-photo-viewer-capture`. You can delete that folder after your work is done to clear the saved login session. Never upload the profile, browser cookies, or saved Page HTML to a public repository.
+
+To generate **only the photo-post links** without Playwright or automation:
+
+```powershell
+py -3 viewer_quality.py "C:\path\to\saved-gallery.html" --manual-only --limit 100
+```
+
+Open the generated `PHOTO_POST_LINKS.html` and use Facebook's own available Download control in each photo viewer.
+
+### Quality verification
+
+Open an exported photo and check its image dimensions (Windows Properties → Details). Compare it with the saved grid thumbnail. A larger pixel resolution may improve the quality available for your website, but it still does not prove the photo is an uncompressed original. Obtain the owner's permission before republishing clinic/customer/patient photos.
+
+---
+
 ## Gallery-only filtering and two supported source formats
 
 Both import methods explicitly identify Page photo-grid posts, rather than all images in the Facebook document. Friend suggestions, avatars and unrelated sidebar images are excluded.
