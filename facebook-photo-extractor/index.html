@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Collect authorized Facebook Page photos or import saved photo gallery HTML, then download a ZIP.">
+<title>Facebook Page Photo Collector | Kyle</title>
+<style>
+:root{font:15px/1.55 system-ui,-apple-system,sans-serif;color:#222a2b;background:#f7f6f2;--line:#d5dedb;--green:#216960}
+*{box-sizing:border-box}body{margin:0}a{color:var(--green)}button,input{font:inherit}
+header{padding:18px max(18px,calc((100vw - 1080px)/2));background:#253231;color:#fff;display:flex;justify-content:space-between;gap:10px}
+header a{color:#fff;text-decoration:none}main{width:min(calc(100% - 36px),1080px);margin:48px auto 80px}
+h1{font-size:clamp(34px,6vw,66px);letter-spacing:-.06em;line-height:1.06;margin:8px 0 20px}
+.subtitle{max-width:750px;font-size:17px;color:#566563}h2{font-size:23px;letter-spacing:-.035em;margin:0 0 12px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px}
+.label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);font-weight:850}
+p{color:#5b6866}.tabs,.actions{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
+button{border-radius:10px;border:1px solid #b9c8c3;padding:11px 14px;background:#fff;font-weight:720;color:#23312f;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #65afa1;outline-offset:3px}
+button[aria-selected="true"],button.primary{background:#253231;color:#fff;border-color:#253231}
+button:disabled{opacity:.45;cursor:not-allowed}label{display:block;font-weight:700;margin:16px 0 6px;font-size:13px}
+input{width:100%;padding:12px 13px;border-radius:10px;border:1px solid #bdc9c5;min-width:0}
+small,.note{color:#5b6866}.note{font-size:13px;background:#eaf2ef;border:1px solid #d2e2dc;padding:13px;border-radius:12px;margin-top:15px}
+.warning{color:#885327;background:#fff1e1;border-color:#e9cbab}.hidden{display:none!important}
+#status{white-space:pre-wrap;font-size:13px;min-height:28px;margin-top:12px}#status[data-type="error"]{color:#af2929}
+#status[data-type="ok"]{color:#136747}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:16px;max-height:520px;overflow:auto}
+.tile{aspect-ratio:1;position:relative;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#f0f0f0}
+.tile img{width:100%;height:100%;object-fit:cover}.tile span{position:absolute;left:6px;bottom:6px;font-size:11px;background:#fff9;border-radius:4px;padding:1px 5px}
+.empty{border:1px dashed #bdc9c5;padding:40px 12px;color:#6f7977;text-align:center;border-radius:12px;margin-top:20px}
+.progress{height:8px;background:#e5e9e7;border-radius:20px;margin-top:12px;overflow:hidden}#bar{width:0;height:100%;background:#2b8276}
+footer{margin-top:40px;font-size:12px;color:#6c7774;border-top:1px solid var(--line);padding-top:18px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}main{margin-top:30px}}
+@media(max-width:440px){.grid{grid-template-columns:repeat(2,1fr)}.card{padding:17px}header{font-size:13px}}
+</style></head>
+<body><header><strong>PHOTO COLLECTOR</strong><a href="/">← Back to portfolio</a></header>
+<main><div class="label">Independent Facebook Page media utility</div>
+<h1>Collect Page photos.<br>Export tidy ZIPs.</h1>
+<p class="subtitle">Paste a Facebook Page link using authorized Meta API access, or upload a saved Facebook photo-gallery HTML file. Preview available images and download them in ZIP batches.</p>
+<div class="layout">
+<section class="card"><h2>1. Choose a source</h2>
+<p>Only export images that you own or have permission to use. Facebook's access restrictions still apply.</p>
+<div class="tabs" role="tablist" aria-label="Import method">
+<button id="urlTab" type="button" role="tab" aria-selected="true" aria-controls="urlMode">Facebook URL</button>
+<button id="fileTab" type="button" role="tab" aria-selected="false" aria-controls="fileMode">Saved HTML</button></div>
+<div id="urlMode" role="tabpanel" aria-labelledby="urlTab">
+<label for="page">Facebook Page or /photos link</label>
+<input type="url" id="page" value="https://www.facebook.com/BKAestheticsDermatologyandwellnesscenter/photos" placeholder="https://www.facebook.com/example/photos">
+<div class="note">This mode needs an authorized Meta Page token configured privately on the backend. It cannot automatically access photos from every unrelated public Page.</div>
+<div class="actions"><button id="load" class="primary" type="button">Find Page photos</button><button id="more" class="hidden" type="button">Load more</button></div>
+</div>
+<div id="fileMode" class="hidden" role="tabpanel" aria-labelledby="fileTab">
+<label for="local">Facebook gallery saved as .html or .txt</label>
+<input id="local" type="file" accept=".html,.htm,.txt,text/html,text/plain">
+<div class="note">The HTML stays in your browser. The file can contain Facebook session data: never share or commit it to a public repository. Only individual media URLs may be sent to your download backend.</div>
+<div class="actions"><button id="scan" type="button" class="primary">Scan local file</button></div>
+</div>
+<hr style="border:0;border-top:1px solid var(--line);margin:24px 0">
+<h2>2. Download connection</h2>
+<label for="backend">Vercel API URL</label><input id="backend" type="url" placeholder="https://your-app.vercel.app" autocomplete="off">
+<label for="key">Private extractor access key</label><input id="key" type="password" placeholder="EXTRACTOR_ACCESS_KEY" autocomplete="off">
+<small>Required for Meta API access and for downloading HTML-imported photos when Facebook blocks browser cross-origin downloads. Never paste a Meta Page token here. Nothing is saved in browser storage.</small>
+<div id="status" role="status" aria-live="polite"></div>
+</section>
+<section class="card"><h2>3. Review & export</h2>
+<p id="total">0 photos found.</p><div id="preview" class="empty">Photos will appear here after scanning.</div>
+<div class="actions"><button id="zip" class="primary" disabled>Download ZIP</button><button id="clear" disabled>Clear results</button></div>
+<div id="progress" class="progress hidden"><div id="bar"></div></div><small id="detail" aria-live="polite"></small>
+<div class="note warning">Saved HTML includes only photos loaded on the Facebook page, not necessarily the entire gallery. Expired image links or photos restricted by Facebook may not download.</div>
+</section></div>
+<footer>Not affiliated with Facebook or Meta. Respect image rights, personal privacy, and clinic patient consent. <a href="https://developers.facebook.com/docs/graph-api/reference/page/photos/" target="_blank" rel="noopener">Meta Page Photos API documentation</a>.</footer>
+</main>
+<script src="./app.js" defer></script>
+</body></html>

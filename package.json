@@ -1,0 +1,6 @@
+{
+  "name": "zyeleevangelista-site-tools",
+  "private": true,
+  "type": "module",
+  "description": "Static portfolio with optional Vercel APIs for authorized Facebook Page image exports"
+}
