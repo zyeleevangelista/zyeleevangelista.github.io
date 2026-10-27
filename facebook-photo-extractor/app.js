@@ -1,7 +1,7 @@
 "use strict";
 const q = id => document.getElementById(id);
 const encode = new TextEncoder();
-const state = {mode:"url",photos:[],cursor:"",pageId:"",busy:false};
+const state = {mode:"url",photos:[],cursor:"",pageId:"",busy:false,exportIndex:0};
 function tell(message,type=""){q("status").textContent=message;q("status").dataset.type=type;}
 function config(){
   const base=q("backend").value.trim().replace(/\/+$/,"");
@@ -28,7 +28,7 @@ function lock(busy){
   q("clear").disabled=busy||!state.photos.length;
 }
 function clearAll(){
-  state.photos=[];state.cursor="";state.pageId="";
+  state.photos=[];state.cursor="";state.pageId="";state.exportIndex=0;q("zip").textContent="Download ZIP";
   q("more").classList.add("hidden");
   q("total").textContent="0 photos found.";
   q("preview").className="empty";
@@ -49,7 +49,7 @@ q("clear").addEventListener("click",()=>{clearAll();tell("");});
 function draw(){
   const unique=new Map();
   for(const p of state.photos){if(p.id&&!unique.has(p.id))unique.set(p.id,p);}
-  state.photos=[...unique.values()].slice(0,300);
+  state.photos=[...unique.values()].slice(0,1500);
   q("total").textContent=state.photos.length+" photo(s) found; ZIP export attempts all accessible images.";
   const gallery=document.createElement("div");gallery.className="grid";gallery.id="preview";
   for(const p of state.photos.slice(0,90)){
@@ -75,7 +75,7 @@ async function loadPage(cursor=""){
       id:String(p.id),preview:p.preview||"",mode:"url",caption:p.caption||""
     })));
     state.cursor=found.nextCursor||"";
-    q("more").classList.toggle("hidden",!state.cursor||state.photos.length>=300);
+    q("more").classList.toggle("hidden",!state.cursor||state.photos.length>=1500);
     draw();
     tell(state.photos.length?state.photos.length+" photos found. "+(state.cursor?"Load more for the next page.":"No further pages available."):"No accessible uploaded Page photos found.","ok");
   }catch(e){tell(e.message,"error");lock(false);}
@@ -101,7 +101,7 @@ function findImages(text){
     const score=(url.searchParams.has("stp")?0:100)+(url.href.includes("s2048")?50:0);
     if(!old||old.score<score)found.set(identity,{url:url.href,score});
   }
-  return [...found.values()].slice(0,300).map((p,index)=>({
+  return [...found.values()].slice(0,1500).map((p,index)=>({
     id:"saved-"+String(index+1).padStart(3,"0"),mode:"file",
     caption:"Imported image "+(index+1),url:p.url,preview:p.url
   }));
@@ -113,6 +113,8 @@ q("scan").addEventListener("click",async()=>{
   lock(true);tell("Reading file locally. No HTML is uploaded.");
   try{
     state.photos=findImages(await file.text());
+    state.exportIndex=0;
+    q("zip").textContent="Download ZIP";
     draw();tell(state.photos.length+" image URLs found. Some may be thumbnails or have expired.","ok");
   }catch(e){tell(e.message,"error");lock(false);}
 });
@@ -164,7 +166,8 @@ q("zip").addEventListener("click",async()=>{
   if(!state.photos.length)return;
   lock(true);q("progress").classList.remove("hidden");q("bar").style.width="0%";
   const photos=[],errors=[];let size=0;
-  for(let i=0;i<state.photos.length;i++){
+  const start=state.exportIndex, end=Math.min(start+75,state.photos.length);
+  for(let i=start;i<end;i++){
     const photo=state.photos[i];
     try{
       const blob=await photoFile(photo);
@@ -174,15 +177,17 @@ q("zip").addEventListener("click",async()=>{
       photos.push({name:"photos/photo-"+String(i+1).padStart(3,"0")+"."+ext,bytes:new Uint8Array(await blob.arrayBuffer())});
       size+=blob.size;
     }catch(e){errors.push({photo:photo.id,error:String(e.message).slice(0,120)});}
-    q("bar").style.width=Math.round((i+1)/state.photos.length*100)+"%";
+    q("bar").style.width=Math.round((i-start+1)/(end-start)*100)+"%";
     q("detail").textContent="Processed "+(i+1)+"/"+state.photos.length+" · "+photos.length+" downloaded · "+errors.length+" failed";
   }
-  const manifest={created:new Date().toISOString(),source:state.mode,requested:state.photos.length,succeeded:photos.length,errors};
+  const manifest={created:new Date().toISOString(),source:state.mode,range:[start+1,end],requested:end-start,succeeded:photos.length,errors};
   photos.push({name:"manifest.json",bytes:encode.encode(JSON.stringify(manifest,null,2))});
   const href=URL.createObjectURL(zipFiles(photos));
-  const anchor=document.createElement("a");anchor.href=href;anchor.download="facebook-page-photos-"+Date.now()+".zip";
+  const anchor=document.createElement("a");anchor.href=href;anchor.download="facebook-page-photos-part-"+String(Math.floor(start/75)+1).padStart(2,"0")+".zip";
   document.body.append(anchor);anchor.click();anchor.remove();
   setTimeout(()=>URL.revokeObjectURL(href),60000);
-  tell((photos.length-1)+" photos exported. "+errors.length+" failures are listed in manifest.json.",errors.length?"error":"ok");
+  state.exportIndex=end<state.photos.length?end:0;
+  q("zip").textContent=state.exportIndex?"Download next ZIP ("+(state.exportIndex+1)+"–"+Math.min(state.exportIndex+75,state.photos.length)+")":"Download ZIP again";
+  tell((photos.length-1)+" photos exported from this batch. "+errors.length+" failures are listed in manifest.json."+(state.exportIndex?" Click Download next ZIP to continue.":" All loaded photos processed."),errors.length?"error":"ok");
   lock(false);
 });
