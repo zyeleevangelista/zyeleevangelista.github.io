@@ -27,13 +27,27 @@ if not "%~1"=="" (
     echo Tip: You can also drag the file onto this BAT file.
     set /p "SOURCE=File path: "
 )
+REM Remove quotes pasted from Windows Copy as path. The Python invocation adds its own.
+set "SOURCE=%SOURCE:"=%"
 if not defined SOURCE (
     echo No HTML file specified.
     pause
     exit /b 1
 )
+if not exist "%SOURCE%" (
+    echo File not found: "%SOURCE%"
+    echo Check the full path and try again.
+    pause
+    exit /b 1
+)
 echo.
 %PYTHON% "%~dp0offline_extract.py" "%SOURCE%"
+if errorlevel 1 (
+    echo.
+    echo Extraction did not finish successfully. Check the error details above.
+    pause
+    exit /b 1
+)
 echo.
 echo Finished. Check the output folder beside your saved HTML file.
 pause
