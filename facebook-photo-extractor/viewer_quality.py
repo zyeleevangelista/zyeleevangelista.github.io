@@ -125,7 +125,7 @@ def is_facebook_cdn_photo(url: str) -> bool:
 
 
 JS_PHOTO_CANDIDATES = """
-(photoId, filenamePrefix) => {
+({photoId, filenamePrefix}) => {
   const results = [];
   for (const image of document.querySelectorAll('img')) {
     const url = image.currentSrc || image.src || '';
@@ -237,11 +237,7 @@ def main() -> int:
                 page.goto(photo["post"], wait_until="domcontentloaded", timeout=35000)
                 page.wait_for_timeout(2500)
                 prefix = photo_filename_prefix(photo["thumbnail"])
-                candidates = page.evaluate(JS_PHOTO_CANDIDATES, photo["id"], prefix)
-                if not candidates:
-                    # Playwright JS evaluate takes one argument; try the object
-                    # argument variant in older/newer viewer configurations.
-                    pass
+                candidates = page.evaluate(JS_PHOTO_CANDIDATES, {"photoId": photo["id"], "filenamePrefix": prefix})
                 # Ignore tiny preview renditions. A viewer image is still not
                 # guaranteed to be the full camera original.
                 candidates = [c for c in candidates if c["width"] >= 600 and c["height"] >= 600]
