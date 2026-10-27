@@ -1,9 +1,8 @@
 "use strict";
 
-const { cors, checkAccess, json, identifyPage, graphGet, reportError, PAGE_SIZE } =
-  require("../lib/facebook-photo-utils");
+import { cors, checkAccess, json, identifyPage, graphGet, reportError, PAGE_SIZE } from "../lib/facebook-photo-utils.js";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (cors(req, res)) return;
   if (req.method !== "POST") return json(res, 405, { error: "POST required." });
   if (!checkAccess(req, res)) return;
