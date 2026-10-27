@@ -9,13 +9,15 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
+from html.parser import HTMLParser
 import json
+import shutil
 from pathlib import Path
 import re
 import sys
 import time
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, urlsplit, unquote
 from urllib.request import (
     HTTPRedirectHandler, Request, build_opener,
 )
@@ -112,6 +114,116 @@ def image_urls_from_saved_html(source: str) -> list[str]:
         results.setdefault(photo_id, image_url)
     return list(results.values())
 
+
+class LocalGalleryParser(HTMLParser):
+    """Find photo.php links with an image nested inside the saved Page photo grid.
+
+    Chrome's 'Webpage, Complete' format rewrites CDN image src attributes to a
+    local sibling *_files directory. Restricting extraction to photo-grid links
+    avoids unrelated photos from Facebook sidebars and friend suggestions.
+    """
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.anchor_stack: list[tuple[str, str] | None] = []
+        self.photos: dict[str, tuple[str, str]] = {}
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        fields = dict(attrs)
+        if tag == "a":
+            href = fields.get("href") or ""
+            photo_id = None
+            album = None
+            try:
+                link = urlsplit(href)
+                query = parse_qs(link.query)
+                possible_id = query.get("fbid", [""])[0]
+                possible_album = query.get("set", [""])[0]
+                if (
+                    link.scheme == "https"
+                    and link.hostname in ("www.facebook.com", "facebook.com")
+                    and link.path == "/photo.php"
+                    and possible_id.isdecimal()
+                    and possible_album.startswith("pb.")
+                ):
+                    photo_id, album = possible_id, possible_album
+            except ValueError:
+                pass
+            self.anchor_stack.append((photo_id, album) if photo_id else None)
+        elif tag == "img" and self.anchor_stack:
+            active = next((item for item in reversed(self.anchor_stack) if item), None)
+            src = fields.get("src") or ""
+            if active and src and active[0] not in self.photos:
+                self.photos[active[0]] = (active[1], src)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "a" and self.anchor_stack:
+            self.anchor_stack.pop()
+
+
+def saved_page_photo_assets(source: str) -> list[dict]:
+    """Return images actually nested inside the saved Page's photo links."""
+    parser = LocalGalleryParser()
+    parser.feed(source)
+    if not parser.photos:
+        return []
+    # All images must belong to the same Page-specific photo set. If the HTML
+    # contains another embedded photo collection, ignore minority collections.
+    from collections import Counter
+    main_album = Counter(album for album, src in parser.photos.values()).most_common(1)[0][0]
+    result = []
+    for photo_id, (album, src) in parser.photos.items():
+        if album != main_album:
+            continue
+        parts = urlsplit(src)
+        if parts.scheme == "https" and is_facebook_image(src):
+            result.append({"photo_id": photo_id, "mode": "cdn", "source": src})
+        elif not parts.scheme and not parts.netloc:
+            # Relative images from Chrome's saved sibling *_files folder.
+            raw_path = unquote(parts.path)
+            if raw_path and not raw_path.startswith(("/", "\\")) and (
+                "_files/" in raw_path.replace("\\", "/")
+            ) and Path(raw_path).suffix.lower() in EXTENSIONS:
+                result.append({"photo_id": photo_id, "mode": "local", "source": raw_path})
+    return result
+
+
+def copy_saved_image(index: int, src: str, directory: Path, html_parent: Path) -> dict:
+    record = {"number": index, "name": None, "status": "failed"}
+    try:
+        base = html_parent.resolve()
+        path = (base / src).resolve()
+        path.relative_to(base)  # Prevent relative-path traversal / symlink escapes.
+        if not path.is_file():
+            raise FileNotFoundError(f"Saved image missing: {path.name} (keep the *_files folder beside the HTML)")
+        if path.suffix.lower() not in EXTENSIONS:
+            raise ValueError("Unsupported saved image format")
+        size = path.stat().st_size
+        if size < 100 or size > MAX_IMAGE_BYTES:
+            raise ValueError("Image is empty or exceeds the 25 MB limit")
+        with path.open("rb") as source_file:
+            magic = source_file.read(16)
+        if not (
+            magic.startswith(b"\xff\xd8\xff") or magic.startswith(b"\x89PNG\r\n\x1a\n")
+            or magic.startswith((b"GIF87a", b"GIF89a"))
+            or (magic.startswith(b"RIFF") and magic[8:12] == b"WEBP")
+        ):
+            raise ValueError("Saved file is not a recognized image")
+        output = f"photo_{index:04d}{path.suffix.lower()}"
+        shutil.copyfile(path, directory / output)
+        record.update(name=output, status="ok", bytes=size, origin="saved_page")
+    except (OSError, ValueError) as error:
+        record["reason"] = str(error)[:180]
+    return record
+
+
+def export_asset(index: int, asset: dict, directory: Path, html_parent: Path) -> dict:
+    if asset["mode"] == "local":
+        record = copy_saved_image(index, asset["source"], directory, html_parent)
+    else:
+        record = download_one(index, asset["source"], directory)
+    record["photo_id"] = asset["photo_id"]
+    return record
+
 class SafeRedirects(HTTPRedirectHandler):
     """Never follow an extracted photo URL to an unrelated host."""
     def redirect_request(self, req, fp, code, msg, headers, newurl):
@@ -189,11 +301,28 @@ def main() -> int:
         parser.error("--workers must be 1–5 and --limit must be 1–5000")
 
     document = args.source.read_text(encoding="utf-8", errors="replace")
-    urls = image_urls_from_saved_html(document)[:args.limit]
-    print(f"Found {len(urls)} verified Page photo-grid images (other Facebook content excluded).")
-    if not urls:
-        print("No Page photo-grid records found. Open the Page Photos tab, scroll to load pictures, then save fresh HTML.")
+    assets = saved_page_photo_assets(document)
+    if assets:
+        print(f"Found {len(assets)} gallery photos in the saved webpage HTML.")
+    else:
+        legacy_urls = image_urls_from_saved_html(document)
+        assets = [{"photo_id": str(n), "mode": "cdn", "source": url}
+                  for n, url in enumerate(legacy_urls, 1)]
+        print(f"Found {len(assets)} Page photo-grid images in Facebook's embedded JSON.")
+    assets = assets[:args.limit]
+    if not assets:
+        print("No Page photo-grid images found in this saved HTML.")
         return 1
+    local = [a for a in assets if a["mode"] == "local"]
+    if local:
+        found = sum((args.source.parent / a["source"]).is_file() for a in local)
+        print(f"Saved-image files present: {found}/{len(local)}.")
+        if found == 0:
+            print("Companion photo folder missing. Keep the original *_files folder")
+            print("in the same directory as your saved .html file.")
+            print(f"Expected folder example: {args.source.parent / Path(local[0]['source']).parent}")
+            if not args.list_only:
+                return 2
     if args.list_only:
         print("No images downloaded (--list-only).")
         return 0
@@ -207,35 +336,35 @@ def main() -> int:
     folder.mkdir(parents=True)
     records: list[dict] = []
 
-    print(f"Downloading into {folder} ...")
+    print(f"Collecting photos into {folder} ...")
     with ThreadPoolExecutor(max_workers=args.workers) as executor:
         futures = {
-            executor.submit(download_one, n, link, folder): n
-            for n, link in enumerate(urls, start=1)
+            executor.submit(export_asset, n, asset, folder, args.source.parent): n
+            for n, asset in enumerate(assets, start=1)
         }
         for done, future in enumerate(as_completed(futures), start=1):
             record = future.result()
             records.append(record)
-            if done % 10 == 0 or done == len(urls):
+            if done % 10 == 0 or done == len(assets):
                 ok = sum(x["status"] == "ok" for x in records)
-                print(f"  {done}/{len(urls)} attempted · {ok} downloaded", flush=True)
+                print(f"  {done}/{len(assets)} processed · {ok} collected", flush=True)
 
     records.sort(key=lambda item: item["number"])
     successful = sum(item["status"] == "ok" for item in records)
     summary = {
         "source_file": args.source.name,
         "created_at": datetime.now().isoformat(timespec="seconds"),
-        "found_urls": len(urls),
+        "found_gallery_photos": len(assets),
         "downloaded": successful,
-        "failed": len(urls) - successful,
+        "failed": len(assets) - successful,
         "records": records,
         "notice": "Only HTML-embedded, accessible CDN images. "
                   "Use clinic/patient photos only with permission.",
     }
     (folder / "manifest.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     (folder / "README.txt").write_text(
-        "Facebook photos downloaded from a locally saved HTML file.\n"
-        "Some files might be thumbnails, staff avatars, or gallery previews.\n"
+        "Facebook Page gallery photos collected from a saved HTML file.\n"
+        "Photos may be website-sized thumbnails rather than originals.\n"
         "Failed/expired files are listed in manifest.json.\n"
         "Please obtain the owner’s approval before reusing photos on a website.\n",
         encoding="utf-8",
@@ -245,7 +374,7 @@ def main() -> int:
         for image in sorted(folder.iterdir()):
             if image.is_file():
                 archive.write(image, arcname=f"{folder.name}/{image.name}")
-    print(f"\nFinished: {successful} photos downloaded, {len(urls)-successful} unavailable.")
+    print(f"\nFinished: {successful} gallery photos collected, {len(assets)-successful} unavailable.")
     print(f"Folder: {folder}")
     print(f"ZIP:    {zip_path}")
     return 0 if successful else 2

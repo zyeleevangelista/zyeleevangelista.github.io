@@ -1,7 +1,7 @@
 "use strict";
 const q = id => document.getElementById(id);
 const encode = new TextEncoder();
-const state = {mode:"url",photos:[],cursor:"",pageId:"",busy:false,exportIndex:0};
+const state = {mode:"url",photos:[],cursor:"",pageId:"",busy:false,exportIndex:0,objectUrls:[]};
 function tell(message,type=""){q("status").textContent=message;q("status").dataset.type=type;}
 function config(){
   const base=q("backend").value.trim().replace(/\/+$/,"");
@@ -24,10 +24,12 @@ async function api(path,options={}){
 function lock(busy){
   state.busy=busy;
   for(const id of ["load","more","scan"])q(id).disabled=busy;
-  q("zip").disabled=busy||!state.photos.length;
+  q("zip").disabled=busy||!state.photos.some(p=>p.mode!=="saved-local" || p.file);
   q("clear").disabled=busy||!state.photos.length;
 }
 function clearAll(){
+  for(const url of state.objectUrls)URL.revokeObjectURL(url);
+  state.objectUrls=[];
   state.photos=[];state.cursor="";state.pageId="";state.exportIndex=0;q("zip").textContent="Download ZIP";
   q("more").classList.add("hidden");
   q("total").textContent="0 photos found.";
@@ -83,28 +85,74 @@ async function loadPage(cursor=""){
 q("load").addEventListener("click",()=>loadPage(""));
 q("more").addEventListener("click",()=>loadPage(state.cursor));
 
-function findImages(text){
-  // Strict Page photo-collection records only. A saved Facebook page may also
-  // contain friends' photos, search results, ads and avatars; these are excluded.
-  const photoRecords=/"node":\{"__typename":"Photo","id":"(\d+)"([\s\S]{0,7000}?)"__typename":"TimelineAppCollectionItem"/g;
+function findImages(text, savedFiles=[]){
+  // Parse links in the actual Facebook Page photo-grid, NOT every CDN image
+  // from sidebars, friends, recommendations, messaging, or Facebook chrome.
+  const doc=new DOMParser().parseFromString(text,"text/html");
+  const albumPhotos=new Map();
+  const albumCounts=new Map();
+  for(const anchor of doc.querySelectorAll("a[href]")){
+    const image=anchor.querySelector("img[src]");
+    if(!image)continue;
+    let href;
+    try{href=new URL(anchor.getAttribute("href"),"https://www.facebook.com");}catch{continue;}
+    const id=href.searchParams.get("fbid"),album=href.searchParams.get("set")||"";
+    if(!["facebook.com","www.facebook.com"].includes(href.hostname) ||
+       href.pathname!=="/photo.php" || !/^\d{5,30}$/.test(id||"") ||
+       !album.startsWith("pb."))continue;
+    const src=image.getAttribute("src")||"";
+    if(!src)continue;
+    albumCounts.set(album,(albumCounts.get(album)||0)+1);
+    if(!albumPhotos.has(id))albumPhotos.set(id,{id,album,src});
+  }
+  if(albumPhotos.size){
+    const primaryAlbum=[...albumCounts].sort((a,b)=>b[1]-a[1])[0][0];
+    const normalize=p=>{
+      try{return decodeURIComponent(p.replace(/\\/g,"/").replace(/^\.\//,"").split("?")[0]);}
+      catch{return p.replace(/\\/g,"/").replace(/^\.\//,"").split("?")[0];}
+    };
+    const chosen=new Map();
+    for(const file of Array.from(savedFiles)) {
+      const key=normalize(file.webkitRelativePath||file.name);
+      chosen.set(key,file);
+    }
+    return [...albumPhotos.values()].filter(p=>p.album===primaryAlbum).slice(0,1500).map(p=>{
+      const local=normalize(p.src);
+      const isSaved=local.includes("_files/") && !/^https?:/i.test(local);
+      if(isSaved){
+        return {
+          id:"saved-"+p.id,mode:"saved-local",
+          caption:"Page gallery photo "+p.id,
+          file:chosen.get(local)||null,
+          localName:local
+        };
+      }
+      let url;
+      try{url=new URL(p.src);}catch{url=null;}
+      if(url&&url.protocol==="https:"&&url.hostname.startsWith("scontent.")&&url.hostname.endsWith(".fbcdn.net")){
+        return {id:"saved-"+p.id,mode:"file",caption:"Page gallery photo "+p.id,url:url.href,preview:url.href};
+      }
+      return {id:"saved-"+p.id,mode:"saved-local",caption:"Page gallery photo "+p.id,file:null,localName:local};
+    });
+  }
+  // Older Facebook "view source" files contain serialized photo-grid records
+  // but no real a/img DOM. Support those without scanning unrelated URLs.
+  const recordRx=/"node":\{"__typename":"Photo","id":"(\d+)"([\s\S]{0,7000}?)"__typename":"TimelineAppCollectionItem"/g;
   const viewerRx=/"viewer_image":\{"uri":"((?:\\.|[^"\\])*)"/;
   const linkRx=/"url":"((?:\\.|[^"\\])*)"/;
   const found=new Map();
-  for(const match of text.matchAll(photoRecords)){
-    const id=match[1], body=match[2];
-    const image=viewerRx.exec(body), post=linkRx.exec(body);
-    if(!image || !post)continue;
-    let url,link;
-    try{url=new URL(JSON.parse('"'+image[1]+'"'));link=new URL(JSON.parse('"'+post[1]+'"'));}catch{continue;}
-    if(!["www.facebook.com","facebook.com"].includes(link.hostname) ||
-      link.pathname!=="/photo.php" || link.searchParams.get("fbid")!==id ||
-      !(link.searchParams.get("set")||"").startsWith("pb."))continue;
-    if(url.protocol!=="https:" || !url.hostname.startsWith("scontent.") ||
-      !url.hostname.endsWith(".fbcdn.net") || !/\.(?:jpg|jpeg|png|webp|gif)$/i.test(url.pathname))continue;
-    if(!found.has(id))found.set(id,{
-      id:"saved-"+id,mode:"file",caption:"Page gallery photo "+id,
-      url:url.href,preview:url.href
-    });
+  for(const match of text.matchAll(recordRx)){
+    const id=match[1],body=match[2];
+    const im=viewerRx.exec(body),post=linkRx.exec(body);
+    if(!im||!post)continue;
+    let photo,link;
+    try{photo=new URL(JSON.parse('"'+im[1]+'"'));link=new URL(JSON.parse('"'+post[1]+'"'));}catch{continue;}
+    if(!["www.facebook.com","facebook.com"].includes(link.hostname)||
+       link.pathname!=="/photo.php" || link.searchParams.get("fbid")!==id ||
+       !(link.searchParams.get("set")||"").startsWith("pb.") ||
+       photo.protocol!=="https:" || !photo.hostname.startsWith("scontent.") ||
+       !photo.hostname.endsWith(".fbcdn.net"))continue;
+    found.set(id,{id:"saved-"+id,mode:"file",caption:"Page gallery photo "+id,url:photo.href,preview:photo.href});
   }
   return [...found.values()].slice(0,1500);
 }
@@ -114,10 +162,23 @@ q("scan").addEventListener("click",async()=>{
   if(file.size>35*1024*1024){tell("Your saved file exceeds the 35 MB limit.","error");return;}
   lock(true);tell("Reading file locally. No HTML is uploaded.");
   try{
-    state.photos=findImages(await file.text());
+    for(const url of state.objectUrls)URL.revokeObjectURL(url);
+    state.objectUrls=[];
+    state.photos=findImages(await file.text(),q("assetsFolder").files);
     state.exportIndex=0;
     q("zip").textContent="Download ZIP";
-    draw();tell(state.photos.length+" verified Page gallery photos found. Unrelated Facebook content excluded. Links may expire.","ok");
+    for(const photo of state.photos.slice(0,90)){
+      if(photo.mode==="saved-local"&&photo.file){
+        photo.preview=URL.createObjectURL(photo.file);
+        state.objectUrls.push(photo.preview);
+      }
+    }
+    draw();
+    const local=state.photos.filter(p=>p.mode==="saved-local");
+    const available=local.filter(p=>p.file).length;
+    if(local.length && available<local.length)
+      tell(state.photos.length+" Page photos identified. "+available+"/"+local.length+" matching saved photos found. Select the companion _files folder and scan again.", "error");
+    else tell(state.photos.length+" Page gallery photos identified. Unrelated Facebook pictures excluded.","ok");
   }catch(e){tell(e.message,"error");lock(false);}
 });
 // Browser-only ZIP writer (store method). No external ZIP library or upload is necessary.
@@ -149,6 +210,12 @@ function zipFiles(files){
   return new Blob([...chunks,...directory,end],{type:"application/zip"});
 }
 async function photoFile(photo){
+  if(photo.mode==="saved-local"){
+    if(!photo.file)throw Error("Saved photo missing from selected _files folder");
+    const ext=photo.file.name.split(".").pop().toLowerCase();
+    const mime=photo.file.type||({jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif"}[ext])||"";
+    return new Blob([await photo.file.arrayBuffer()],{type:mime});
+  }
   if(photo.mode==="url"){
     const response=await api("/api/facebook-image?id="+encodeURIComponent(photo.id));
     return response.blob();

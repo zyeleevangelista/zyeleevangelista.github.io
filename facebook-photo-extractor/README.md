@@ -4,13 +4,21 @@ A stand-alone tool at `/facebook-photo-extractor/` in Kyle's GitHub Pages portfo
 
 **Important limitation:** Pasting any arbitrary Facebook URL cannot retrieve all its images without the applicable Meta permissions. This project does not bypass Facebook login, privacy settings, rate limits, or API review.
 
-## Gallery-only filtering (important)
+## Gallery-only filtering and two supported source formats
 
-The offline Python downloader and the **Saved HTML** web importer now extract image URLs **only from Facebook's `TimelineAppCollectionItem` photo-grid records**, verifying that each record has a matching `photo.php?fbid=...` link within the Page's own photo collection. They do not scan every image URL in the HTML; this avoids friend suggestions, avatars, ads and unrelated thumbnails.
+Both import methods explicitly identify Page photo-grid posts, rather than all images in the Facebook document. Friend suggestions, avatars and unrelated sidebar images are excluded.
 
-In the saved **New Text Document.txt** from the BK Aesthetics photos tab, testing identified **eight** such gallery photos. Earlier loose scanning found hundreds of Facebook CDN images but mostly unrelated content. If you need more gallery photos, scroll farther through the photo grid in Facebook and save fresh HTML after the additional items are loaded; whether they become present in the saved HTML depends on Facebook's browser rendering.
+**1. Browser saved-page HTML ("Webpage, Complete").** This format contains photo links and relative image paths. For the supplied `(1) Blanka Kallyntika Aesthetics Zamboanga _ Facebook.html`, the tool identifies **84 Page gallery images**, all associated with the same Page photo set. The photos themselves are stored in the sibling `(1) Blanka Kallyntika Aesthetics Zamboanga _ Facebook_files` folder created by Chrome/Brave, **not embedded in the HTML**.
 
-If the strict parser reports **zero** records, it will not fall back to unsafe all-image scanning. Facebook may change its page markup over time.
+For Windows, keep the HTML and its `_files` folder together in Downloads, update `offline_extract.py` to the latest copy and drag the HTML onto `RUN_ON_WINDOWS.bat`. The downloader copies the matching existing image files and packages them in one ZIP without API credentials, fetching nothing online. The exported images may be webpage-resolution thumbnails, not original uploads.
+
+For the website, open the **Saved HTML** tab, select the HTML file, then select the matching `_files` folder with the new **Saved webpage image folder** picker and click **Scan local file**. This permits entirely local ZIP exports without Vercel or a Meta token. Chrome/Brave may ask for permission to open the folder.
+
+**2. Older "View Source" saved HTML / TXT.** Earlier file `New Text Document.txt` contains serialized JSON Page photo-grid records rather than browser-saved images. The strict parser identified **8 Page gallery entries** there. These entries reference Facebook CDN image links and may expire; the API-free local folder approach does not apply unless you also have their actual image files.
+
+If no local images are found in saved-page HTML, confirm that the matching `_files` directory is present **beside** the HTML, not moved or renamed. Uploading the HTML alone does not transfer its companion images. Do not commit HTML or session-containing data to your public GitHub repository.
+
+---
 
 ## No Meta API required — recommended for saved Facebook HTML
 
@@ -20,7 +28,7 @@ If the strict parser reports **zero** records, it will not fall back to unsafe a
 
 1. Download **offline_extract.py** and **RUN_ON_WINDOWS.bat** from this folder into the same Windows folder.
 2. While viewing the Facebook photo gallery in your own browser, scroll through photos you need to load and save its HTML/page source as a .html or .txt file. The previously saved `New Text Document.txt` is a valid example.
-3. Drag the saved HTML/TXT file onto **RUN_ON_WINDOWS.bat**. Alternatively double-click the BAT and paste the file's full path.
+3. For Chrome/Brave saved-page HTML, keep the matching `_files` directory next to the HTML. Drag the HTML/TXT file onto **RUN_ON_WINDOWS.bat**. Alternatively double-click the BAT and paste the file's full path.
 4. The script creates a **Facebook_Photos_Extracted** folder *beside your HTML input file* and a matching **Facebook_Photos_Extracted.zip** containing any accessible downloaded photos plus a manifest of failures.
 
 ### Terminal / macOS / Linux
