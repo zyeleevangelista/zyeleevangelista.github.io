@@ -9,11 +9,9 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
-import html
 import json
 from pathlib import Path
 import re
-import shutil
 import sys
 import time
 from urllib.error import HTTPError, URLError
@@ -68,27 +66,51 @@ def quality_score(url: str) -> float:
     return score
 
 
-def image_urls_from_saved_html(source: str) -> list[str]:
-    # Decode HTML ampersands and common JSON slash/unicode escapes.
-    # Do not deserialize or transmit Facebook app/session data.
-    source = html.unescape(source)
-    source = source.replace("\\/", "/")
-    for old, new in (
-        ("\\u0026", "&"), ("\\u003d", "="), ("\\u0025", "%"),
-        ("\\u003f", "?"), ("\\u002f", "/"), ("\\u002F", "/"),
-    ):
-        source = source.replace(old, new)
-    chosen: dict[str, str] = {}
-    for raw in URL_PATTERN.findall(source):
-        url = raw.rstrip(");,]}")
-        if not is_facebook_image(url):
-            continue
-        parts = urlsplit(url)
-        key = parts.path  # same photo may have several query/host variants
-        if key not in chosen or quality_score(url) > quality_score(chosen[key]):
-            chosen[key] = url
-    return list(chosen.values())
+# Only records belonging to the Facebook Page's *photo collection*, rather
+# than all scontent.* image URLs present in the document. Facebook bundles
+# friend suggestions, profile thumbnails, ads and UI photos into the same HTML.
+PHOTO_COLLECTION_ITEM = re.compile(
+    r'"node":\{"__typename":"Photo","id":"(?P<id>\d+)"'
+    r'(?P<body>.{0,7000}?)"__typename":"TimelineAppCollectionItem"',
+    re.DOTALL,
+)
+JSON_FIELD = r'((?:\\.|[^"\\])*)'
 
+
+def image_urls_from_saved_html(source: str) -> list[str]:
+    """Read photos explicitly attached to the Page photo-grid collection.
+
+    The Page collection record has its own photo ID and full viewer_image URI.
+    URL-only scanning of the entire HTML is deliberately disallowed: that
+    previously exported unrelated Facebook friends' photographs.
+    """
+    results: dict[str, str] = {}
+    for match in PHOTO_COLLECTION_ITEM.finditer(source):
+        photo_id = match.group("id")
+        body = match.group("body")
+        view = re.search(r'"viewer_image":\{"uri":"' + JSON_FIELD + r'"', body)
+        link = re.search(r'"url":"' + JSON_FIELD + r'"', body)
+        if not view or not link:
+            continue
+        try:
+            image_url = json.loads('"' + view.group(1) + '"')
+            post_url = json.loads('"' + link.group(1) + '"')
+            post_parts = urlsplit(post_url)
+            query = parse_qs(post_parts.query)
+        except (ValueError, TypeError):
+            continue
+        # Verify the viewer image belongs to this particular photo-gallery
+        # item, as opposed to an unrelated photo in the page's other modules.
+        if (
+            post_parts.hostname not in ("www.facebook.com", "facebook.com")
+            or post_parts.path != "/photo.php"
+            or query.get("fbid") != [photo_id]
+            or not query.get("set", [""])[0].startswith("pb.")
+            or not is_facebook_image(image_url)
+        ):
+            continue
+        results.setdefault(photo_id, image_url)
+    return list(results.values())
 
 class SafeRedirects(HTTPRedirectHandler):
     """Never follow an extracted photo URL to an unrelated host."""
@@ -168,9 +190,9 @@ def main() -> int:
 
     document = args.source.read_text(encoding="utf-8", errors="replace")
     urls = image_urls_from_saved_html(document)[:args.limit]
-    print(f"Discovered {len(urls)} distinct Facebook CDN image paths.")
+    print(f"Found {len(urls)} verified Page photo-grid images (other Facebook content excluded).")
     if not urls:
-        print("No image references found. Try saving the photo gallery after it finishes loading.")
+        print("No Page photo-grid records found. Open the Page Photos tab, scroll to load pictures, then save fresh HTML.")
         return 1
     if args.list_only:
         print("No images downloaded (--list-only).")
