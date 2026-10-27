@@ -1,6 +1,6 @@
 "use strict";
 
-const { cors, checkAccess, json, graphGet, reportError } = require("../lib/facebook-photo-utils");
+import { cors, checkAccess, json, graphGet, reportError } from "../lib/facebook-photo-utils.js";
 
 function allowedImageUrl(value) {
   let url;
@@ -48,7 +48,7 @@ async function fetchImage(source) {
   throw Error("Too many image redirects.");
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (cors(req, res)) return;
   if (req.method !== "GET") return json(res, 405, { error: "GET required." });
   if (!checkAccess(req, res)) return;
