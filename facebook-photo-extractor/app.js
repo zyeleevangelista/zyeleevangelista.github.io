@@ -84,27 +84,29 @@ q("load").addEventListener("click",()=>loadPage(""));
 q("more").addEventListener("click",()=>loadPage(state.cursor));
 
 function findImages(text){
-  // Parse only Facebook CDN image URLs. Do not upload the local HTML or decode session tokens.
-  const flat=text.replace(/\\u([0-9a-f]{4})/gi,(_,x)=>String.fromCharCode(parseInt(x,16)))
-    .replace(/\\\//g,"/").replace(/&amp;/gi,"&").replace(/&#38;/g,"&");
-  const rawUrls=flat.match(/https?:\/\/[^\s<>"'\\]+/gi)||[];
+  // Strict Page photo-collection records only. A saved Facebook page may also
+  // contain friends' photos, search results, ads and avatars; these are excluded.
+  const photoRecords=/"node":\{"__typename":"Photo","id":"(\d+)"([\s\S]{0,7000}?)"__typename":"TimelineAppCollectionItem"/g;
+  const viewerRx=/"viewer_image":\{"uri":"((?:\\.|[^"\\])*)"/;
+  const linkRx=/"url":"((?:\\.|[^"\\])*)"/;
   const found=new Map();
-  for(const raw of rawUrls){
-    let url;
-    try{url=new URL(raw.replace(/[),;]+$/,""));}catch{continue;}
-    if(url.protocol!=="https:")continue;
-    const host=url.hostname.toLowerCase();
-    if(!host.startsWith("scontent.")||!host.endsWith(".fbcdn.net"))continue;
-    if(!/\.(?:jpg|jpeg|png|webp|gif)$/i.test(url.pathname))continue;
-    const identity=host+url.pathname;
-    const old=found.get(identity);
-    const score=(url.searchParams.has("stp")?0:100)+(url.href.includes("s2048")?50:0);
-    if(!old||old.score<score)found.set(identity,{url:url.href,score});
+  for(const match of text.matchAll(photoRecords)){
+    const id=match[1], body=match[2];
+    const image=viewerRx.exec(body), post=linkRx.exec(body);
+    if(!image || !post)continue;
+    let url,link;
+    try{url=new URL(JSON.parse('"'+image[1]+'"'));link=new URL(JSON.parse('"'+post[1]+'"'));}catch{continue;}
+    if(!["www.facebook.com","facebook.com"].includes(link.hostname) ||
+      link.pathname!=="/photo.php" || link.searchParams.get("fbid")!==id ||
+      !(link.searchParams.get("set")||"").startsWith("pb."))continue;
+    if(url.protocol!=="https:" || !url.hostname.startsWith("scontent.") ||
+      !url.hostname.endsWith(".fbcdn.net") || !/\.(?:jpg|jpeg|png|webp|gif)$/i.test(url.pathname))continue;
+    if(!found.has(id))found.set(id,{
+      id:"saved-"+id,mode:"file",caption:"Page gallery photo "+id,
+      url:url.href,preview:url.href
+    });
   }
-  return [...found.values()].slice(0,1500).map((p,index)=>({
-    id:"saved-"+String(index+1).padStart(3,"0"),mode:"file",
-    caption:"Imported image "+(index+1),url:p.url,preview:p.url
-  }));
+  return [...found.values()].slice(0,1500);
 }
 q("scan").addEventListener("click",async()=>{
   const file=q("local").files[0];
@@ -115,7 +117,7 @@ q("scan").addEventListener("click",async()=>{
     state.photos=findImages(await file.text());
     state.exportIndex=0;
     q("zip").textContent="Download ZIP";
-    draw();tell(state.photos.length+" image URLs found. Some may be thumbnails or have expired.","ok");
+    draw();tell(state.photos.length+" verified Page gallery photos found. Unrelated Facebook content excluded. Links may expire.","ok");
   }catch(e){tell(e.message,"error");lock(false);}
 });
 // Browser-only ZIP writer (store method). No external ZIP library or upload is necessary.
