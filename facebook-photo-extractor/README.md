@@ -4,6 +4,14 @@ A stand-alone tool at `/facebook-photo-extractor/` in Kyle's GitHub Pages portfo
 
 **Important limitation:** Pasting any arbitrary Facebook URL cannot retrieve all its images without the applicable Meta permissions. This project does not bypass Facebook login, privacy settings, rate limits, or API review.
 
+## Gallery-only filtering (important)
+
+The offline Python downloader and the **Saved HTML** web importer now extract image URLs **only from Facebook's `TimelineAppCollectionItem` photo-grid records**, verifying that each record has a matching `photo.php?fbid=...` link within the Page's own photo collection. They do not scan every image URL in the HTML; this avoids friend suggestions, avatars, ads and unrelated thumbnails.
+
+In the saved **New Text Document.txt** from the BK Aesthetics photos tab, testing identified **eight** such gallery photos. Earlier loose scanning found hundreds of Facebook CDN images but mostly unrelated content. If you need more gallery photos, scroll farther through the photo grid in Facebook and save fresh HTML after the additional items are loaded; whether they become present in the saved HTML depends on Facebook's browser rendering.
+
+If the strict parser reports **zero** records, it will not fall back to unsafe all-image scanning. Facebook may change its page markup over time.
+
 ## No Meta API required — recommended for saved Facebook HTML
 
 **Works directly from the Facebook page source you already saved.** No developer app, access token, Vercel backend, or paid service. You need Python 3 on your PC.
@@ -27,7 +35,7 @@ To check the number of unique referenced CDN photos **without downloading**, run
 python3 offline_extract.py "/path/to/saved-facebook-page.html" --list-only
 ```
 
-The offline downloader uses only Python's standard library and limits parallel downloads to avoid overwhelming Facebook. You may need to save fresh HTML if Facebook's time-limited CDN links have expired.
+The offline downloader uses only Python's standard library and limits parallel downloads to avoid overwhelming Facebook. It deliberately does not download unrelated profile photos. You may need to save fresh HTML if Facebook's time-limited CDN links have expired.
 
 **Important distinction:** Pasting a Facebook URL into a GitHub Pages website alone does not give that site permission to read Facebook's page source, because of browser cross-origin restrictions. The offline script instead reads HTML that you saved locally in your browser and downloads accessible images from those links.
 
