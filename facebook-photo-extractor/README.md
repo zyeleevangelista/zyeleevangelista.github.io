@@ -4,6 +4,37 @@ A stand-alone tool at `/facebook-photo-extractor/` in Kyle's GitHub Pages portfo
 
 **Important limitation:** Pasting any arbitrary Facebook URL cannot retrieve all its images without the applicable Meta permissions. This project does not bypass Facebook login, privacy settings, rate limits, or API review.
 
+## No Meta API required — recommended for saved Facebook HTML
+
+**Works directly from the Facebook page source you already saved.** No developer app, access token, Vercel backend, or paid service. You need Python 3 on your PC.
+
+### Windows (easiest)
+
+1. Download **offline_extract.py** and **RUN_ON_WINDOWS.bat** from this folder into the same Windows folder.
+2. While viewing the Facebook photo gallery in your own browser, scroll through photos you need to load and save its HTML/page source as a .html or .txt file. The previously saved `New Text Document.txt` is a valid example.
+3. Drag the saved HTML/TXT file onto **RUN_ON_WINDOWS.bat**. Alternatively double-click the BAT and paste the file's full path.
+4. The script creates a **Facebook_Photos_Extracted** folder *beside your HTML input file* and a matching **Facebook_Photos_Extracted.zip** containing any accessible downloaded photos plus a manifest of failures.
+
+### Terminal / macOS / Linux
+
+```bash
+python3 offline_extract.py "/path/to/saved-facebook-page.html"
+```
+
+To check the number of unique referenced CDN photos **without downloading**, run:
+
+```bash
+python3 offline_extract.py "/path/to/saved-facebook-page.html" --list-only
+```
+
+The offline downloader uses only Python's standard library and limits parallel downloads to avoid overwhelming Facebook. You may need to save fresh HTML if Facebook's time-limited CDN links have expired.
+
+**Important distinction:** Pasting a Facebook URL into a GitHub Pages website alone does not give that site permission to read Facebook's page source, because of browser cross-origin restrictions. The offline script instead reads HTML that you saved locally in your browser and downloads accessible images from those links.
+
+The HTML can contain session identifiers. Keep it on your PC and do not upload it to GitHub, your public site, or a public issue tracker. Get permission before republishing business, customer, or medical images.
+
+---
+
 ## Features
 
 - **Facebook Page URL mode:** lists uploaded Page photos using the official Meta Graph API through a server-side function. Supports pagination.
