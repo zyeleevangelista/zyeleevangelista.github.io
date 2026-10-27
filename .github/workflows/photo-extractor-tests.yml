@@ -1,0 +1,31 @@
+name: Test Facebook Photo Collector
+on:
+  push:
+    paths:
+      - "facebook-photo-extractor/**"
+      - "tests/test_facebook_photo_extractor.py"
+      - ".github/workflows/photo-extractor-tests.yml"
+  pull_request:
+    paths:
+      - "facebook-photo-extractor/**"
+      - "tests/test_facebook_photo_extractor.py"
+      - ".github/workflows/photo-extractor-tests.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python syntax check
+        run: python -m py_compile facebook-photo-extractor/offline_extract.py
+      - name: Saved HTML gallery tests
+        run: python -m unittest discover -s tests -p "test_facebook_photo_extractor.py" -v
+      - name: Browser script syntax check
+        run: node --check facebook-photo-extractor/app.js
