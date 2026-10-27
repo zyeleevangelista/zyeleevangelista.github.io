@@ -1,6 +1,6 @@
 "use strict";
 
-const { cors, checkAccess, json, reportError } = require("../lib/facebook-photo-utils");
+import { cors, checkAccess, json, reportError } from "../lib/facebook-photo-utils.js";
 
 // Download only user-supplied Facebook CDN image URLs from the HTML file.
 // Not an arbitrary URL proxy; does not send Facebook cookies or read HTML.
@@ -16,7 +16,7 @@ function imageURL(input) {
   return url;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (cors(req, res)) return;
   if (req.method !== "POST") return json(res, 405, { error: "POST required." });
   if (!checkAccess(req, res, false)) return;
