@@ -162,6 +162,8 @@ q("scan").addEventListener("click",async()=>{
   if(file.size>35*1024*1024){tell("Your saved file exceeds the 35 MB limit.","error");return;}
   lock(true);tell("Reading file locally. No HTML is uploaded.");
   try{
+    for(const url of state.objectUrls)URL.revokeObjectURL(url);
+    state.objectUrls=[];
     state.photos=findImages(await file.text(),q("assetsFolder").files);
     state.exportIndex=0;
     q("zip").textContent="Download ZIP";
