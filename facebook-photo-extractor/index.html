@@ -49,6 +49,7 @@ footer{margin-top:40px;font-size:12px;color:#6c7774;border-top:1px solid var(--l
 <label for="local">Facebook gallery saved as .html or .txt</label>
 <input id="local" type="file" accept=".html,.htm,.txt,text/html,text/plain">
 <div class="note">The HTML stays in your browser. The file can contain Facebook session data: never share or commit it to a public repository. Only individual media URLs may be sent to your download backend.</div>
+<div class="note"><strong>No API? Use the offline downloader.</strong><p>For full ZIP downloads without Meta tokens, Vercel, or CORS restrictions, save the Facebook photos page as HTML. Download <a href="./offline_extract.py" download>offline_extract.py</a> and <a href="./RUN_ON_WINDOWS.bat" download>RUN_ON_WINDOWS.bat</a> into the same folder. On Windows, drag your saved HTML/TXT onto the BAT file; it saves accessible photos and a ZIP beside your source file. Python 3 required. <a href="./README.md">Detailed instructions</a>.</p></div>
 <div class="actions"><button id="scan" type="button" class="primary">Scan local file</button></div>
 </div>
 <hr style="border:0;border-top:1px solid var(--line);margin:24px 0">
