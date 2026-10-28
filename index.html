@@ -4,11 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f7f5f0" />
-  <meta name="description" content="Kyle is a web developer, SEO specialist, and automation-focused virtual assistant building websites, systems, and client-ready digital experiences across WordPress, Shopify, GoHighLevel, and custom front end work." />
-  <meta property="og:title" content="Kyle | Web, SEO & Digital Systems" />
-  <meta property="og:description" content="A scroll-driven portfolio featuring selected client websites, redesigns, SEO work, and automation systems." />
+  <meta name="description" content="Kyle builds WordPress websites, landing pages, Shopify improvements, SEO fixes and GoHighLevel automations for service businesses and agencies. Explore client work and request a project quote." />
+  <meta property="og:title" content="Kyle | Websites, Landing Pages & GoHighLevel Automation" />
+  <meta property="og:description" content="WordPress development, landing pages, SEO improvements and CRM automation. See selected projects and request a tailored quote." />
   <meta property="og:type" content="website" />
-  <title>Kyle | Web, SEO & Digital Systems</title>
+  <meta property="og:url" content="https://zyeleevangelista.github.io/" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://zyeleevangelista.github.io/" />
+  <title>Kyle | WordPress Developer & GoHighLevel Automation</title>
 
   <style>
     :root {
@@ -1854,6 +1857,181 @@
       .scroll-cue i::after { animation: none; }
       * { transition: none !important; }
     }
+
+    /* Client acquisition layer: keep the existing scrollytelling design. */
+    .topbar-cta {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      color: #fff;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .topbar-cta:hover, .topbar-cta:focus-visible {
+      transform: translateY(-2px);
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    .hero-action.primary {
+      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .hero-action.primary::after { color: #fff; }
+    .hero-action:focus-visible, .service-link:focus-visible, .topbar-cta:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px;
+    }
+    .services {
+      min-height: 105vh;
+      display: grid;
+      align-items: center;
+      position: relative;
+      padding: clamp(96px, 11vh, 156px) 0;
+      border-top: 1px solid var(--soft-line);
+      border-bottom: 1px solid var(--soft-line);
+      background: linear-gradient(160deg, rgba(255,255,255,.55), rgba(231,236,253,.23) 56%, rgba(231,245,238,.24));
+    }
+    .services-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: auto;
+    }
+    .services-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .services-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+    .services-heading {
+      max-width: 980px;
+      margin: 20px 0 16px;
+      font-size: clamp(48px, 6.6vw, 98px);
+      line-height: .93;
+      letter-spacing: -.072em;
+      text-wrap: balance;
+    }
+    .services-heading span { color: #929292; }
+    .services-intro {
+      max-width: 740px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 19px);
+      line-height: 1.6;
+    }
+    .service-grid {
+      margin-top: clamp(26px, 5vh, 52px);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .service-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 340px;
+      padding: clamp(22px, 2.6vw, 34px);
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: rgba(255,253,249,.72);
+      box-shadow: 0 16px 42px rgba(0,0,0,.025);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.07);
+    }
+    .service-number {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .16em;
+    }
+    .service-card h3 {
+      margin: 28px 0 14px;
+      font-size: clamp(27px, 2.45vw, 38px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+    .service-card p {
+      margin: 0 0 18px;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .service-tags {
+      margin-top: auto;
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 730;
+      letter-spacing: .015em;
+      line-height: 1.5;
+    }
+    .service-link {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      margin-top: 18px;
+      padding: 10px 14px;
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .04em;
+      transition: background .2s ease;
+    }
+    .service-link:hover { background: var(--blue); }
+    .services-bottom {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+      color: #767676;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .services-bottom a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      font-weight: 750;
+    }
+    @media (max-width: 760px) {
+      .services { min-height: auto; padding: 95px 0 76px; }
+      .services-heading { font-size: clamp(44px, 10vw, 72px); }
+      .service-grid { grid-template-columns: 1fr; gap: 12px; }
+      .service-card { min-height: 0; padding: 25px; }
+      .service-card h3 { margin-top: 20px; font-size: 32px; }
+      .services-bottom { flex-direction: column; gap: 10px; }
+    }
+    @media (max-width: 420px) {
+      .topbar-cta { min-height: 34px; padding: 0 11px; font-size: 10px; }
+      .services-inner { width: calc(100% - 22px); }
+    }
   </style>
 </head>
 
@@ -1862,6 +2040,7 @@
     <div class="topbar-inner">
       <a class="signature" href="#top" aria-label="Back to top"><b>K</b><span>Kyle / Portfolio</span></a>
       <div class="scroll-meta"><span id="sceneLabel">Introduction</span><span id="percent">00%</span></div>
+      <a class="topbar-cta" href="mailto:zyeleevangelista@gmail.com?subject=Project%20Quote%20Request" aria-label="Request a project quote by email">Request a quote ↗</a>
     </div>
   </div>
 
@@ -1869,6 +2048,7 @@
 
   <nav class="side-nav" id="sideNav" aria-label="Portfolio navigation">
     <a href="#top" data-nav="Introduction"><i></i><span>Home</span></a>
+    <a href="#servicesSection" data-nav="Services"><i></i><span>Services</span></a>
     <a href="#work" data-nav="WASSWA Capital"><i></i><span>Work</span></a>
     <a href="#aboutSection" data-nav="About Kyle"><i></i><span>About</span></a>
     <a href="#contactSection" data-nav="Contact"><i></i><span>Contact</span></a>
@@ -1878,11 +2058,11 @@
     <section class="intro" data-label="Introduction">
       <div class="intro-sticky">
         <div class="intro-inner">
-          <div class="intro-kicker">Web developer • SEO specialist • systems builder</div>
+          <div class="intro-kicker">Freelance web developer • WordPress • GoHighLevel</div>
 
           <h1 class="intro-title" id="introTitle">
             I build<br>
-            <span class="ghost">for the web.</span>
+            <span class="ghost">for growth.</span>
           </h1>
 
           <div class="intro-portrait-wrap" id="introPortrait">
@@ -1897,12 +2077,12 @@
           <div class="scroll-cue"><i></i>Scroll to enter</div>
 
           <p class="intro-copy" id="introCopy">
-            I work across <strong>WordPress, Shopify, GoHighLevel, SEO, custom front end development, and automation</strong>. The work changes from client to client. The goal does not: make the website clearer, stronger, and more useful to the business.
+            I help service businesses and agencies build <strong>better WordPress websites, lead-focused landing pages, and GoHighLevel follow-up systems</strong> — from the first click to the next customer conversation.
           </p>
 
           <div class="hero-actions" id="heroActions">
-            <a class="hero-action" href="#aboutSection">About me</a>
-            <a class="hero-action" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">Contact me</a>
+            <a class="hero-action primary" href="mailto:zyeleevangelista@gmail.com?subject=Project%20Quote%20Request">Request a quote</a>
+            <a class="hero-action" href="#work">See client work</a>
           </div>
         </div>
       </div>
@@ -1958,6 +2138,42 @@
 
           <div class="statement-rail"><i id="statementRail"></i></div>
           <div class="statement-foot">Build → Fix → Rank → Automate</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="services" id="servicesSection" data-label="Services" aria-labelledby="servicesHeading">
+      <div class="services-inner">
+        <div class="services-kicker">Ways we can work together</div>
+        <h2 class="services-heading" id="servicesHeading">Your next project.<br><span>Handled end to end.</span></h2>
+        <p class="services-intro">Need a page built, an existing website fixed, or the follow-up process connected? Choose a starting point and I’ll recommend a practical scope after reviewing your project.</p>
+        <div class="service-grid">
+          <article class="service-card">
+            <span class="service-number">01 / WEBSITE SUPPORT</span>
+            <h3>Fix and improve your website.</h3>
+            <p>Repair mobile layouts, forms, navigation and technical issues; improve usability and on-page SEO without an unnecessary rebuild.</p>
+            <div class="service-tags">WordPress / Elementor / Front-end fixes / Technical SEO</div>
+            <a class="service-link" href="mailto:zyeleevangelista@gmail.com?subject=Website%20Support%20Quote">Discuss website fixes ↗</a>
+          </article>
+          <article class="service-card">
+            <span class="service-number">02 / LANDING PAGES</span>
+            <h3>Turn more visits into inquiries.</h3>
+            <p>Build clear, responsive landing pages with focused calls to action, useful content structure, and tested contact or booking flows.</p>
+            <div class="service-tags">Landing pages / Lead forms / Responsive UI / Shopify</div>
+            <a class="service-link" href="mailto:zyeleevangelista@gmail.com?subject=Landing%20Page%20Quote">Discuss a landing page ↗</a>
+          </article>
+          <article class="service-card">
+            <span class="service-number">03 / CRM & AUTOMATION</span>
+            <h3>Follow up without the busywork.</h3>
+            <p>Connect inquiry forms and booking calendars to GoHighLevel pipelines, confirmations, reminders and follow-up workflows.</p>
+            <div class="service-tags">GoHighLevel / Forms / Calendars / Email and SMS flows</div>
+            <a class="service-link" href="mailto:zyeleevangelista@gmail.com?subject=GoHighLevel%20Automation%20Quote">Discuss automation ↗</a>
+          </article>
+        </div>
+        <div class="services-bottom">
+          <span>How it works: Share your website and goals → Receive a scoped quote → Build, test and hand off.</span>
+          <a href="#work">See selected client projects →</a>
         </div>
       </div>
     </section>
@@ -2339,12 +2555,12 @@
         <div class="label">Let’s work together</div>
 
         <h2>
-          Have a website<br>
-          <span>that needs to work better?</span>
+          Let's make your website<br>
+          <span>work harder for you.</span>
         </h2>
 
         <p>
-          I’m available for freelance projects, ongoing website support, SEO implementation, Shopify work, GoHighLevel automation, and remote roles where web and digital systems matter. If you have a project in mind, send me the details directly.
+          I take on freelance website, landing page, SEO, Shopify and GoHighLevel projects for businesses and agencies. Tell me your website URL, what needs to change, and your ideal timeline. I'll respond with the next steps and a scoped quote.
         </p>
 
         <div class="contact-grid">
@@ -2362,7 +2578,7 @@
         </div>
 
         <div class="final-actions">
-          <a class="primary" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">Start a project →</a>
+          <a class="primary" href="mailto:zyeleevangelista@gmail.com?subject=Project Inquiry from Portfolio">Request a quote →</a>
           <a href="https://github.com/zyeleevangelista" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           <a href="#top">Run it back ↑</a>
         </div>
@@ -2383,7 +2599,7 @@
     const portfolioConfig = {
       email: "zyeleevangelista@gmail.com",
       phone: "0910971605",
-      github: "https://github.com/zyeleeveangelista"
+      github: "https://github.com/zyeleevangelista"
     };
 
     const clamp = (n, min = 0, max = 1) => Math.min(Math.max(n, min), max);
@@ -2606,7 +2822,7 @@
         const nav = link.dataset.nav;
         const active =
           nav === activeLabel ||
-          (nav === "WASSWA Capital" && activeLabel !== "Introduction" && activeLabel !== "About Kyle" && activeLabel !== "Contact" && activeLabel !== "Capabilities" && activeLabel !== "How I work");
+          (nav === "WASSWA Capital" && activeLabel !== "Introduction" && activeLabel !== "About Kyle" && activeLabel !== "Contact" && activeLabel !== "Capabilities" && activeLabel !== "How I work" && activeLabel !== "Services");
         link.classList.toggle("active", active);
       });
     }
